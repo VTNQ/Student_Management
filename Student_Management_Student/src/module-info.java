@@ -1,7 +1,5 @@
-module Student_Manager {
+module Student_Management_Student {
 	requires javafx.controls;
-	requires javafx.fxml;
-	requires java.desktop;
 	
 	opens application to javafx.graphics, javafx.fxml;
 }
