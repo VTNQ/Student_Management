@@ -1,0 +1,7 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.vbox_background_center{
+	-fx-background-image: url('Group 4@2x.jpg');
+}
+.vbox_background_right{
+	-fx-border-radius: 50px;
+}
