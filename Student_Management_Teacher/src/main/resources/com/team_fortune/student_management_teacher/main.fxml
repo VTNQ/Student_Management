@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.1724598930481283" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <items>
+      <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0">
+         <children>
+            <Button mnemonicParsing="false" onMouseClicked="#btn_home" prefWidth="100.0" style="-fx-border-color: tranparent;" stylesheets="@css/main.css" text="Home">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+            <Accordion layoutY="28.0" minWidth="-Infinity" prefWidth="100.0" stylesheets="@css/main.css">
+              <panes>
+                <TitledPane animated="false" prefWidth="100.0" text="Class">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <content>
+                        <AnchorPane prefWidth="141.0">
+                           <children>
+                              <Label fx:id="btn_add_class" alignment="CENTER" layoutX="20.0" prefHeight="33.0" prefWidth="100.0" style="-fx-background-color: tranparent;" stylesheets="@css/main.css" text="Add Class" />
+                              <Label fx:id="btn_list_class" alignment="CENTER" layoutX="20.0" layoutY="34.0" prefHeight="33.0" prefWidth="100.0" style="-fx-background-color: tranparent;" stylesheets="@css/main.css" text="List Class" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+                <TitledPane animated="false" style="-fx-background-color: tranparent;" stylesheets="@css/main.css" text="Subject">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <content>
+                        <AnchorPane prefHeight="68.0" prefWidth="139.0">
+                           <children>
+                              <Label fx:id="btn_add_subject" alignment="CENTER" layoutX="16.0" prefHeight="33.0" prefWidth="100.0" style="-fx-background-color: tranparent;" stylesheets="@css/main.css" text="Add Subject" />
+                              <Label fx:id="btn_list_subject" alignment="CENTER" layoutX="18.0" layoutY="34.0" prefHeight="33.0" prefWidth="100.0" style="-fx-background-color: tranparent;" stylesheets="@css/main.css" text="List Subject" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+              </panes>
+            </Accordion>
+         </children>
+      </AnchorPane>
+      <ScrollPane fx:id="main_display" prefHeight="398.0" prefWidth="403.0" />
+   </items>
+</SplitPane>
