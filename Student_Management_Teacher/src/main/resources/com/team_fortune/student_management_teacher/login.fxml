@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-size: cover;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.LoginController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" nodeOrientation="INHERIT" pickOnBounds="true">
+         <image>
+            <Image url="@asset/bg-login.png" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <VBox prefHeight="400.0" prefWidth="300.0">
+         <children>
+            <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="133.0" prefWidth="300.0" text="WELCOME BACK" textAlignment="CENTER" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="300.0" text="Nice To See You Again" textAlignment="CENTER" textFill="#ffe500">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" prefHeight="43.0" prefWidth="300.0" text="Hello! We warmly welcome you to our login system." textFill="#5800ff" wrapText="true">
+               <font>
+                  <Font name="System Italic" size="13.0" />
+               </font>
+               <padding>
+                  <Insets left="60.0" />
+               </padding>
+            </Label>
+            <Label alignment="TOP_LEFT" text="Please enter your login information to experience the wonderful features we provide." textFill="#5800ff" wrapText="true">
+               <font>
+                  <Font name="System Italic" size="13.0" />
+               </font>
+               <padding>
+                  <Insets left="60.0" />
+               </padding>
+            </Label>
+            <Label alignment="TOP_LEFT" text="Wishing you a pleasant and exciting day!l" textFill="#5800ff" wrapText="true">
+               <font>
+                  <Font name="System Italic" size="13.0" />
+               </font>
+               <padding>
+                  <Insets left="60.0" />
+               </padding>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="300.0" prefHeight="400.0" prefWidth="300.0">
+         <children>
+            <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="163.0" prefWidth="300.0" text="LOGIN" textAlignment="CENTER" textFill="#00ffeb">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <padding>
+                  <Insets bottom="13.0" />
+               </padding>
+            </Label>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView disable="true" fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@asset/user.png" />
+                     </image>
+                  </ImageView>
+                  <TextField opacity="0.5" prefHeight="26.0" prefWidth="213.0" promptText="UserName" stylesheets="@css/login.css" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -6,20 +6,30 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.1724598930481283" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.1724598930481283" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.MainController">
    <items>
       <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0">
          <children>
             <Button mnemonicParsing="false" onMouseClicked="#btn_home" prefWidth="100.0" style="-fx-border-color: tranparent;" stylesheets="@css/main.css" text="Home">
                <font>
                   <Font name="System Bold" size="13.0" />
-               </font></Button>
+               </font>
+               <graphic>
+                  <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@asset/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             <Accordion layoutY="28.0" minWidth="-Infinity" prefWidth="100.0" stylesheets="@css/main.css">
               <panes>
-                <TitledPane animated="false" prefWidth="100.0" text="Class">
+                <TitledPane alignment="CENTER" prefWidth="100.0" text="Class">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -31,6 +41,13 @@
                            </children>
                         </AnchorPane>
                      </content>
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/class.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </TitledPane>
                 <TitledPane animated="false" style="-fx-background-color: tranparent;" stylesheets="@css/main.css" text="Subject">
                      <font>
@@ -44,6 +61,13 @@
                            </children>
                         </AnchorPane>
                      </content>
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/subject.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </TitledPane>
               </panes>
             </Accordion>
