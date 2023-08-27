@@ -37,6 +37,7 @@ public class LoginController {
         }
     }
     public void CheckLogin(ActionEvent event) throws IOException{
+        
         App.setRoot("main");
     }
 }

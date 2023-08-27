@@ -29,27 +29,28 @@ public class HomeController {
     private TextField showPhone;
     @FXML
     private TextField showSince;
-    
-    public void Start(){
-        FXMLLoader loader=new FXMLLoader(App.class.getResource("/view/home.fxml"));
-        try{
-            AnchorPane HomePage=loader.load();
-            main_display.getChildrenUnmodifiable().clear();
-            main_display.getChildrenUnmodifiable().add(HomePage);
-        }catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
+     
     @FXML
     void btn_home(MouseEvent event) {
         FXMLLoader loader=new FXMLLoader(App.class.getResource("view/home.fxml"));
         try{
             AnchorPane HomePage=loader.load();
-            main_display.getChildrenUnmodifiable().clear();
-            main_display.getChildrenUnmodifiable().add(HomePage);
+            main_display.setContent(HomePage);
+            
         }catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+    void btn_add_class(MouseEvent event){
+        
+    }
+    void btn_list_class(MouseEvent event){
+        
+    }
+    void btn_add_subject(MouseEvent event){
+        
+    }
+    void btn_list_subject(MouseEvent event){
+        
     }
 }
