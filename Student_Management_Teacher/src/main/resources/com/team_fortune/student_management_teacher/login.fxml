@@ -79,7 +79,7 @@
                         <Image url="@asset/user.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="username_field" opacity="0.5" prefHeight="26.0" prefWidth="213.0" promptText="UserName" />
+                  <TextField fx:id="username_field" opacity="0.5" prefHeight="26.0" prefWidth="213.0" promptText="UserName" styleClass="text_field_border-radius" stylesheets="@css/application.css" />
                </children>
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="44.0" prefWidth="300.0">
@@ -89,7 +89,7 @@
                         <Image url="@asset/padlock.png" />
                      </image>
                   </ImageView>
-                  <PasswordField fx:id="password_field" opacity="0.5" prefHeight="26.0" prefWidth="213.0" promptText="Password" />
+                  <PasswordField fx:id="password_field" opacity="0.5" prefHeight="26.0" prefWidth="213.0" promptText="Password" styleClass="text_field_border-radius" stylesheets="@css/application.css" />
                </children>
             </HBox>
             <HBox prefHeight="28.0" prefWidth="270.0">
@@ -106,7 +106,7 @@
             </HBox>
             <HBox prefHeight="124.0" prefWidth="300.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#CheckLogin" opacity="0.73" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #003865;" text="Login" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="btn_Login" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#CheckLogin" opacity="0.73" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #003865;" text="Login" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>

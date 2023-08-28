@@ -1,4 +1,12 @@
 .bg_tranparent{
-    background-color: transparent;
+    -fx-background-color: transparent;
 }
-
+.text_field_border-radius{
+    -fx-border-radius: 30px; 
+    -fx-background-radius:40px;
+}
+.text_field_error{
+    -fx-border-color:red;
+    -fx-border-style:solid;
+    -fx-border-width:1px;
+}

@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.1724598930481283" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.HomeController">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.HomeController">
    <items>
       <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0">
          <children>
@@ -92,6 +92,19 @@
                   </AnchorPane>
                   <HBox alignment="CENTER" prefHeight="33.0" prefWidth="492.0">
                      <children>
+                        <Label text="Name" />
+                        <TextField fx:id="showName" alignment="CENTER" editable="false" opacity="0.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="13.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="33.0" prefWidth="492.0">
+                     <children>
                         <Label text="Username" />
                         <TextField fx:id="showUsername" alignment="CENTER" editable="false" opacity="0.0">
                            <HBox.margin>
@@ -105,8 +118,8 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="33.0" prefWidth="492.0">
                      <children>
-                        <Label fx:id="show_username" text="Email" />
-                        <TextField fx:id="showEmail" alignment="CENTER" editable="false" opacity="0.0">
+                        <Label fx:id="show_username1" text="Phone" />
+                        <TextField fx:id="showPhone" alignment="CENTER" editable="false" opacity="0.0">
                            <HBox.margin>
                               <Insets left="13.0" />
                            </HBox.margin>
@@ -118,8 +131,8 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="33.0" prefWidth="492.0">
                      <children>
-                        <Label fx:id="show_username1" text="Phone" />
-                        <TextField fx:id="showPhone" alignment="CENTER" editable="false" opacity="0.0">
+                        <Label fx:id="show_username" text="Email" />
+                        <TextField fx:id="showEmail" alignment="CENTER" editable="false" opacity="0.0">
                            <HBox.margin>
                               <Insets left="13.0" />
                            </HBox.margin>

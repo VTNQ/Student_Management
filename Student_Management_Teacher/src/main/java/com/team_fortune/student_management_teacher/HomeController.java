@@ -22,6 +22,8 @@ public class HomeController {
     @FXML
     private ScrollPane main_display;
     @FXML
+    private TextField showName;
+    @FXML
     private TextField showUsername;
     @FXML
     private TextField showEmail;
