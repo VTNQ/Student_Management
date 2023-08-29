@@ -7,7 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.StageStyle;
 
 /**
  * JavaFX App
@@ -18,9 +19,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        SplitPane root=
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("primary.fxml"));
+        scene = new Scene(root);
+         stage.initStyle(StageStyle.UNIFIED);
         stage.setScene(scene);
+       
         stage.show();
     }
 

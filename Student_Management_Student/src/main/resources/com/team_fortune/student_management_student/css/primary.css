@@ -21,6 +21,11 @@
 .button-design:hover{
     -fx-background-color:#6a9ae7;
 }
+#back{
+     -fx-background-color:#4CAF50;
+     -fx-text-fill:#fff;
+     -fx-cursor:hand;
+}
 .hypertext-design{
     -fx-text-fill:#fff;
     -fx-border-color:none;
@@ -29,4 +34,67 @@
 .marco{
     -fx-text-fill:#6a9ae7;
     -fx-cursor:hand;
+}
+.top-form{
+    -fx-background-color:#fff;
+    -fx-border-color:#000;
+    -fx-border-width:.4px .4px .2px .4px;
+}
+.semi-top-form{
+     -fx-background-color:#efefef;
+     -fx-border-color:#000;
+     -fx-border-width:.2px .4px .4px .4px;
+}
+.nav-form{
+    -fx-background-color:linear-gradient(to bottom right,#2d658c,#2ca772);
+}
+.nav-btn{
+    -fx-background-color:transparent;
+    -fx-cursor:hand;
+    -fx-text-fill:#fff;
+    -fx-font-size:15px;
+    -fx-font-family:"Arial";
+    -fx-alignment:CENTER_LEFT;
+}
+.logout{
+    -fx-background-color:#2c84bf;
+    -fx-background-radius:10px;
+    -fx-cursor:hand;
+}
+.logout:hover{
+    -fx-background-color:#1593e7;
+}
+.shadow{
+    -fx-effect:dropshadow(three-pass-box,rgb(0,0,0,0.4),6,0,0,0);
+}
+.text_field_error{
+    -fx-border-color:red;
+    -fx-border-style:solid;
+    -fx-border-width:1px;
+}
+.mfx-toggle-button {
+	-fx-font-family: 'Visby Round CF Medium';
+	-fx-text-fill: -mfx-text-he;
+}
+
+.mfx-toggle-button .text {
+	-fx-font-smoothing-type: lcd;
+}
+
+#customToggleButton {
+	-mfx-main: -common-gradient;
+	-mfx-secondary: #5E0BA8;
+	-fx-background-color: red;
+}
+
+#customToggleButton .mfx-ripple-generator {
+	-mfx-ripple-color: -common-gradient;
+	-fx-opacity: 0.5;
+}
+.white-bg{
+    -fx-background-color:#fff;
+    -fx-background-radius:8px;
+}
+.card{
+    -fx-background-color:linear-gradient(to right,#344250,#3c6382);
 }
