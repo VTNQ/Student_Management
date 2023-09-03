@@ -2,6 +2,9 @@ package com.team_fortune.student_management_teacher;
 
 import com.team_fortune.student_management_teacher.dao.SearchTeacher;
 import com.team_fortune.student_management_teacher.dialog.DialogAlert;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXPasswordField;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -12,9 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -25,11 +25,11 @@ public class LoginController {
     @FXML
     private AnchorPane login_form;
     @FXML
-    private PasswordField password_field;
+    private MFXPasswordField password_field;
     @FXML
-    private TextField username_field;
+    private MFXTextField username_field;
     @FXML
-    private Button btn_Login;
+    private MFXButton btn_Login;
     
     @FXML
     void openPopupForgetgPassword(ActionEvent event) {
@@ -45,20 +45,6 @@ public class LoginController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    public static boolean isValidUsername(String username) {
-        String regex = "^[a-zA-Z0-9_],{6,}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(username);
-        return matcher.matches();
-    }
-
-    public static boolean isValidPassword(String Password) {
-        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)[a-zA-Z\\\\d]{8,}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(Password);
-        return matcher.matches();
     }
 
     public void CheckLogin(MouseEvent event) throws IOException {
@@ -83,21 +69,23 @@ public class LoginController {
             
             DialogAlert.DialogError("Password is require");
         } else {
-            if (isValidUsername(username) && isValidPassword(password)) {
                 try {
-                    boolean isFound = SearchTeacher.searchTeacherAll(username_field.getText(), password_field.getText());
-                    if (isFound == true) {
-                        DialogAlert.DialogSuccess("Login Successfully");
-                        App.setRoot("main");
-                    } else {
-                        DialogAlert.DialogError("Account not exist!");
+                    int isFound = SearchTeacher.searchTeacherAll(username_field.getText(), password_field.getText());
+                    if (isFound == 0) {
+                        DialogAlert.DialogSuccess("Account not exist!");
+                    } else switch (isFound) {
+                        case 1:
+                            DialogAlert.DialogSuccess("Login Successfully");
+                            HomeController homePage=new HomeController(username);
+                            App.setRoot("main");
+                            break;
+                        case 2:
+                            DialogAlert.DialogError("Username or Password Incorrect!");
+                            break;
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else {
-                DialogAlert.DialogError("Username or Password Incorrect!");
-            }
         }
     }
 }

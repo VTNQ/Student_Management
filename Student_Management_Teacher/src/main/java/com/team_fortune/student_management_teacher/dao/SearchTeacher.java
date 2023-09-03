@@ -7,15 +7,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SearchTeacher{
-    public static boolean searchTeacherAll(String username, String password) throws SQLException{
-        String searchQuery="select*from teacher";
+    public static int searchTeacherAll(String username, String password) throws SQLException{
+        String searchQuery="select*from teacher where status=1";
         Connection conn=DBConnection.getConnection();
         Statement st=conn.createStatement();
         ResultSet rs=st.executeQuery(searchQuery);
-        boolean isFound=false;
+        int isFound=0;
         while(rs.next()){
             if(username.equals(rs.getString("username"))&&password.equals(rs.getString("password"))){
-                isFound=true;
+                isFound=1;
+            }else if(username.equals(rs.getString("username"))||password.equals(rs.getString("password"))){
+                isFound=2;
             }
         }
         return isFound;
