@@ -1,41 +1,301 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.HomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.HomeController">
+   <center>
+      <Pane fx:id="main_display" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <BarChart fx:id="Char_Class" prefHeight="222.0" prefWidth="240.0">
+              <xAxis>
+                <CategoryAxis fx:id="list_class" endMargin="13.0" label="Class" prefHeight="19.0" prefWidth="144.0" startMargin="3.0" tickLabelFill="RED" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="student_class" label="Number of Student" side="LEFT" />
+              </yAxis>
+            </BarChart>
+         </children></Pane>
+   </center>
+   <left>
+      <AnchorPane prefHeight="555.0" prefWidth="143.0" style="-fx-background-color: linear-gradient(to right, #2980b9, #2c3e50);" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onMouseClicked="#btn_home" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Home">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@asset/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Line endX="125.20001220703125" endY="0.19998550415039062" layoutX="18.0" layoutY="63.0" startX="-18.0000057220459" startY="0.19998550415039062" stroke="WHITE" />
+            <Line endX="124.19998168945312" endY="0.199981689453125" layoutX="19.0" layoutY="127.0" startX="-18.9999942779541" startY="0.199981689453125" stroke="WHITE" />
+            <MenuButton alignment="CENTER" layoutY="64.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Class">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Add">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/plus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Update">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/update.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Delete">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/delete.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                <MenuItem mnemonicParsing="false" text="List">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/checklist.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+              </items>
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@asset/class.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </MenuButton>
+            <MenuButton alignment="CENTER" layoutY="128.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Subject">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Add">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/plus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Update">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/update.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Delete">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/delete.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="List">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/checklist.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+               </items>
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@asset/subject.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </MenuButton>
+            <MenuButton alignment="CENTER" layoutY="190.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Exam">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Add">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/plus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Update">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/update.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Delete">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/delete.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="List">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/checklist.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+               </items>
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@asset/exam.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </MenuButton>
+            <Line endX="125.19998168945312" layoutX="18.0" layoutY="191.0" startX="-17.9999942779541" startY="0.199981689453125" stroke="WHITE" />
+            <MenuButton alignment="CENTER" layoutY="254.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Assignment">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Add">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/plus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Update">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/update.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="Delete">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/delete.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem mnemonicParsing="false" text="List">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@asset/checklist.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+               </items>
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@asset/assignment.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </MenuButton>
+            <Line endX="125.19998168945312" layoutX="19.0" layoutY="253.0" startX="-17.9999942779541" startY="0.199981689453125" stroke="WHITE" />
+         </children>
+      </AnchorPane>
+   </left>
    <top>
-      <ToolBar fx:id="menu" nodeOrientation="RIGHT_TO_LEFT" prefHeight="45.0" prefWidth="736.0" BorderPane.alignment="CENTER">
-        <items>
-            <MenuButton alignment="TOP_LEFT" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="bg_tranparent" stylesheets="@css/application.css">
+      <AnchorPane prefHeight="53.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to left, #159957, #155799);" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@asset/teacher.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="61.0" layoutY="2.0" prefHeight="50.0" prefWidth="176.0" text="Teacher Page" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <MenuButton alignment="TOP_LEFT" layoutX="715.0" layoutY="10.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="bg_tranparent" stylesheets="@css/application.css">
               <items>
                 <MenuItem mnemonicParsing="false">
                      <graphic>
-                        <Button fx:id="btn_profile" mnemonicParsing="false" onMouseClicked="#showInformationUser" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Profile">
+                        <Button fx:id="btn_profile" mnemonicParsing="false" onAction="#showInformationUser" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Profile">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <graphic>
+                              <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@asset/profile.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
                      </graphic>
                   </MenuItem>
                 <MenuItem mnemonicParsing="false">
                      <graphic>
-                        <Button fx:id="btn_logout" mnemonicParsing="false" onMouseClicked="#LogOut" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Logout">
+                        <Button fx:id="btn_logout" mnemonicParsing="false" onAction="#LogOut" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Logout">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <graphic>
+                              <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@asset/exit.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Button>
                      </graphic>
                   </MenuItem>
@@ -51,72 +311,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </MenuButton>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="513.0">
-               <children>
-                  <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="480.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@asset/teacher.png" />
-                     </image>
-                  </ImageView>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="335.0" layoutY="-1.0" prefHeight="34.0" prefWidth="149.0" text="Teacher Page" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-        </items>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </ToolBar>
+         </children>
+      </AnchorPane>
    </top>
-   <center>
-      <Pane fx:id="main_display" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="356.0" fitWidth="600.0" focusTraversable="true" pickOnBounds="true">
-               <image>
-                  <Image url="@asset/background-main.jpg" />
-               </image></ImageView>
-            <MFXButton alignment="CENTER" layoutX="106.0" layoutY="61.0" mnemonicParsing="false" opacity="0.83" prefHeight="63.0" prefWidth="113.0" styleClass="mfx-button" stylesheets="@css/application.css" text="Class">
-               <graphic>
-                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@asset/class.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></MFXButton>
-            <MFXButton layoutX="244.0" layoutY="61.0" opacity="0.83" prefHeight="63.0" prefWidth="113.0" styleClass="mfx-button" stylesheets="@css/application.css" text="Subject">
-               <graphic>
-                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@asset/subject.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font></MFXButton>
-            <MFXButton layoutX="386.0" layoutY="61.0" opacity="0.83" prefHeight="63.0" prefWidth="113.0" styleClass="mfx-button" stylesheets="@css/application.css" text="Exam">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@asset/exam.png" />
-                     </image>
-                  </ImageView>
-               </graphic></MFXButton>
-            <MFXButton layoutX="106.0" layoutY="217.0" prefHeight="63.0" prefWidth="113.0" />
-            <MFXButton layoutX="244.0" layoutY="217.0" prefHeight="63.0" prefWidth="113.0" text="Button" />
-            <MFXButton layoutX="386.0" layoutY="217.0" prefHeight="63.0" prefWidth="113.0" text="Button" />
-         </children></Pane>
-   </center>
 </BorderPane>

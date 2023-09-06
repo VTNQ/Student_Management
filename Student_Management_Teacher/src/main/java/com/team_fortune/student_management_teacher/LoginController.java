@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,14 +21,12 @@ import javafx.stage.Stage;
 public class LoginController {
 
     @FXML
-    private AnchorPane login_form;
-    @FXML
     private MFXPasswordField password_field;
     @FXML
     private MFXTextField username_field;
     @FXML
     private MFXButton btn_Login;
-    
+    public static String username;
     @FXML
     void openPopupForgetgPassword(ActionEvent event) {
         try {
@@ -48,7 +44,7 @@ public class LoginController {
     }
 
     public void CheckLogin(MouseEvent event) throws IOException {
-        String username = username_field.getText();
+        username = username_field.getText();
         String password = password_field.getText();
         if (username.isEmpty() && password.isEmpty()) {
             username_field.getStyleClass().add("text_field_error");
@@ -76,7 +72,6 @@ public class LoginController {
                     } else switch (isFound) {
                         case 1:
                             DialogAlert.DialogSuccess("Login Successfully");
-                            HomeController homePage=new HomeController(username);
                             App.setRoot("main");
                             break;
                         case 2:

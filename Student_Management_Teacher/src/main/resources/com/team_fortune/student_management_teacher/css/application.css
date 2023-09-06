@@ -1,5 +1,5 @@
 .bg_tranparent{
-    -fx-background-color: transparent;
+    -fx-background-color: transparent !important;
 }
 .text_field_border-radius{
     -fx-border-radius: 30px; 

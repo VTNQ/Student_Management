@@ -1,5 +1,6 @@
 package com.team_fortune.student_management_teacher.dialog;
 
+import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -17,11 +18,18 @@ public class DialogAlert {
         alert.setTitle("ERROR");
         alert.setHeaderText(null);
         alert.setContentText(message);
-        alert.show();
+        alert.showAndWait();
     }
     public  static void DialogInformation(String message){
         Alert alert=new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("INFORMATION");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    public static void DiaglogModified(String message){
+        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("CONFIRMATION");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

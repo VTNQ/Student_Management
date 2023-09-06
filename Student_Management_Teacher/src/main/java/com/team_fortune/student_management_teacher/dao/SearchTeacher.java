@@ -20,6 +20,7 @@ public class SearchTeacher{
                 isFound=2;
             }
         }
+        DBConnection.closeConnection(conn);
         return isFound;
     }
 }
