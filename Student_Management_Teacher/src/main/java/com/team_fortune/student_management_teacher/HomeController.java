@@ -21,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
@@ -44,7 +45,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private MenuButton btnSubject;
-
+    
     public void chartClass() throws SQLException {
         String searchClassStudent = "select c.name, count(cs.id_student) as total from class_subject cs join class c on c.id=cs.id_class join teacher t on cs.id_teacher=t.id where t.username=? group by c.name order by c.id ASC";
         Connection conn = DBConnection.getConnection();
@@ -77,8 +78,17 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    void add_class(ActionEvent event) {
-
+    void add_class(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("view/Class.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+        btnClass.getStyleClass().add("bg-active");
+        TabPane classPane=loader.load();
+        ClassController classController=loader.getController();
+        classController.addClass();
+        main_display.getChildren().clear();
+        main_display.getChildren().setAll(classPane);
     }
     
     @FXML

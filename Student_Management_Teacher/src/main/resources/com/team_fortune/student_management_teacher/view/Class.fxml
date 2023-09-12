@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.mfxcore.controls.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane fx:id="mainClass" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClassController">
+  <tabs>
+    <Tab fx:id="addClass" text="Add Class">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="202.0" text="ADD CLASS" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="202.0" layoutY="176.0" text="Name Class">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <MFXTextField layoutX="330.0" layoutY="174.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="133.0" promptText="Name Class" />
+                  <MFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="235.0" prefHeight="41.0" prefWidth="58.0" text="ADD" textAlignment="CENTER" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </MFXButton>
+               </children>
+            </AnchorPane>
+         </content></Tab>
+    <Tab fx:id="updateClass" text="Update Class">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+         </content></Tab>
+      <Tab fx:id="listClass" text="List Class">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab fx:id="deleteClass" text="Delete Class">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>

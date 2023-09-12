@@ -10,9 +10,8 @@ import java.sql.Statement;
 
 public class SearchTeacher{
     public static int searchTeacherAll(String username, String password) throws SQLException{
-        String username_teacher=new String(MD5.Md5(username));
-        String password_teacher=new String(MD5.Md5(password));
-        System.out.println(username_teacher+" "+password_teacher);
+        String username_teacher=MD5.Md5(username);
+        String password_teacher=MD5.Md5(password);
         String searchQuery="select*from teacher where status=1";
         Connection conn=DBConnection.getConnection();
         Statement st=conn.createStatement();
