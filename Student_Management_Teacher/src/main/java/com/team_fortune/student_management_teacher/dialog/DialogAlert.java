@@ -1,9 +1,6 @@
 package com.team_fortune.student_management_teacher.dialog;
 
-import java.util.Optional;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-
 
 public class DialogAlert {
     public static void DialogSuccess(String message){

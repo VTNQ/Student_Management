@@ -1,6 +1,5 @@
 package com.team_fortune.student_management_teacher;
 
-import com.team_fortune.student_management_teacher.dialog.DialogAlert;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -19,7 +18,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
@@ -29,6 +30,20 @@ public class HomeController implements Initializable {
     private Pane main_display;
     @FXML
     private BarChart<String, Number> Char_Class;
+    @FXML
+    private MenuButton btnAssignment;
+
+    @FXML
+    private MenuButton btnClass;
+
+    @FXML
+    private MenuButton btnExam;
+
+    @FXML
+    private Button btnHome;
+
+    @FXML
+    private MenuButton btnSubject;
 
     public void chartClass() throws SQLException {
         String searchClassStudent = "select c.name, count(cs.id_student) as total from class_subject cs join class c on c.id=cs.id_class join teacher t on cs.id_teacher=t.id where t.username=? group by c.name order by c.id ASC";
@@ -38,7 +53,6 @@ public class HomeController implements Initializable {
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             PreparedStatement ps = conn.prepareStatement(searchClassStudent);
             ps.setString(1, LoginController.username);
-           
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String nameClass = rs.getString("name");
@@ -56,11 +70,39 @@ public class HomeController implements Initializable {
     @FXML
     void btn_home(MouseEvent event) throws IOException {
         App.setRoot("main");
+        btnClass.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+        btnHome.getStyleClass().add("bg-active");
+    }
+
+    @FXML
+    void add_class(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void update_class(ActionEvent event) {
+
+    }
+
+    @FXML
+    void delete_class(ActionEvent event) {
+
+    }
+
+    @FXML
+    void list_class(ActionEvent event) {
+
     }
 
     @FXML
     void showInformationUser(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("view/Information.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
         try {
             AnchorPane InformationPage = loader.load();
             main_display.getChildren().clear();
@@ -72,17 +114,17 @@ public class HomeController implements Initializable {
 
     @FXML
     void LogOut(ActionEvent event) throws IOException {
-        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("CONFIRMATION");
         alert.setHeaderText(null);
         alert.setContentText("Are You Logout?");
-        alert.showAndWait().ifPresent(response->{
-            if(response==ButtonType.CANCEL){
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.CANCEL) {
                 alert.close();
             }
-            if(response==ButtonType.OK){
+            if (response == ButtonType.OK) {
                 try {
-                    LoginController.username = ""; 
+                    LoginController.username = "";
                     App.setRoot("login");
                 } catch (IOException ex) {
                     Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,6 +136,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            btnHome.getStyleClass().add("bg-active");
             chartClass();
         } catch (SQLException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
