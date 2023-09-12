@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane fx:id="mainClass" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.MainClassController">
+    <tabs>
+        <Tab fx:id="addClass" text="Add Class">
+            <content>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                    <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="201.0" text="ADD CLASS" textFill="RED">
+                            <font>
+                                <Font name="System Bold" size="36.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="167.0" layoutY="176.0" text="Name Class">
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </Label>
+                        <MFXTextField layoutX="329.0" layoutY="172.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+                        <MFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="235.0" prefHeight="41.0" prefWidth="58.0" styleClass="mfx-button" stylesheets="@../css/application.css" text="ADD" textAlignment="CENTER" textFill="RED">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </MFXButton>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab fx:id="updateClass" text="Update Class">
+            <content>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="Classtbl" layoutX="223.0" layoutY="100.0" prefHeight="103.0" prefWidth="226.0">
+                    <columns>
+                        <TableColumn fx:id="colClass" prefWidth="225.60001220703126" text="Class" />
+                    </columns>
+                  </TableView>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="172.0" text="UPDATE CLASS" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="158.0" layoutY="54.0" text="Search">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <MFXTextField fx:id="txtsearch" layoutX="256.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+               </children></AnchorPane>
+            </content>
+        </Tab>
+        <Tab fx:id="listClass" text="List Class">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+        </Tab>
+        <Tab fx:id="deleteClass" text="Delete Class">
+            <content>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>
