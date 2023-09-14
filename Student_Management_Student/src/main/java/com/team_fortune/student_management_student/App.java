@@ -20,10 +20,10 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("primary.fxml"));
-        scene = new Scene(root);
+        scene = new Scene(root,800,500);
          stage.initStyle(StageStyle.UNIFIED);
         stage.setScene(scene);
-       
+       stage.setResizable(false);
         stage.show();
     }
 

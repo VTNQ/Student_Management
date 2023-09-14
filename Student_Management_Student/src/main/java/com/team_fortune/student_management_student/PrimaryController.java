@@ -15,6 +15,13 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,11 +43,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
-
 import javafx.stage.Stage;
 
-public class PrimaryController implements Initializable{
-public static Connection conn;
+public class PrimaryController implements Initializable {
+
+    public static Connection conn;
+    public static int loggedInStudentId;
+    @FXML
+    private TextField username;
+public static String loggedInUsername;
 private PreparedStatement statement;
 private static ResultSet result;
 public static Connection connectDB(){
@@ -95,34 +106,34 @@ private static boolean isaccoutphone(String phone){
     }
     return exists;
 }
-public void login(ActionEvent event){
-    conn=connectDB();
+    public void login(ActionEvent event) {
+    conn = connectDB();
+   
     try {
-       String sql="Select * From student Where username=? and password=? and status=?";
-       statement=conn.prepareStatement(sql);
-       statement.setString(1, username.getText());
-       statement.setString(2, password.getText());
-       statement.setString(3, "1");
-       result=statement.executeQuery();
-       if(result.next()){
-           String loggedInUsername = result.getString("username"); // Lấy tên người dùng từ cơ sở dữ liệu
-    displaysuccessfully("Login successfully");
-    login_btn.getScene().getWindow().hide();
+        String sql = "SELECT * FROM student WHERE username=? And password=?  AND status=?";
+        statement = conn.prepareStatement(sql);
+ String usernamtxt=encryptPasswordMD5(username.getText());
+      String passtxt=encryptPasswordMD5(password.getText());
 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin.fxml"));
-    Parent root = loader.load();
-    SecondaryController secondaryController = loader.getController();
-    secondaryController.setLoggedInUsername(loggedInUsername);
-    secondaryController.showLoggedInUsername();
+        statement.setString(1, usernamtxt);
+        statement.setString(2,passtxt);
+        
+        statement.setString(3, "1");
 
-    Scene scene = new Scene(root);
-    Stage stage = new Stage();
-    stage.setScene(scene);
-    stage.setTitle("Simple Dashboard");
-    stage.show();
-       }else{
-           displayErrorMessage("Wrong Username/Password");
-       }
+        result = statement.executeQuery();
+        if (result.next()) {
+           loggedInStudentId = result.getInt("id");
+             loggedInUsername = result.getString("username");
+          
+            displaysuccessfully("Login successfully");
+             App.setRoot("admin");
+              
+          
+            
+          
+        } else {
+            displayErrorMessage("Wrong Username");
+        }
     } catch (Exception e) {
         e.printStackTrace();
     }
@@ -192,8 +203,7 @@ private void displaysuccessfully(String message){
     @FXML
     private TextField su_username;
 
-    @FXML
-    private TextField username;
+    
         @FXML
     private AnchorPane signup_form;
             @FXML
@@ -206,14 +216,17 @@ private void displaysuccessfully(String message){
         return textField.getText().trim().isEmpty();
     }
                 @FXML
-    void updatepassword(ActionEvent event) {
+    void updatepassword(ActionEvent event) throws NoSuchAlgorithmException {
         String username=pass_username.getText();
-        String new_password=new_pass.getText();
+        String hashedPassword;
+  
+        
+          hashedPassword=encryptPasswordMD5(new_pass.getText());
         String renew_pass=this.renew_pass.getText();
-        if(!username.isEmpty() && !new_password.isEmpty() && !renew_pass.isEmpty()){
+        if(!username.isEmpty() && !hashedPassword.isEmpty() && !renew_pass.isEmpty()){
             if(isaccoutExists(username)){
-                if(new_password.equals(new_password)){
-                    Updatepasswordindb(username, new_password);
+                if(hashedPassword.equals(hashedPassword)){
+                    Updatepasswordindb(username, hashedPassword);
                     displaysuccessfully("update successfully");
                     pass_username.setText("");
                     new_pass.setText("");
@@ -260,10 +273,19 @@ private void Updatepasswordindb(String username,String newpassword){
                                       
                                       modelprimary newitem=new modelprimary();
                                       newitem.setName(su_name.getText());
-                                      newitem.setUsername(su_username.getText());
+                                     
                                       newitem.setPhone(suphone);
                                       newitem.setSince(mysqlDate);
-                                      newitem.setPassword(su_password.getText());
+                                      String hashedPassword;
+                                      try {
+                                          hashedPassword=encryptPasswordMD5(su_password.getText());
+                                          String hashedusername=encryptPasswordMD5(su_username.getText());
+                                          newitem.setPassword(hashedPassword);
+                                          newitem.setUsername(hashedusername);
+                                      } catch (Exception e) {
+                                          e.printStackTrace();
+                                      }
+                                     
                                       newitem.setStatus(Boolean.TRUE);
                                       daoprimary jp=new daoprimary();
                                       boolean status=jp.register(newitem);
@@ -293,7 +315,22 @@ private void Updatepasswordindb(String username,String newpassword){
               
              
             }
+public static String encryptPasswordMD5(String input){
 
+    try {
+        String base64Encode=Base64.getEncoder().encodeToString(input.getBytes());
+        MessageDigest md=MessageDigest.getInstance("MD5");
+        byte[] md5byte=md.digest(base64Encode.getBytes());
+        StringBuilder sb=new StringBuilder();
+        for(byte b:md5byte){
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    }
+} 
     public void textfield(MouseEvent event){
         if(event.getSource()==username){
             username.setStyle("-fx-background-color:#fff;"+"-fx-border-width:3px;");
@@ -312,21 +349,34 @@ public void changeForm(ActionEvent event){
     if(event.getSource()==login_acc){
         signup_form.setVisible(false);
         login_form.setVisible(true);
+        su_name.setText("");
+        su_phone.setText("");
+        su_username.setText("");
+        su_password.setText("");
+        su_date.setValue(null);
         reset.setVisible(false);
     }else if(event.getSource()==create_acc){
         signup_form.setVisible(true);
+        username.setText("");
+        password.setText("");
         login_form.setVisible(false);
         reset.setVisible(false);
     }else if(event.getSource()==forgot_form){
+          username.setText("");
+        password.setText("");
         signup_form.setVisible(false);
         login_form.setVisible(false);
         reset.setVisible(true);
     }else if(event.getSource()==back){
+        pass_username.setText("");
+        new_pass.setText("");
+        renew_pass.setText("");
         signup_form.setVisible(false);
          reset.setVisible(false);
             login_form.setVisible(true);
     }
 }
+
 public void su_textfield(MouseEvent event){
     if(event.getSource()==su_username){
         su_username.setStyle("-fx-background-color:#fff"+"-fx-border-width:3px");
@@ -410,6 +460,7 @@ public void su_textfield(MouseEvent event){
         m1.setEffect(shadow);
         marco1.setEffect(shadow);
         });
+
         } catch (Exception e) {
         }
        

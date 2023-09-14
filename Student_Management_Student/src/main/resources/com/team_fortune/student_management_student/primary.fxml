@@ -14,7 +14,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_student.PrimaryController">
    <children>
-      <AnchorPane fx:id="login_form" layoutX="292.0" layoutY="116.0" prefHeight="500.0" prefWidth="800.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="login_form" layoutX="292.0" layoutY="116.0" prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="500.0" prefWidth="393.0" styleClass="login-card" stylesheets="@css/primary.css">
                <children>
@@ -134,7 +134,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="reset" layoutX="-5.0" prefHeight="500.0" prefWidth="800.0">
+      <AnchorPane fx:id="reset" layoutX="-5.0" prefHeight="500.0" prefWidth="800.0" visible="false">
          <children>
             <AnchorPane layoutX="416.0" prefHeight="500.0" prefWidth="394.0" styleClass="login-card" stylesheets="@css/primary.css">
                <children>
