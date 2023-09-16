@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javax.xml.transform.Result;
 
@@ -29,6 +30,8 @@ public class SubmitassignmentController implements Initializable {
      */
         @FXML
     private TextField linkfield;
+            @FXML
+    private Label subject;
         private Connection conn;
                  private int assignmentId;
             @FXML
@@ -76,7 +79,7 @@ public class SubmitassignmentController implements Initializable {
     }    
     
      @FXML
-    public void init() {
-       
+    public void init(String subject) {
+       this.subject.setText(subject);
     }
 }

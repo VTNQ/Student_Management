@@ -4,7 +4,9 @@
  */
 package com.team_fortune.student_management_student;
 
+import java.awt.Desktop;
 import java.lang.module.FindException;
+import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +16,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -61,9 +66,40 @@ public class DetailController implements Initializable {
         colsubject.setCellValueFactory(new PropertyValueFactory<>("subject"));
         colclass.setCellValueFactory(new PropertyValueFactory<>("Myclass"));
         colexercise.setCellValueFactory(new PropertyValueFactory<>("exercises"));
+        colexercise.setCellFactory(column->{
+         TableCell<modelsolution,String>cell=new TableCell<modelsolution,String>(){
+           @Override
+           protected void updateItem(String item,boolean empty){
+               super.updateItem(item, empty);
+               if(empty || item==null){
+                   setText(null);
+                   setGraphic(null);
+               }else{
+                   Hyperlink hyperlink=new Hyperlink(item);
+                   hyperlink.setOnAction(event->{
+                    try{
+                                   Desktop.getDesktop().browse(new URI(item));
+                              }catch(Exception ex){
+                                  displayErrorMessage("URL is not found");
+                              
+                              }
+                   });
+                   setGraphic(hyperlink);
+               }
+           }
+         };
+         return cell;
+        });
         colstatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colreason.setCellValueFactory(new PropertyValueFactory<>("reason"));
     }
+      private void displayErrorMessage(String message) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Error");
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
+}
     void displayrecord(){
         conn=PrimaryController.connectDB();
         model.clear();
@@ -71,7 +107,7 @@ public class DetailController implements Initializable {
                 +"JOIN class_subject t4 ON t1.id=t4.id_subject "
                 +"JOIN class t2 ON t2.id=t4.id_class "
                 +"JOIN  assignments t5 ON t4.id_assignments=t5.id_ass "
-                +"JOIN  assignments_student t3 ON t3.id_assignments=t5.id_ass "
+                +"JOIN  solution t3 ON t3.id_assignments=t5.id_ass "
                 +"JOIN  student t6 ON t6.id=t4.id_student "
                 +"Where t6.id =? And t3.id_assignments = ?";
         try {
@@ -87,6 +123,7 @@ public class DetailController implements Initializable {
                  String name_class=rs.getString("name_class");
                  String link=rs.getString("link");
                  Boolean status=rs.getBoolean("status");
+                 
                  String resultstatus=(status)?"tot":"lam lai";
                  String reason=rs.getString("reason");
                  model.add(new modelsolution(index, name_subject, name_class, link, resultstatus, reason));

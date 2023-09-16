@@ -542,7 +542,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Schedule" layoutX="2.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <AnchorPane fx:id="Schedule" layoutX="2.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
          <children>
             <BorderPane prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <top>
@@ -688,14 +688,13 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TableView fx:id="tbl11" layoutX="14.0" layoutY="150.0" prefHeight="189.0" prefWidth="580.0">
+                                    <TableView fx:id="tbl11" layoutX="14.0" layoutY="150.0" prefHeight="190.0" prefWidth="524.0">
                                        <columns>
                                           <TableColumn fx:id="colid11" prefWidth="76.80000114440918" text="STT" />
                                           <TableColumn fx:id="colteacher11" prefWidth="65.60004425048828" text="Subject" />
                                           <TableColumn fx:id="colclass1" maxWidth="202.39999389648438" prefWidth="51.199951171875" text="Class" />
                                           <TableColumn fx:id="Time" maxWidth="202.39999389648438" prefWidth="89.5999755859375" text="Start time" />
                                           <TableColumn fx:id="Endtime" maxWidth="202.39999389648438" prefWidth="88.79995727539062" text="End time" />
-                                          <TableColumn fx:id="colEventButton" maxWidth="202.39999389648438" prefWidth="64.7999267578125" text="button" />
                                           <TableColumn fx:id="colclock" maxWidth="202.39999389648438" minWidth="0.0" prefWidth="59.20001220703125" text="Clock" />
                                           <TableColumn fx:id="colCountdown" maxWidth="202.39999389648438" minWidth="0.0" prefWidth="87.99996948242188" text="Link Examp" />
                                        </columns>
@@ -904,7 +903,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Exercise1" layoutX="7.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="Exercise1" layoutX="7.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <BorderPane prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <top>

@@ -25,9 +25,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import javafx.scene.control.TableCell;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
@@ -63,15 +68,15 @@ import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
-
 import javafx.util.Duration;
+
 
 public class SecondaryController implements Initializable{
     private Connection connection;
     @FXML
     private TableColumn<modelExample,Boolean>Columnassignment;
     @FXML
-    
+   
     private AnchorPane Home;
     @FXML
     private Button btnexercise;
@@ -411,9 +416,8 @@ String link_examp;
     private TableColumn<modelWord,String>colWorl;
     @FXML
     private TableColumn<modelWord,String>colWorldclass;
-   @FXML
-private TableColumn<modelcalender,Boolean> colEventButton;
-    
+  
+    private String coutdown;
  
     private void displayErrorMessage(String message) {
     Alert alert = new Alert(AlertType.ERROR);
@@ -482,12 +486,12 @@ private final ObservableList<modelWord>World=FXCollections.observableArrayList()
                +"Join assignments t4 On t4.id_ass=t2.id_assignments "
                +"Join class t5 ON t5.id=t2.id_class "
                +"Join student t6 ON t6.id=t2.id_student "
-               +"Where t6.id = ? And t4.status =?";
+               +"Where t6.id = ? ";
        connection=PrimaryController.connectDB();
        try {
            PreparedStatement stmt=connection.prepareStatement(query);
            stmt.setInt(1, PrimaryController.loggedInStudentId);
-           stmt.setBoolean(2, true);
+         
            ResultSet rs=stmt.executeQuery();
            int index=1;
            while(rs.next()){
@@ -555,14 +559,17 @@ private final ObservableList<modelWord>World=FXCollections.observableArrayList()
             String className = rs.getString("name_class");
              link_examp=rs.getString("link_exam");
             LocalDateTime startTime = rs.getTimestamp("start").toLocalDateTime();
+            String startcout=startcountdown(startTime);
+            System.out.println(startcout); 
             LocalDateTime endtime=rs.getTimestamp("end").toLocalDateTime();
             DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm",new Locale("vi","VN"));
             String formatdate=startTime.format(formatter);
+           
             DateTimeFormatter endformat=DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm",new Locale("vi","VN"));
             String endfor=endtime.format(endformat);
          linkDisplay ="chua co tai lieu";
 
-            data.add(new modelcalender(index,subject , className, formatdate,linkDisplay,endfor));
+            data.add(new modelcalender(index,subject , className, startcout,linkDisplay,endfor));
 
       
 
@@ -576,6 +583,29 @@ private final ObservableList<modelWord>World=FXCollections.observableArrayList()
         e.printStackTrace();
     }
 }
+ public String startcountdown(LocalDateTime startTime1){
+ LocalDateTime now=LocalDateTime.now();
+ 
+ long tottalSeconddifference=java.time.Duration.between(now, startTime1).getSeconds();
+ if(tottalSeconddifference<=15*60){
+     Timeline tl=new Timeline();
+     tl.setCycleCount(Timeline.INDEFINITE);
+     KeyFrame keyframe=new KeyFrame(Duration.seconds(1), event->{
+     long seconddiiff=java.time.Duration.between(LocalDateTime.now(), startTime1).getSeconds();
+     long minutes=seconddiiff/60;
+     long second=seconddiiff%60;
+     if(seconddiiff<=0){
+         tl.stop();
+     }
+     String resultcoutdown=String.format("%02d:%02d", minutes,second);
+     coutdown=resultcoutdown;
+     });
+     tl.getKeyFrames().add(keyframe);
+     tl.play();
+ }
+ return coutdown;
+
+ }
    private String formatTime(long minute,long seconds){
         return String.format("%02d:%02d", minute,seconds);
     }
@@ -646,27 +676,28 @@ private String caculaterating(Timestamp startTime){
           private void WorldStudent(){
               connection=PrimaryController.connectDB();
               World.clear();
-              String query="Select t1.name_subject,t2.name,t5.link,t6.name_class From subject t1 "
-                      +"JOIN class_subject t3 ON t1.id=t3.id_subject "
-                      +"JOIN teacher t2 ON t2.id=t3.id_teacher "
-                      +"JOIN class t6 ON t6.id=t3.id_class "
-                      +"JOIN student t7 ON t3.id_student=t7.id "
-                      +"Join assignments t8 ON t3.id_assignments=t8.id_ass "
-                      +"JOIN solution t5 ON t8.id_ass=t5.id_assignments "
-                      +"Where t7.id= ?";
+              String query="Select t1.name_subject,t3.name,t1.lession_link,t6.name_class From subject t1 "
+               +"Join class_subject t2 ON t1.id=t2.id_subject "
+               +"JOIN teacher t3 ON t2.id_teacher=t3.id "
+               
+               +"JOIN class t6 ON t2.id_class=t6.id "
+               +"JOIN student t7 ON t2.id_student=t7.id "
+               +"Where t7.id=? ";
               int index=1;
               try {
                   PreparedStatement stmt=connection.prepareStatement(query);
                   stmt.setInt(1, PrimaryController.loggedInStudentId);
+              
                   ResultSet rs=stmt.executeQuery();
                   while(rs.next()){
                       String name_subject=rs.getString("name_subject");
                       String name_teacher=rs.getString("name");
-                      String link=rs.getString("link");
+                      String link=rs.getString("lession_link");
                       String name_class=rs.getString("name_class");
                       World.add(new modelWord(index, name_subject, name_teacher, link, name_class));
                       index++;
                   }
+                  updateWord(World);
               } catch (Exception e) {
                   e.printStackTrace();
               }
@@ -715,7 +746,7 @@ private final HBox buttonsContainer = new HBox();
             AnchorPane newPopup;
                 newPopup = fxmlLoader.load();
                  SubmitassignmentController forgot_password=fxmlLoader.getController();
-            forgot_password.init();
+            forgot_password.init(subject);
             Stage popupStage=new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(newPopup,600,400));
@@ -775,94 +806,44 @@ private final HBox buttonsContainer = new HBox();
               colworldsubject.setCellValueFactory(new PropertyValueFactory<>("name_subject"));
               colworldteacher.setCellValueFactory(new PropertyValueFactory<>("name_teacher"));
               colWorl.setCellValueFactory(new PropertyValueFactory<>("World"));
+              colWorl.setCellFactory(column ->{
+              TableCell<modelWord,String> cell=new TableCell<modelWord,String>(){
+                  @Override
+                  protected void updateItem(String item,boolean empty){
+                      super.updateItem(item, empty);
+                      if(empty ||item==null ){
+                          setText(null);
+                          setGraphic(null);
+                      }else{
+                          Hyperlink hyperlink=new Hyperlink(item);
+                          hyperlink.setOnAction(event->{
+                              try{
+                                   Desktop.getDesktop().browse(new URI(item));
+                              }catch(Exception ex){
+                                  displayErrorMessage("URL is not found");
+                              
+                              }
+                             
+                          
+                          });
+                          setGraphic(hyperlink);
+                      }
+                  }
+              };
+                  return cell;
+              });
               colWorldclass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
           }
         public void updatestart(ObservableList<modelcalender> data) {
      tbl11.setItems(data);
+     
      colid11.setCellValueFactory(new PropertyValueFactory<>("index"));
      colteacher11.setCellValueFactory(new PropertyValueFactory<>("name_Subject"));
 
      colclass1.setCellValueFactory(new PropertyValueFactory<>("name_class"));
-     Time.setCellValueFactory(new PropertyValueFactory<>("StartTime"));
+     Time.setCellValueFactory(new PropertyValueFactory<>("StartTime")); 
  colCountdown.setCellValueFactory(new PropertyValueFactory<>("link"));
    Endtime.setCellValueFactory(new PropertyValueFactory<>("Endtime"));
-    colEventButton.setCellValueFactory(new PropertyValueFactory<>("buttonVisible"));
-   colEventButton.setCellFactory(column -> new TableCell<modelcalender, Boolean>() {
-    private final Button eventButton = new Button("Join exam");
- private Hyperlink hyperlink;
-  
-    {
-       eventButton.setOnAction(event -> {
-    modelcalender item = getTableView().getItems().get(getIndex());
-
-
-    if (item.getLink().equals("chua co tai lieu")) {
-        
-        item.setLink(link_examp);
-
-       
-        Hyperlink hyperlink = new Hyperlink(link_examp);
-        hyperlink.setOnAction(e -> {
-            
-            try {
-                java.awt.Desktop.getDesktop().browse(new URI(link_examp));
-            } catch (IOException ex) {
-                Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (URISyntaxException ex) {
-                Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-
-        // Cập nhật cột colCountdown
-        colCountdown.setCellFactory(column -> new TableCell<modelcalender, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setGraphic(null);
-                    setText(null);
-                } else {
-                    setGraphic(hyperlink);
-                    setText(null);
-                }
-            }
-        });
-
-    } else {
-        // Reset cột colCountdown để hiển thị text
-        colCountdown.setCellFactory(column -> new TableCell<modelcalender, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setGraphic(null);
-                    setText(null);
-                } else {
-                    setGraphic(null);
-                    setText(item);
-                }
-            }
-        });
-    }
-
-    tbl11.refresh(); // Cập nhật TableView
-});
-    }
-
-    // Còn phần code khác...
-
-    @Override
-    protected void updateItem(Boolean item, boolean empty) {
-        super.updateItem(item, empty);
-        eventButton.getStyleClass().add("button-design");
-        if (empty || item == null ) {
-            setGraphic(null);
-        } else {
-            setGraphic(eventButton);
-         
-        }
-    }
-});
 } 
 
        
@@ -939,7 +920,7 @@ private final HBox buttonsContainer = new HBox();
                         try {
                             java.awt.Desktop.getDesktop().browse(new URI(item));
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            displayErrorMessage("URl is not Found");
                         }
                     });
                     setGraphic(hyperlink);
