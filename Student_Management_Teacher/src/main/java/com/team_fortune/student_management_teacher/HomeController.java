@@ -26,7 +26,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 public class HomeController implements Initializable {
-
+    
+    public static String username;
+    
     @FXML
     private Pane main_display;
     @FXML
@@ -53,7 +55,7 @@ public class HomeController implements Initializable {
             Char_Class.setTitle("Student Of Class");
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             PreparedStatement ps = conn.prepareStatement(searchClassStudent);
-            ps.setString(1, LoginController.username);
+            ps.setString(1,username);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String nameClass = rs.getString("name");
@@ -74,6 +76,7 @@ public class HomeController implements Initializable {
         btnClass.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().remove("bg-active");
         btnHome.getStyleClass().add("bg-active");
     }
 
@@ -83,6 +86,7 @@ public class HomeController implements Initializable {
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().remove("bg-active");
         btnClass.getStyleClass().add("bg-active");
         try {
             TabPane classPane = loader.load();
@@ -100,6 +104,7 @@ public class HomeController implements Initializable {
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().remove("bg-active");
         btnClass.getStyleClass().add("bg-active");
         try {
             TabPane classPane = loader.load();
@@ -113,10 +118,11 @@ public class HomeController implements Initializable {
 
     @FXML
     void delete_class(ActionEvent event) {
-FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainClass.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainClass.fxml"));
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().remove("bg-active");
         btnClass.getStyleClass().add("bg-active");
         try {
             TabPane classPane = loader.load();
@@ -130,16 +136,89 @@ FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainClass.fxml"))
 
     @FXML
     void list_class(ActionEvent event) {
-FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainClass.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainClass.fxml"));
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().remove("bg-active");
         btnClass.getStyleClass().add("bg-active");
         try {
             TabPane classPane = loader.load();
             classPane.getSelectionModel().select(2);
             main_display.getChildren().clear();
             main_display.getChildren().setAll(classPane);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    void add_subject(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainSubject.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().remove("bg-active");
+        btnClass.getStyleClass().add("bg-active");
+        try {
+            TabPane subjectPane = loader.load();
+            subjectPane.getSelectionModel().select(0);
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(subjectPane);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    void update_subject(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainSubject.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().remove("bg-active");
+        btnClass.getStyleClass().add("bg-active");
+        try {
+            TabPane subjectPane = loader.load();
+            subjectPane.getSelectionModel().select(1);
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(subjectPane);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    void list_subject(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainSubject.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().remove("bg-active");
+        btnClass.getStyleClass().add("bg-active");
+        try {
+            TabPane subjectPane = loader.load();
+            subjectPane.getSelectionModel().select(2);
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(subjectPane);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    void delete_subject(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainSubject.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().remove("bg-active");
+        btnClass.getStyleClass().add("bg-active");
+        try {
+            TabPane subjectPane = loader.load();
+            subjectPane.getSelectionModel().select(3);
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(subjectPane);
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -173,7 +252,7 @@ FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainClass.fxml"))
             }
             if (response == ButtonType.OK) {
                 try {
-                    LoginController.username = "";
+                    username = "";
                     App.setRoot("login");
                 } catch (IOException ex) {
                     Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);

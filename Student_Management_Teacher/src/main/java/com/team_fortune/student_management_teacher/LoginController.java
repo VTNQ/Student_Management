@@ -26,7 +26,6 @@ public class LoginController {
     private MFXTextField username_field;
     @FXML
     private MFXButton btn_Login;
-    public static String username;
     @FXML
     void openPopupForgetgPassword(ActionEvent event) {
         try {
@@ -44,7 +43,7 @@ public class LoginController {
     }
 
     public void CheckLogin(MouseEvent event) throws IOException {
-        username = username_field.getText();
+        String username = username_field.getText();
         String password = password_field.getText();
         if (username.isEmpty() && password.isEmpty()) {
             username_field.getStyleClass().add("text_field_error");
@@ -73,6 +72,7 @@ public class LoginController {
                         case 1:
                             DialogAlert.DialogSuccess("Login Successfully");
                             App.setRoot("main");
+                            HomeController.username=username_field.getText();
                             break;
                         case 2:
                             DialogAlert.DialogError("Username or Password Incorrect!");

@@ -26,8 +26,8 @@
                                 <Font size="13.0" />
                             </font>
                         </Label>
-                        <MFXTextField layoutX="329.0" layoutY="172.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
-                        <MFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="235.0" prefHeight="41.0" prefWidth="58.0" styleClass="mfx-button" stylesheets="@../css/application.css" text="ADD" textAlignment="CENTER" textFill="RED">
+                        <MFXTextField fx:id="name_class" layoutX="329.0" layoutY="172.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+                        <MFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="235.0" onAction="#Addclass" prefHeight="41.0" prefWidth="58.0" styleClass="mfx-button" stylesheets="@../css/application.css" text="ADD" textAlignment="CENTER" textFill="RED">
                             <font>
                                 <Font name="System Bold" size="13.0" />
                             </font>
@@ -40,7 +40,7 @@
             <content>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="Classtbl" layoutX="223.0" layoutY="100.0" prefHeight="103.0" prefWidth="226.0">
+                  <TableView fx:id="Classtbl" layoutX="187.0" layoutY="102.0" prefHeight="103.0" prefWidth="226.0">
                     <columns>
                         <TableColumn fx:id="colClass" prefWidth="225.60001220703126" text="Class" />
                     </columns>
@@ -50,12 +50,12 @@
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <Label layoutX="158.0" layoutY="54.0" text="Search">
+                  <Label layoutX="187.0" layoutY="53.0" text="Search">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="txtsearch" layoutX="256.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+                  <MFXTextField fx:id="txtsearch" layoutX="279.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
                </children></AnchorPane>
             </content>
         </Tab>

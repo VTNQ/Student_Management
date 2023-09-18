@@ -8,5 +8,6 @@ module com.team_fortune.student_management_teacher {
     requires VirtualizedFX;
     
     opens com.team_fortune.student_management_teacher to javafx.fxml;
+     opens com.team_fortune.student_management_teacher.model to javafx.base;
     exports com.team_fortune.student_management_teacher;
 }
