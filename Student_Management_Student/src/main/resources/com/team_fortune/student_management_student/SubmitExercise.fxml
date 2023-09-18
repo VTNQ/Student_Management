@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.team_fortune.student_management_student.SubmitExerciseController">
+   <children>
+      <AnchorPane prefHeight="67.0" prefWidth="600.0" styleClass="card1" stylesheets="@css/primary.css">
+         <children>
+            <ImageView fitHeight="75.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@asset/submit.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="97.0" layoutY="21.0" prefHeight="36.0" prefWidth="178.0" text="Submit Assignment" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label alignment="CENTER" layoutX="14.0" layoutY="96.0" prefHeight="36.0" prefWidth="178.0" text="Name">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="150.0" layoutY="96.0" prefHeight="36.0" prefWidth="178.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="14.0" layoutY="148.0" prefHeight="36.0" prefWidth="178.0" text="Subject">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="158.0" layoutY="148.0" prefHeight="36.0" prefWidth="178.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="20.0" layoutY="182.0" prefHeight="36.0" prefWidth="178.0" text="Class">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="158.0" layoutY="182.0" prefHeight="36.0" prefWidth="178.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="27.0" layoutY="237.0" prefHeight="36.0" prefWidth="178.0" text="Assignment">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField layoutX="193.0" layoutY="243.0" />
+      <Button layoutX="193.0" layoutY="296.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="84.0" styleClass="button-design" stylesheets="@css/primary.css" text="Button" />
+   </children>
+</AnchorPane>

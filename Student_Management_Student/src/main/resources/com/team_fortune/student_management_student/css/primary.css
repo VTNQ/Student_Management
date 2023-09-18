@@ -47,6 +47,7 @@
 }
 .nav-form{
     -fx-background-color:linear-gradient(to bottom right,#2d658c,#2ca772);
+    -fx-text-align:center;
 }
 .nav-btn{
     -fx-background-color:transparent;
@@ -54,7 +55,7 @@
     -fx-text-fill:#fff;
     -fx-font-size:15px;
     -fx-font-family:"Arial";
-    -fx-alignment:CENTER_LEFT;
+    -fx-alignment:CENTER;
 }
 .logout{
     -fx-background-color:#2c84bf;
@@ -97,4 +98,28 @@
 }
 .card{
     -fx-background-color:linear-gradient(to right,#344250,#3c6382);
+}
+.card1{
+    -fx-background-color:#89CFEF;
+    -fx-border-width:5px
+}
+.input{
+    -fx-font-family: "Quicksand";
+   -fx-font-size: 18;
+   -fx-padding: 1,1,1,1;
+   -fx-border-color: grey;
+   -fx-border-width: 2;
+   -fx-border-radius: 1;
+   -fx-border: gone;
+   -fx-background-color: transparent;
+   -fx-text-fill: grey;
+}
+.field-error{
+    -fx-text-fill:red;
+}
+.field-success{
+    -fx-text-fill:green;
+}
+.dash{
+    -fx-background-color:  linear-gradient(to left, #a8c0ff, #3f2b96);
 }

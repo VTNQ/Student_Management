@@ -9,20 +9,43 @@ import java.sql.Date;
 public class modelprimary {
     private int id;
     private String Name;
+    private String name_teacher;
+    private String name_subject;
+    private String name_class;
+
+    public String getName_teacher() {
+        return name_teacher;
+    }
+
+    public void setName_teacher(String name_teacher) {
+        this.name_teacher = name_teacher;
+    }
+
+    public String getName_subject() {
+        return name_subject;
+    }
+
+    public void setName_subject(String name_subject) {
+        this.name_subject = name_subject;
+    }
+
+    public String getName_class() {
+        return name_class;
+    }
+
+    public void setName_class(String name_class) {
+        this.name_class = name_class;
+    }
     private String username;
     private int phone;
     private Date since;
     private String password;
     private Boolean status;
 
-    public modelprimary(int id, String Name, String username, int phone, Date since, String password, Boolean status) {
+    public modelprimary(int id,String name_teacher) {
         this.id = id;
-        this.Name = Name;
-        this.username = username;
-        this.phone = phone;
-        this.since = since;
-        this.password = password;
-        this.status = status;
+       
+      
     }
     public modelprimary(){
         

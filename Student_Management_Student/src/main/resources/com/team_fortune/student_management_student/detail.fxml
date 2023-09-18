@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="462.0" prefWidth="668.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.team_fortune.student_management_student.DetailController">
+   <children>
+      <AnchorPane prefHeight="90.0" prefWidth="668.0" styleClass="card1" stylesheets="@css/primary.css">
+         <children>
+            <ImageView fitHeight="90.0" fitWidth="107.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@asset/assignment.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="90.0" layoutY="16.0" prefHeight="56.0" prefWidth="180.0" text="My Exercises" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tblexercise" layoutX="66.0" layoutY="118.0" prefHeight="238.0" prefWidth="552.0">
+        <columns>
+          <TableColumn fx:id="colstt" prefWidth="75.0" text="Stt" />
+          <TableColumn fx:id="colsubject" prefWidth="75.0" text="Subject" />
+            <TableColumn fx:id="colclass" prefWidth="75.0" text="Class" />
+            <TableColumn fx:id="colexercise" prefWidth="128.0" text="Exercises" />
+            <TableColumn fx:id="colstatus" prefWidth="84.79998779296875" text="Status" />
+            <TableColumn fx:id="colreason" prefWidth="112.80001831054688" text="reason" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
