@@ -47,9 +47,12 @@
             <content>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="TableSubject" layoutX="187.0" layoutY="98.0" prefHeight="103.0" prefWidth="226.0">
+                  <TableView fx:id="TableSubject" layoutX="94.0" layoutY="102.0" prefHeight="168.0" prefWidth="418.0">
                     <columns>
-                        <TableColumn fx:id="colSubject" prefWidth="225.60001220703126" text="Subject" />
+                        <TableColumn fx:id="colNameSubject" prefWidth="111.20001220703125" text="Name Subject" />
+                        <TableColumn fx:id="colSessionSubject" prefWidth="70.4000244140625" text="Session" />
+                        <TableColumn fx:id="colLessionSubject" prefWidth="157.5999755859375" text="Lession link" />
+                        <TableColumn fx:id="colView" prefWidth="75.0" text="Update" />
                     </columns>
                   </TableView>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" text="UPDATE SUBJECT" textFill="RED">

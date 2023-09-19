@@ -158,8 +158,8 @@ public class HomeController implements Initializable {
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
-        btnSubject.getStyleClass().remove("bg-active");
-        btnClass.getStyleClass().add("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
         try {
             TabPane subjectPane = loader.load();
             subjectPane.getSelectionModel().select(0);
@@ -176,8 +176,8 @@ public class HomeController implements Initializable {
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
-        btnSubject.getStyleClass().remove("bg-active");
-        btnClass.getStyleClass().add("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
         try {
             TabPane subjectPane = loader.load();
             subjectPane.getSelectionModel().select(1);
@@ -194,8 +194,8 @@ public class HomeController implements Initializable {
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
-        btnSubject.getStyleClass().remove("bg-active");
-        btnClass.getStyleClass().add("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
         try {
             TabPane subjectPane = loader.load();
             subjectPane.getSelectionModel().select(2);
@@ -212,8 +212,8 @@ public class HomeController implements Initializable {
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
-        btnSubject.getStyleClass().remove("bg-active");
-        btnClass.getStyleClass().add("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
         try {
             TabPane subjectPane = loader.load();
             subjectPane.getSelectionModel().select(3);
