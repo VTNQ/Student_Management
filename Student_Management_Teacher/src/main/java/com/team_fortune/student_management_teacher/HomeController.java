@@ -49,7 +49,7 @@ public class HomeController implements Initializable {
     private MenuButton btnSubject;
 
     public void chartClass() throws SQLException {
-        String searchClassStudent = "select c.name, count(cs.id_student) as total from class_subject cs join class c on c.id=cs.id_class join teacher t on cs.id_teacher=t.id where t.username=? group by c.name order by c.id ASC";
+        String searchClassStudent = "select c.name_class, count(cs.id_student) as total from class_subject cs join class c on c.id=cs.id_class join teacher t on cs.id_teacher=t.id where t.username=? group by c.name_class order by c.id ASC";
         Connection conn = DBConnection.getConnection();
         try {
             Char_Class.setTitle("Student Of Class");

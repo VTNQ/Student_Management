@@ -38,8 +38,13 @@ public class MainSubjectController implements Initializable {
     private Tab addSubject;
 
     @FXML
-    private TableColumn<?, ?> colSubject;
-
+    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, String> colSubject;
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, String>colSession;
+    @FXML
+    private TableColumn<?,?>colSessionLink;
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, String>colClass;
     @FXML
     private Tab deleteSubject;
 
@@ -77,7 +82,7 @@ public class MainSubjectController implements Initializable {
             while (rs.next()) {
                 com.team_fortune.student_management_teacher.model.Class clss = new com.team_fortune.student_management_teacher.model.Class();
                 clss.setId(rs.getInt("id"));
-                clss.setName(rs.getString("name"));
+                clss.setName(rs.getString("name_class"));
                 classes.add(clss);
             }
             return classes;
@@ -86,7 +91,7 @@ public class MainSubjectController implements Initializable {
         }
         return null;
     }
-
+  
     private List<com.team_fortune.student_management_teacher.model.Subject> getDataFromDataBaseSubject() {
         try {
             String SearchQuery = "select*from subject";
@@ -97,7 +102,7 @@ public class MainSubjectController implements Initializable {
             while (rs.next()) {
                 com.team_fortune.student_management_teacher.model.Subject sub = new com.team_fortune.student_management_teacher.model.Subject();
                 sub.setId(rs.getInt("id"));
-                sub.setName(rs.getString("name"));
+                sub.setName(rs.getString("name_subject"));
                 sub.setSession(rs.getString("session"));
                 sub.setLession_link(rs.getString("lession_link"));
                 subjects.add(sub);
@@ -126,7 +131,7 @@ public class MainSubjectController implements Initializable {
             Statement s = conn.createStatement();
             ResultSet resultSet = s.executeQuery("select*from subject");
             while (resultSet.next()) {
-                if (resultSet.getString("name").equals(name_subject.getText())) {
+                if (resultSet.getString("name_subject").equals(name_subject.getText())) {
                     isFound = true;
                 }
             }
@@ -135,11 +140,11 @@ public class MainSubjectController implements Initializable {
                     int id_teacher = 0;
                     int id_class = 0;
                     int id_subject = 0;
-                    String insertQuery1 = "insert into subject(name,session,lession_link) values(?,?,?)";
+                    String insertQuery1 = "insert into subject(name_subject,session,lession_link) values(?,?,?)";
                     String insertQuery2 = "insert into class_subject(id_class,id_subject,id_teacher) values(?,?,?)";
                     String searchQuery1 = "select id from teacher where username=?";
-                    String searchQuery2 = "select id from class where name=?";
-                    String searchQuery3 = "select id from subject where name=?";
+                    String searchQuery2 = "select id from class where name_class=?";
+                    String searchQuery3 = "select id from subject where name_subject=?";
                     try {
 
                         PreparedStatement ps1 = conn.prepareStatement(insertQuery1);

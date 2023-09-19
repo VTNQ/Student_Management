@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="mainClass" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.MainClassController">
+<TabPane fx:id="mainClass" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.MainClassController">
     <tabs>
         <Tab fx:id="addClass" text="Add Class">
             <content>
@@ -61,12 +61,38 @@
         </Tab>
         <Tab fx:id="listClass" text="List Class">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="163.0" layoutY="14.0" prefHeight="54.0" prefWidth="249.0" text="List CLASS" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="ListTable" layoutX="147.0" layoutY="77.0" prefHeight="200.0" prefWidth="253.0">
+                    <columns>
+                      <TableColumn fx:id="ViewCLass" prefWidth="114.39996337890625" text="Class" />
+                      <TableColumn fx:id="View" prefWidth="138.39998779296874" text="View" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
             </content>
         </Tab>
         <Tab fx:id="deleteClass" text="Delete Class">
             <content>
-                <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="137.0" layoutY="27.0" prefHeight="54.0" prefWidth="290.0" text="Remove CLASS" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="tblremove" layoutX="119.0" layoutY="96.0" prefHeight="200.0" prefWidth="339.0">
+                    <columns>
+                      <TableColumn fx:id="DeleteName" prefWidth="336.800048828125" text="Name" />
+                        <TableColumn fx:id="DelteName" prefWidth="336.800048828125" text="Name" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
             </content>
         </Tab>
     </tabs>

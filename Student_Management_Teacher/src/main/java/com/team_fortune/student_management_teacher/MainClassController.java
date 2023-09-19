@@ -17,13 +17,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import com.team_fortune.student_management_teacher.model.Class;
+import com.team_fortune.student_management_teacher.util.MD5;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -37,10 +41,13 @@ public class MainClassController implements Initializable {
 
     @FXML
     private TabPane mainClass;
+    
     @FXML
     private TextField name_class;
+    public static String class_name;
     @FXML
     private Label oldname;
+   
     @FXML
     private MFXTextField newName;
     @FXML
@@ -50,12 +57,21 @@ public class MainClassController implements Initializable {
     private Tab deleteClass;
     @FXML
     private MFXTextField txtsearch = new MFXTextField();
-
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Class,String>ViewCLass=new TableColumn<>();
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Class,Boolean>View=new TableColumn<>();
+    @FXML
+    private TableView<com.team_fortune.student_management_teacher.model.Class>ListTable=new TableView<>();
     @FXML
     private Tab listClass;
 
     @FXML
     private Tab updateClass;
+    @FXML
+    private TableView<?> tblremove;
+    @FXML
+    private TableColumn<?,?>DeleteName;
 
     @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Class> Classtbl = new TableView<>();
@@ -64,7 +80,8 @@ public class MainClassController implements Initializable {
     private TableColumn<Class, String> colClass;
     private Connection conn;
     ObservableList<com.team_fortune.student_management_teacher.model.Class> model = FXCollections.observableArrayList();
-
+    ObservableList<com.team_fortune.student_management_teacher.model.Class> models = FXCollections.observableArrayList();
+   
     void searchdata(String searchitem) {
         try {
             conn = DBConnection.getConnection();
@@ -88,9 +105,69 @@ public class MainClassController implements Initializable {
         }
 
     }
-
-    public void updatetabledata(ObservableList<Class> data) {
-
+    
+    void displayrecord(){
+        try {
+           Connection  conn=DBConnection.getConnection();
+           
+           String query="Select a.name_class,a.id From class a "+"Join class_subject b ON a.id=b.id_class "+
+                   "Join teacher C ON C.id=b.id_teacher "+"Where C.username=?";
+           PreparedStatement stmt=conn.prepareStatement(query);
+           stmt.setString(1, MD5.Md5(HomeController.username));
+        
+           ResultSet rs=stmt.executeQuery();
+           while(rs.next()){
+               String name_class=rs.getString("name_class");
+               int id=rs.getInt("id");
+                com.team_fortune.student_management_teacher.model.Class ob = new com.team_fortune.student_management_teacher.model.Class(id, name_class);
+               models.add(ob);
+           }
+           ListTable.setItems(models);
+           ViewCLass.setCellValueFactory(new PropertyValueFactory<>("name"));
+           View.setCellValueFactory(new PropertyValueFactory<>("isstatic"));
+           View.setCellFactory(column->new TableCell<Class,Boolean>(){
+        private final MFXButton button=new MFXButton("view");
+        {
+        button.setOnAction(event->{
+            Class classcontroller=getTableView().getItems().get(getIndex());
+              class_name=classcontroller.getName();
+              System.out.println(class_name);
+              
+        try{
+        FXMLLoader fxmloader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/popclass.fxml"));
+        AnchorPane newpopup=fxmloader.load();
+        popUpclass main=fxmloader.getController();
+        main.up();
+      
+           
+          
+           
+            
+        Stage popupStage=new Stage();
+         popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setScene(new Scene(newpopup));
+    
+            popupStage.showAndWait();
+          
+        }catch(Exception ex){
+        ex.printStackTrace();
+        }
+        });
+        }
+         @Override
+        protected void updateItem(Boolean item, boolean empty){
+            super.updateItem(item,empty);
+            if(item==null||empty){
+                setGraphic(null);
+            }else{
+                setGraphic(button);
+                   button.getStyleClass().add("button-design");
+            }
+        }
+        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void showPopup(Class selectedclass) {
@@ -114,6 +191,8 @@ public class MainClassController implements Initializable {
     public void init(String className) {
         oldname.setText(className);
     }
+
+    
 
     @FXML
     void Addclass(ActionEvent event) {
@@ -148,10 +227,12 @@ public class MainClassController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+       
         txtsearch.textProperty().addListener((observable, oldvalue, newValue) -> {
             searchdata(newValue);
         });
+        
+        displayrecord();
         Classtbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
