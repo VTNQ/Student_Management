@@ -23,7 +23,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -181,10 +180,10 @@ public class MainSubjectController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Subject.addAll(new getDatabaseToModel().getDataFromDatabaseSubject());
         Class.addAll(new getDatabaseToModel().getDataFromDatabaseClass());
         Class_Subject.addAll(new getDatabaseToModel().getDataFromDatabaseClassSubject());
         name_class.getItems().addAll(getClassNames());
+        Subject.addAll(new getDatabaseToModel().getDataFromDatabaseSubject());
         showSuject();
         key_search.textProperty().addListener((observable, oldvalue, newValue) -> {
             if (key_search.getText().isEmpty() || key_search.getText().isBlank()) {
