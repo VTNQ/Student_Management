@@ -2,7 +2,7 @@ package com.team_fortune.student_management_teacher;
 
 import com.team_fortune.student_management_teacher.dialog.DialogAlert;
 import com.team_fortune.student_management_teacher.util.DBConnection;
-import com.team_fortune.student_management_teacher.util.MD5;
+import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.net.URL;
@@ -25,6 +25,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class MainSubjectController implements Initializable {
 
@@ -38,13 +39,17 @@ public class MainSubjectController implements Initializable {
     private Tab addSubject;
 
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, String> colSubject;
+    private TableColumn<?, ?> colLessionSubject;
+
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, String>colSession;
+    private TableColumn<?, ?> colNameSubject;
+
     @FXML
-    private TableColumn<?,?>colSessionLink;
+    private TableColumn<?, ?> colSessionSubject;
+
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, String>colClass;
+    private TableColumn<?, ?> colView;
+
     @FXML
     private Tab deleteSubject;
 
@@ -72,50 +77,11 @@ public class MainSubjectController implements Initializable {
     private ObservableList<com.team_fortune.student_management_teacher.model.Class> Class = FXCollections.observableArrayList();
     private ObservableList<com.team_fortune.student_management_teacher.model.Subject> Subject = FXCollections.observableArrayList();
 
-    private List<com.team_fortune.student_management_teacher.model.Class> getDataFromDataBaseClass() {
-        try {
-            String SearchQuery = "select*from class";
-            Connection conn = DBConnection.getConnection();
-            Statement s = conn.createStatement();
-            ResultSet rs = s.executeQuery(SearchQuery);
-            List<com.team_fortune.student_management_teacher.model.Class> classes = new ArrayList<>();
-            while (rs.next()) {
-                com.team_fortune.student_management_teacher.model.Class clss = new com.team_fortune.student_management_teacher.model.Class();
-                clss.setId(rs.getInt("id"));
-                clss.setName(rs.getString("name_class"));
-                classes.add(clss);
-            }
-            return classes;
-        } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-  
-    private List<com.team_fortune.student_management_teacher.model.Subject> getDataFromDataBaseSubject() {
-        try {
-            String SearchQuery = "select*from subject";
-            Connection conn = DBConnection.getConnection();
-            Statement s = conn.createStatement();
-            ResultSet rs = s.executeQuery(SearchQuery);
-            List<com.team_fortune.student_management_teacher.model.Subject> subjects = new ArrayList<>();
-            while (rs.next()) {
-                com.team_fortune.student_management_teacher.model.Subject sub = new com.team_fortune.student_management_teacher.model.Subject();
-                sub.setId(rs.getInt("id"));
-                sub.setName(rs.getString("name_subject"));
-                sub.setSession(rs.getString("session"));
-                sub.setLession_link(rs.getString("lession_link"));
-                subjects.add(sub);
-            }
-            return subjects;
-        } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+    private ObservableList<com.team_fortune.student_management_teacher.model.Class_Subject> Class_Subject = FXCollections.observableArrayList();
+    private ObservableList<com.team_fortune.student_management_teacher.model.Student> students = FXCollections.observableArrayList();
 
     private List<String> getClassNames() {
-        List<com.team_fortune.student_management_teacher.model.Class> classes = getDataFromDataBaseClass();
+        List<com.team_fortune.student_management_teacher.model.Class> classes = new getDatabaseToModel().getDataFromDatabaseClass();
         List<String> classNames = new ArrayList<>();
         for (com.team_fortune.student_management_teacher.model.Class cls : classes) {
             classNames.add(cls.getName());
@@ -137,47 +103,49 @@ public class MainSubjectController implements Initializable {
             }
             if (isFound == false) {
                 if (!name_subject.getText().isEmpty() && !session.getText().isEmpty() && name_class.getSelectedItem() != null) {
-                    int id_teacher = 0;
-                    int id_class = 0;
-                    int id_subject = 0;
-                    String insertQuery1 = "insert into subject(name_subject,session,lession_link) values(?,?,?)";
-                    String insertQuery2 = "insert into class_subject(id_class,id_subject,id_teacher) values(?,?,?)";
-                    String searchQuery1 = "select id from teacher where username=?";
-                    String searchQuery2 = "select id from class where name_class=?";
-                    String searchQuery3 = "select id from subject where name_subject=?";
-                    try {
 
+                    String insertQuery1 = "insert into subject(name,session,lession_link) values(?,?,?)";
+                    String insertQuery2 = "insert into class_subject (id_class,id_subject,id_teacher) values(?,?,?)";
+                    String updateQuery = "update class_subject set id_subject=? where id_class=?";
+                    String searchQuery1 = "select id from class where name=?";
+                    String searchQuery2 = "select id from subject where name=?";
+                    try {
                         PreparedStatement ps1 = conn.prepareStatement(insertQuery1);
                         ps1.setString(1, name_subject.getText());
                         ps1.setInt(2, Integer.parseInt(session.getText()));
                         ps1.setString(3, lession_link.getText());
                         ps1.executeUpdate();
                         PreparedStatement ps2 = conn.prepareStatement(searchQuery1);
-                        ps2.setString(1, MD5.Md5(HomeController.username));
+                        ps2.setString(1, name_class.getSelectedItem());
                         ResultSet rs1 = ps2.executeQuery();
                         while (rs1.next()) {
-                            id_teacher = rs1.getInt("id");
+                            getDatabaseToModel.id_class = rs1.getInt("id");
                         }
                         PreparedStatement ps3 = conn.prepareStatement(searchQuery2);
-                        ps3.setString(1, name_class.getSelectedItem());
+                        ps3.setString(1, name_subject.getText());
                         ResultSet rs2 = ps3.executeQuery();
                         while (rs2.next()) {
-                            id_class = rs2.getInt("id");
+                            getDatabaseToModel.id_subject = rs2.getInt("id");
                         }
-                        PreparedStatement ps4 = conn.prepareStatement(searchQuery3);
-                        ps4.setString(1, name_subject.getText());
-                        ResultSet rs3 = ps4.executeQuery();
-                        while (rs3.next()) {
-                            id_subject = rs3.getInt("id");
+                        PreparedStatement ps = conn.prepareStatement("select id_subject from class_subject where id_class=? and id_teacher=?");
+                        ps.setInt(1, getDatabaseToModel.id_class);
+                        ps.setInt(2, getDatabaseToModel.id_teacher);
+                        ResultSet rs = ps.executeQuery();
+                        while (rs.next()) {
+                            isFound = true;
                         }
-                        System.out.println(id_class);
-                        System.out.println(id_subject);
-                        System.out.println(id_teacher);
-                        PreparedStatement preparedStatement = conn.prepareStatement(insertQuery2);
-                        preparedStatement.setInt(1, id_class);
-                        preparedStatement.setInt(2, id_subject);
-                        preparedStatement.setInt(3, id_teacher);
-                        preparedStatement.executeUpdate();
+                        if (isFound == false) {
+                            PreparedStatement preparedStatement = conn.prepareStatement(updateQuery);
+                            preparedStatement.setInt(1, getDatabaseToModel.id_subject);
+                            preparedStatement.setInt(2, getDatabaseToModel.id_class);
+                            preparedStatement.executeUpdate();
+                        }else{
+                            PreparedStatement preparedStatement=conn.prepareStatement(insertQuery2);
+                            preparedStatement.setInt(1, getDatabaseToModel.id_class);
+                            preparedStatement.setInt(2, getDatabaseToModel.id_subject);
+                            preparedStatement.setInt(3, getDatabaseToModel.id_teacher);
+                            preparedStatement.executeUpdate();
+                        }
                         DialogAlert.DialogSuccess("Add Subject Success");
                     } catch (SQLException ex) {
                         Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
@@ -195,7 +163,7 @@ public class MainSubjectController implements Initializable {
                     name_class.getStyleClass().add("text_field_error");
                     name_class.applyCss();
                 }
-            }else{
+            } else {
                 DialogAlert.DialogError("Subject Exist");
             }
         } catch (SQLException ex) {
@@ -204,11 +172,31 @@ public class MainSubjectController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        Class.addAll(getDataFromDataBaseClass());
-        Subject.addAll(getDataFromDataBaseSubject());
-        name_class.getItems().addAll(getClassNames());
+    void showSuject() {
+        TableSubject.setItems(Subject);
+        colNameSubject.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colSessionSubject.setCellValueFactory(new PropertyValueFactory<>("session"));
+        colLessionSubject.setCellValueFactory(new PropertyValueFactory<>("lession_link"));
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        Class.addAll(new getDatabaseToModel().getDataFromDatabaseClass());
+        Class_Subject.addAll(new getDatabaseToModel().getDataFromDatabaseClassSubject());
+        name_class.getItems().addAll(getClassNames());
+        Subject.addAll(new getDatabaseToModel().getDataFromDatabaseSubject());
+        showSuject();
+        key_search.textProperty().addListener((observable, oldvalue, newValue) -> {
+            if (key_search.getText().isEmpty() || key_search.getText().isBlank()) {
+                Subject.clear();
+                Subject.addAll(new getDatabaseToModel().getDataFromDatabaseSubject());
+                TableSubject.refresh();
+            } else {
+
+                Subject.clear();
+                Subject.addAll(new getDatabaseToModel().getDataFromDatabaseSubjectWithKey(newValue));
+                TableSubject.refresh();
+            }
+        });
+    }
 }
