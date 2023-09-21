@@ -4,6 +4,7 @@ import com.team_fortune.student_management_teacher.dialog.DialogAlert;
 import com.team_fortune.student_management_teacher.model.Subject;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.io.IOException;
@@ -13,10 +14,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -41,31 +42,31 @@ import javafx.stage.Stage;
 public class MainSubjectController implements Initializable {
 
     @FXML
-    private MFXComboBox<String> name_class;
+    private MFXComboBox<String> name_class=new MFXComboBox<>();
 
     @FXML
-    private TableView<com.team_fortune.student_management_teacher.model.Subject> TableSubject;
+    private TableView<com.team_fortune.student_management_teacher.model.Subject> TableSubject=new TableView<>();
 
     @FXML
     private Tab addSubject;
 
     @FXML
-    private TableColumn<?, ?> colLessionSubject;
+    private TableColumn<?, ?> colLessionSubject=new TableColumn<>();
 
     @FXML
-    private TableColumn<?, ?> colNameSubject;
+    private TableColumn<?, ?> colNameSubject=new TableColumn<>();
 
     @FXML
-    private TableColumn<?, ?> colSessionSubject;
+    private TableColumn<?, ?> colSessionSubject=new TableColumn<>();
 
     @FXML
     private Tab deleteSubject;
 
     @FXML
-    private MFXTextField key_search;
+    private MFXTextField key_search =new MFXTextField();
 
     @FXML
-    private MFXTextField lession_link;
+    private MFXTextField lession_link =new MFXTextField();
 
     @FXML
     private Tab listSubject;
@@ -74,40 +75,47 @@ public class MainSubjectController implements Initializable {
     private TabPane mainSubject;
 
     @FXML
-    private MFXTextField name_subject;
+    private MFXTextField name_subject =new MFXTextField();
 
     @FXML
-    private MFXTextField session;
+    private MFXTextField session =new MFXTextField();
 
     @FXML
     private Tab updateSubject;
+
+    @FXML
+    private MFXTextField lessionSubject =new MFXTextField();
+
+    @FXML
+    private MFXTextField nameSubject =new MFXTextField();
+
+    @FXML
+    private MFXTextField sessionSubject =new MFXTextField();
+
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, Boolean> colClass =new TableColumn<>();
+
+    @FXML
+    private TableColumn<?, ?> colLession_Subject=new TableColumn<>();
+
+    @FXML
+    private TableColumn<?, ?> colName_Subject=new TableColumn<>();
+
+    @FXML
+    private TableColumn<?, ?> colSession_Subject=new TableColumn<>();
+
+    @FXML
+    private TableColumn<?, ?> colStudent=new TableColumn<>();
     
     @FXML
-    private MFXTextField lessionSubject;
+    private TableColumn<?, ?> col_class=new TableColumn<>();
 
     @FXML
-    private MFXTextField nameSubject;
+    private TableView<com.team_fortune.student_management_teacher.model.Class> list_class=new TableView<>();
+
 
     @FXML
-    private MFXTextField sessionSubject;
-    
-    @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, Boolean> colClass;
-
-    @FXML
-    private TableColumn<?, ?> colLession_Subject;
-
-    @FXML
-    private TableColumn<?, ?> colName_Subject;
-
-    @FXML
-    private TableColumn<?, ?> colSession_Subject;
-
-    @FXML
-    private TableColumn<?, ?> colStudent;
-
-    @FXML
-    private TableView<com.team_fortune.student_management_teacher.model.Subject> TableListSubject;
+    private TableView<com.team_fortune.student_management_teacher.model.Subject> TableListSubject=new TableView<>();
 
     private ObservableList<com.team_fortune.student_management_teacher.model.Class> Class = FXCollections.observableArrayList();
     private ObservableList<com.team_fortune.student_management_teacher.model.Subject> Subject = FXCollections.observableArrayList();
@@ -132,7 +140,7 @@ public class MainSubjectController implements Initializable {
             Statement s = conn.createStatement();
             ResultSet resultSet = s.executeQuery("select*from subject");
             while (resultSet.next()) {
-                if (resultSet.getString("name_subject").equals(name_subject.getText())) {
+                if (resultSet.getString("name").equals(name_subject.getText())) {
                     isFound = true;
                 }
             }
@@ -162,20 +170,23 @@ public class MainSubjectController implements Initializable {
                         while (rs2.next()) {
                             getDatabaseToModel.id_subject = rs2.getInt("id");
                         }
-                        PreparedStatement ps = conn.prepareStatement("select id_subject from class_subject where id_class=? and id_teacher=?");
+                        PreparedStatement ps = conn.prepareStatement("select id_subject from class_subject where id_class=? and id_teacher=? and id_subject=?");
                         ps.setInt(1, getDatabaseToModel.id_class);
                         ps.setInt(2, getDatabaseToModel.id_teacher);
+                        ps.setNull(3, Types.INTEGER);
                         ResultSet rs = ps.executeQuery();
                         while (rs.next()) {
-                            isFound = true;
+                            if(rs.getString("id_subject")!=null){
+                                isFound = true;
+                            }
                         }
                         if (isFound == false) {
                             PreparedStatement preparedStatement = conn.prepareStatement(updateQuery);
                             preparedStatement.setInt(1, getDatabaseToModel.id_subject);
                             preparedStatement.setInt(2, getDatabaseToModel.id_class);
                             preparedStatement.executeUpdate();
-                        }else{
-                            PreparedStatement preparedStatement=conn.prepareStatement(insertQuery2);
+                        } else {
+                            PreparedStatement preparedStatement = conn.prepareStatement(insertQuery2);
                             preparedStatement.setInt(1, getDatabaseToModel.id_class);
                             preparedStatement.setInt(2, getDatabaseToModel.id_subject);
                             preparedStatement.setInt(3, getDatabaseToModel.id_teacher);
@@ -213,34 +224,44 @@ public class MainSubjectController implements Initializable {
         colSessionSubject.setCellValueFactory(new PropertyValueFactory<>("session"));
         colLessionSubject.setCellValueFactory(new PropertyValueFactory<>("lession_link"));
     }
-    
-    void showListSubject(){
+
+    void showListSubject() {
         TableListSubject.setItems(Subject);
         colName_Subject.setCellValueFactory(new PropertyValueFactory<>("name"));
         colSession_Subject.setCellValueFactory(new PropertyValueFactory<>("session"));
         colLession_Subject.setCellValueFactory(new PropertyValueFactory<>("lession_link"));
-        colClass.setCellFactory(column->new TableCell<Subject,Boolean>(){
-            
+        colClass.setCellValueFactory(new PropertyValueFactory<>("isActive"));
+        colClass.setCellFactory(column-> new TableCell<Subject,Boolean>(){
+            private MFXButton button=new MFXButton("View");
+            {
+                button.setOnAction(event->{
+                    Subject selectSubject =getTableView().getItems().get(getIndex());
+                    try{
+                        
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                });
+            }
         });
-   
     }
-    
-    public void showUpdate(com.team_fortune.student_management_teacher.model.Subject selectSubject){
-        try{
-            FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/UpdateSubject.fxml"));
-            AnchorPane showUpdate=loader.load();
+
+    public void showUpdate(com.team_fortune.student_management_teacher.model.Subject selectSubject) {
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/UpdateSubject.fxml"));
+            AnchorPane showUpdate = loader.load();
             nameSubject.setText(selectSubject.getName());
             sessionSubject.setText(selectSubject.getSession());
             lessionSubject.setText(selectSubject.getLession_link());
-            Stage stage=new Stage();
+            Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(showUpdate, 400, 300));
             stage.show();
-        }catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Class.addAll(new getDatabaseToModel().getDataFromDatabaseClass());
@@ -248,6 +269,7 @@ public class MainSubjectController implements Initializable {
         name_class.getItems().addAll(getClassNames());
         Subject.addAll(new getDatabaseToModel().getDataFromDatabaseSubject());
         showSuject();
+        showListSubject();
         key_search.textProperty().addListener((observable, oldvalue, newValue) -> {
             if (key_search.getText().isEmpty() || key_search.getText().isBlank()) {
                 Subject.clear();
@@ -260,12 +282,12 @@ public class MainSubjectController implements Initializable {
                 TableSubject.refresh();
             }
         });
-        TableSubject.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        TableSubject.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event){
-                if(event.getClickCount()==1){
-                    com.team_fortune.student_management_teacher.model.Subject sub=TableSubject.getSelectionModel().getSelectedItem();
-                    if(!sub.equals(null)){
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 1) {
+                    com.team_fortune.student_management_teacher.model.Subject sub = TableSubject.getSelectionModel().getSelectedItem();
+                    if (!sub.equals(null)) {
                         showUpdate(sub);
                     }
                 }

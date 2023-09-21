@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.team_fortune.student_management_teacher.popUpclass">
+   <children>
+      <AnchorPane prefHeight="93.0" prefWidth="500.0">
+         <children>
+            <Label alignment="CENTER" layoutX="127.0" layoutY="17.0" prefHeight="72.0" prefWidth="245.0" text="Class Student">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tblSubkect" layoutX="91.0" layoutY="124.0" prefHeight="200.0" prefWidth="317.0">
+        <columns>
+          <TableColumn fx:id="ClassSubject" prefWidth="148.00000762939453" text="Class" />
+          <TableColumn fx:id="classStudent" prefWidth="167.9999938964844" text="Student" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.AssignmentController">
+  <tabs>
+    <Tab text="Add Assignment">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="132.0" layoutY="14.0" text="ADD ASSIGNMENT" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="70.0" layoutY="121.0" prefHeight="33.0" prefWidth="108.0" text="link_assignment">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <MFXTextField fx:id="Link_assignment" layoutX="178.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Assignment" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+                  <MFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="202.0" layoutY="315.0" onAction="#AddAssignment" prefHeight="42.0" prefWidth="141.0" styleClass="mfx-button" stylesheets="@../css/application.css" text="ADD" textAlignment="CENTER" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </MFXButton>
+                  <Label alignment="CENTER" layoutX="70.0" layoutY="161.0" prefHeight="33.0" prefWidth="108.0" text="Student">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="70.0" layoutY="205.0" prefHeight="33.0" prefWidth="108.0" text="Subject">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="70.0" layoutY="255.0" prefHeight="33.0" prefWidth="108.0" text="Class">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <MFXComboBox fx:id="name_student" layoutX="178.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
+                  <MFXComboBox fx:id="name_subject" layoutX="182.0" layoutY="212.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
+                  <MFXComboBox fx:id="name_class" layoutX="190.0" layoutY="258.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Untitled Tab 2">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="127.0" layoutY="14.0" text="Update ASSIGNMENT" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="134.0" layoutY="79.0" text="Search">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <MFXTextField fx:id="txtsearch" layoutX="197.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+                  <TableView layoutX="127.0" layoutY="137.0" prefHeight="200.0" prefWidth="304.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="Teacher" />
+                      <TableColumn prefWidth="75.0" text="Subject" />
+                        <TableColumn prefWidth="75.0" text="Class" />
+                        <TableColumn prefWidth="75.0" text="Assignment" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="List Assignment">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="127.0" layoutY="14.0" text="List ASSIGNMENT" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="ListAssignment" layoutX="71.0" layoutY="137.0" prefHeight="200.0" prefWidth="475.0">
+                     <columns>
+                        <TableColumn fx:id="name_Subject" prefWidth="75.0" text="Subject" />
+                        <TableColumn fx:id="Class_ass" prefWidth="75.0" text="Class" />
+                        <TableColumn fx:id="colAssignment" prefWidth="132.7999267578125" text="Assignment" />
+                        <TableColumn fx:id="colStatus" prefWidth="96.800048828125" text="Status" />
+                        <TableColumn fx:id="colStudent" prefWidth="96.800048828125" text="Student" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Untitled Tab 2">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="127.0" layoutY="14.0" text="Delete ASSIGNMENT" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <TableView layoutX="127.0" layoutY="137.0" prefHeight="200.0" prefWidth="304.0">
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="Teacher" />
+                        <TableColumn prefWidth="75.0" text="Subject" />
+                        <TableColumn prefWidth="75.0" text="Class" />
+                        <TableColumn prefWidth="75.0" text="Assignment" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>
