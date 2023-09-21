@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.MainSubjectController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.team_fortune.student_management_teacher.MainSubjectController">
+   <children>
+      <Label layoutX="214.0" text="Update Subject" textFill="#ff5656">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="162.0" layoutY="63.0" text="Name Subject">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="162.0" layoutY="115.0" text="Session">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="162.0" layoutY="167.0" text="Lession link">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <MFXTextField fx:id="nameSubject" layoutX="300.0" layoutY="59.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+      <MFXTextField fx:id="sessionSubject" layoutX="300.0" layoutY="111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+      <MFXTextField fx:id="lessionSubject" layoutX="300.0" layoutY="154.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+      <MFXButton layoutX="273.0" layoutY="256.0" styleClass="mfx-button" stylesheets="@../css/application.css" text="Update" textFill="#910000">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </MFXButton>
+   </children>
 </AnchorPane>

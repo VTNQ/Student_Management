@@ -23,7 +23,7 @@ public class Class {
     public Class(int id, String name) {
         this.id = id;
         this.name = name;
-        this.isstatic=true;
+        this.isstatic=false;
     }
 
     public String getName_student() {

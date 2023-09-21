@@ -131,7 +131,7 @@ public class MainClassController implements Initializable {
         button.setOnAction(event->{
             Class classcontroller=getTableView().getItems().get(getIndex());
               class_name=classcontroller.getName();
-              System.out.println(class_name);
+            
               
         try{
         FXMLLoader fxmloader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/popclass.fxml"));
@@ -172,16 +172,13 @@ public class MainClassController implements Initializable {
 
     public void showPopup(Class selectedclass) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Update.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/view/UpdateClass.fxml"));
             AnchorPane newpopup = fxmlLoader.load();
             MainClassController mainclass = fxmlLoader.getController();
             mainclass.init(selectedclass.getName());
             Stage popupStage = new Stage();
-            System.out.println(selectedclass.getName());
-
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(newpopup));
-
             popupStage.showAndWait();
         } catch (IOException ex) {
             ex.printStackTrace();
