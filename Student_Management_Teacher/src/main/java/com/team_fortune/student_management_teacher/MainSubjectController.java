@@ -97,7 +97,7 @@ public class MainSubjectController implements Initializable {
             Statement s = conn.createStatement();
             ResultSet resultSet = s.executeQuery("select*from subject");
             while (resultSet.next()) {
-                if (resultSet.getString("name_subject").equals(name_subject.getText())) {
+                if (resultSet.getString("name").equals(name_subject.getText())) {
                     isFound = true;
                 }
             }

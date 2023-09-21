@@ -13,7 +13,7 @@ public class Assignments {
     private String name_Subject;
     private String name_class;
     private String Assignment;
-    private String Status;
+    private boolean Status;
 
    
     public String getName_Subject() {
@@ -36,7 +36,7 @@ public class Assignments {
         return Assignment;
     }
 
-    public Assignments(String name_student, String name_Subject, String name_class, String Assignment, String Status) {
+    public Assignments(String name_student, String name_Subject, String name_class, String Assignment, boolean Status) {
         this.name_student= name_student;
         this.name_Subject = name_Subject;
         this.name_class = name_class;
@@ -58,11 +58,11 @@ public class Assignments {
         this.Assignment = Assignment;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return Status;
     }
 
-    public void setStatus( String Status) {
+    public void setStatus( boolean Status) {
         this.Status = Status;
     }
     

@@ -157,7 +157,7 @@ public class getDatabaseToModel {
             assignment.setName_Subject(result.getString("subject_name"));
             assignment.setName_class(result.getString("class_name"));
             assignment.setAssignment(result.getString("link"));
-            assignment.setStatus(result.getString("status"));
+            assignment.setStatus(result.getBoolean("status"));
             assignment.setName_student(result.getString("student_name"));
 
             AssignmentList.add(assignment);

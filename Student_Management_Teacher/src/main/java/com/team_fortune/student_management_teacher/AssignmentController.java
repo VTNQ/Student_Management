@@ -12,6 +12,7 @@ import com.team_fortune.student_management_teacher.util.MD5;
 import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,10 +28,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
@@ -52,14 +55,14 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
 @FXML
 private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colAssignment;
 @FXML
-private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colStatus;
+private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Boolean>colStatus;
 @FXML
 private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colStudent;
     @FXML
     private MFXComboBox<String> name_student=new MFXComboBox<>();
         @FXML
     private MFXComboBox<String> name_subject=new MFXComboBox<>();
-        
+        private Connection conn;
     @FXML
     private MFXComboBox<String> name_class=new MFXComboBox<>();
      ObservableList<com.team_fortune.student_management_teacher.model.Assignments> model=FXCollections.observableArrayList();
@@ -96,16 +99,42 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
                     protected void updateItem(String Item, boolean empty) {
                         super.updateItem(Item, empty);
                         if(!empty && Item!=null && !Item.isEmpty()){
-                            
+                            Hyperlink hyperlink=new Hyperlink(Item);
+                            hyperlink.setOnAction(event->{
+                                try {
+                                    java.awt.Desktop.getDesktop().browse(new URI(Item));
+                                } catch (Exception e) {
+                                    DialogAlert.DialogError("URL is not Found");
+                                }
+                            });
+                            setGraphic(hyperlink);
+                        }else{
+                            setGraphic(null);
                         }
                     }
 
                 };
                 });
                 colStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+                colStatus.setCellFactory(column->new CheckBoxTableCell<Assignments,Boolean>(){
+               @Override
+               public void updateItem(Boolean Item, boolean empty) {
+                   super.updateItem(Item, empty);
+                   if(Item!=null && !empty){
+                       CheckBox checkbox=new CheckBox();
+                       checkbox.setSelected(Item);
+                       setGraphic(checkbox);
+                       checkbox.setOnAction(event->{
+                       Assignments assignment=getTableView().getItems().get(getIndex());
+                       assignment.setStatus(checkbox.isSelected());
+                       });
+                   }else{
+                       setGraphic(null);
+                   }
+               }
+                
+                });
                 colStudent.setCellValueFactory(new PropertyValueFactory<>("name_student"));
-       }else{
-
        }
       
     }
@@ -122,117 +151,93 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
         }
         
     }
-    private int getSubject(String subject){
-        int id=-1;
-        try {
-            Connection conn=DBConnection.getConnection();
-            String query="Select id From subject Where name=?";
-            PreparedStatement statement=conn.prepareStatement(query);
-            statement.setString(1, subject);
-            ResultSet result=statement.executeQuery();
-            while(result.next()){
-                id=result.getInt("id");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            
-        }
-       return id;
-    }
-    private int getClass(String name_class){
-        int id=-1;
-        try {
-            Connection conn=DBConnection.getConnection();
-            String query="Select id From class Where name=?";
-            PreparedStatement stmt=conn.prepareStatement(query);
-            stmt.setString(1, name_class);
-            ResultSet result=stmt.executeQuery();
-            while(result.next()){
-                id=result.getInt("id");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return id;
-    }
-    private int getStudent(String name_student){
-        int id=-1;
-        try {
-            Connection conn=DBConnection.getConnection();
-            String query="Select id From student Where name=?";
-            PreparedStatement stmt=conn.prepareStatement(query);
-            stmt.setString(1, name_student  );
-            ResultSet result=stmt.executeQuery();
-            while(result.next()){
-                id=result.getInt("id");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return id;
-    }
-  private int latest_assignment(){
-      int id=-1;
-      String query="Select id From assignments ORDER BY id DESC LIMIT 1";
-      try {
-          Connection conn=DBConnection.getConnection();
-          PreparedStatement stmt=conn.prepareStatement(query);
-          ResultSet result=stmt.executeQuery();
-          if(result.next()){
-              id=result.getInt(1);
-          }
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
-      return id;
-  }
-  private int getTeacher(String username){
-      int id=-1;
-      String query="Select id From teacher Where username=?";
-        try {
-            Connection conn=DBConnection.getConnection();
-            PreparedStatement stmt=conn.prepareStatement(query);
-            stmt.setString(1, username);
-            ResultSet result=stmt.executeQuery();
-            while(result.next()){
-                id=result.getInt("id");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AssignmentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return id;
-  }
+  
         @FXML
     private MFXTextField Link_assignment;
        @FXML
     void AddAssignment(ActionEvent event) {
-        if(!Link_assignment.getText().isEmpty() && !name_student.getValue().isEmpty()&& !name_subject.getValue().isEmpty() && !name_class.getValue().isEmpty()){
-                 String query="Insert into assignments(link) values(?)";
-      String query1="Insert into class_subject(id_class,id_subject,id_teacher,id_student,id_assignments) values(?,?,?,?,?)";
+        int id_class=0;
+        int id_subject=0;
+        int id_teacher=0;
+        int id_Assignment=0;
+          String query="Select id From class Where name=?";
+          String querysubject="Select id From subject Where name=?";
+          String queryclass_subject="Select COUNT(*) AS count From class_subject Where id_class=? And id_subject=?";
+          String queryTeacher="Select id From teacher where username=?";
+          String queryUpdate="Update class_subject set id_assignments=? Where id_teacher=? AND id_subject=? AND id_class=?";
+          String insertquery="Insert into assignments(link,status) values(?,?)";
+          String latestQuery="Select id From assignments ORDER BY id DESC LIMIT 1";
+          String insertClass_subject="Insert into class_subject(id_class,id_subject,id_teacher,id_assignments) values(?,?,?,?)";
            try {
-               Connection conn=DBConnection.getConnection();
-               PreparedStatement stmt=conn.prepareStatement(query);
-               stmt.setString(1, Link_assignment.getText());
-               stmt.executeUpdate();
-               int id_Assignments=latest_assignment();
-               int id_class=getClass(name_class.getValue());
-               int id_subject=getSubject(name_subject.getValue());
-               int id_student=getStudent(name_student.getValue());
-               int id_teacher=getTeacher(MD5.Md5(HomeController.username));
-               PreparedStatement stmt2=conn.prepareStatement(query1);
-               stmt2.setInt(1, id_class);
-               stmt2.setInt(2, id_subject);
-               stmt2.setInt(3, id_teacher);
-               stmt2.setInt(4, id_student);
-               stmt2.setInt(5, id_Assignments);
-               stmt2.executeUpdate();
-               com.team_fortune.student_management_teacher.dialog.DialogAlert.DialogSuccess("Insert success");
+                conn=DBConnection.getConnection();
+                PreparedStatement stmt=conn.prepareStatement(query);
+                stmt.setString(1, name_class.getValue());
+                ResultSet result=stmt.executeQuery();
+                while(result.next()){
+                    id_class=result.getInt("id");
+                }
+                PreparedStatement stmt2=conn.prepareStatement(querysubject);
+                stmt2.setString(1, name_subject.getValue());
+                ResultSet rs=stmt2.executeQuery();
+                while(rs.next()){
+                    id_subject=rs.getInt("id");
+                }
+                PreparedStatement smt3=conn.prepareStatement(queryTeacher);
+                smt3.setString(1, MD5.Md5(HomeController.username));
+                ResultSet rs2=smt3.executeQuery();
+                while(rs2.next()){
+                    id_teacher=rs2.getInt("id");
+                }
+                
+                PreparedStatement checkStmt=conn.prepareStatement(queryclass_subject);
+                checkStmt.setInt(1, id_class);
+                checkStmt.setInt(2, id_subject);
+                ResultSet checkResult=checkStmt.executeQuery();
+                if(checkResult.next()){
+                    int count=checkResult.getInt("count");
+                    if(count==2){
+                        PreparedStatement insert=conn.prepareStatement(insertquery);
+                    insert.setString(1, Link_assignment.getText());
+                    insert.setBoolean(2, false);
+                    insert.executeUpdate();
+                    PreparedStatement latest=conn.prepareStatement(latestQuery);
+                    ResultSet latestResult=latest.executeQuery();
+                    while(latestResult.next()){
+                    id_Assignment=latestResult.getInt("id");
+                    }
+                    PreparedStatement updateInsert=conn.prepareStatement(queryUpdate);
+                    updateInsert.setInt(1, id_Assignment);
+                    updateInsert.setInt(2, id_teacher);
+                    updateInsert.setInt(3, id_subject);
+                    updateInsert.setInt(4, id_class);
+                    updateInsert.executeUpdate();
+                    DialogAlert.DialogSuccess("Add Assignment Successfully");
+                    
+                    
+                }else{
+                        PreparedStatement insert=conn.prepareStatement(insertquery);
+                    insert.setString(1, Link_assignment.getText());
+                    insert.setBoolean(2, false);
+                    insert.executeUpdate();
+                    PreparedStatement latest=conn.prepareStatement(latestQuery);
+                    ResultSet latestResult=latest.executeQuery();
+                    while(latestResult.next()){
+                    id_Assignment=latestResult.getInt("id");
+                    }
+                    PreparedStatement queryinsert=conn.prepareStatement(insertClass_subject);
+                    queryinsert.setInt(1, id_class);
+                    queryinsert.setInt(2, id_subject);
+                    queryinsert.setInt(3, id_teacher);
+                    queryinsert.setInt(4, id_Assignment);
+                    queryinsert.executeUpdate();
+                    }
+                    
+                }
            } catch (Exception e) {
                e.printStackTrace();
            }
-        }else{
-            DialogAlert.DialogError("Field is Empty");
-        }
+         
+        
        
 
     }

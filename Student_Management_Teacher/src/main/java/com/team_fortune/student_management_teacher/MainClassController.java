@@ -115,7 +115,7 @@ public class MainClassController implements Initializable {
     @FXML
     void Removebtn(ActionEvent event) {
         try {
-            Connection conn=DBConnection.getConnection();
+             conn=DBConnection.getConnection();
           String checkQuery="Select Count(*) From class_subject Where id_class IN(Select id From class Where name=?)";
           PreparedStatement stmt=conn.prepareStatement(checkQuery);
             stmt.setString(1, className);
@@ -176,7 +176,7 @@ public class MainClassController implements Initializable {
     }
     void displayrecord(){
         try {
-           Connection  conn=DBConnection.getConnection();
+           conn=DBConnection.getConnection();
            
            String query="Select id,name From class";
            PreparedStatement stmt=conn.prepareStatement(query);
@@ -274,13 +274,34 @@ private void startUpdating(){
     @FXML
     void Addclass(ActionEvent event) {
         try {
+            int id = 0;
+            int id_class=0;
             conn = DBConnection.getConnection();
+            String query1="Select id From teacher Where username=?";
+            String latest_Query="Select id From class ORDER BY id DESC LIMIT 1";
             String query = "Insert into class(name) values(?)";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, name_class.getText());
-            stmt.executeUpdate();
+            String query_class_subject="Insert into class_subject(id_class,id_teacher) values (?,?)";
+            PreparedStatement stmt = conn.prepareStatement(query1);
+            stmt.setString(1, MD5.Md5(HomeController.username));
+            ResultSet result=stmt.executeQuery();
+            while(result.next()){
+                id=result.getInt("id");
+            }
+            PreparedStatement insert=conn.prepareStatement(query);
+            insert.setString(1, name_class.getText());
+            insert.executeUpdate();
+            PreparedStatement Catch_id=conn.prepareStatement(latest_Query);
+            ResultSet result1=Catch_id.executeQuery();
+            while(result1.next()){
+                id_class=result1.getInt("id");
+            }
+            PreparedStatement stmt2=conn.prepareStatement(query_class_subject);
+            stmt2.setInt(1, id_class);
+            stmt2.setInt(2, id);
+            stmt2.executeUpdate();
+            DialogAlert.DialogSuccess("Add class successfully");
             name_class.setText("");
-            DialogAlert.DialogSuccess("Add class successfully   ");
+           
         } catch (SQLException ex) {
             Logger.getLogger(MainClassController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -22,35 +22,29 @@
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="70.0" layoutY="121.0" prefHeight="33.0" prefWidth="108.0" text="link_assignment">
+                  <Label alignment="CENTER" layoutX="144.0" layoutY="119.0" prefHeight="33.0" prefWidth="108.0" text="link_assignment">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="Link_assignment" layoutX="178.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Assignment" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
-                  <MFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="202.0" layoutY="315.0" onAction="#AddAssignment" prefHeight="42.0" prefWidth="141.0" styleClass="mfx-button" stylesheets="@../css/application.css" text="ADD" textAlignment="CENTER" textFill="RED">
+                  <MFXTextField fx:id="Link_assignment" layoutX="265.0" layoutY="123.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Assignment" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+                  <MFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="216.0" layoutY="248.0" onAction="#AddAssignment" prefHeight="42.0" prefWidth="141.0" styleClass="mfx-button" stylesheets="@../css/application.css" text="ADD" textAlignment="CENTER" textFill="RED">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </MFXButton>
-                  <Label alignment="CENTER" layoutX="70.0" layoutY="161.0" prefHeight="33.0" prefWidth="108.0" text="Student">
+                  <Label alignment="CENTER" layoutX="144.0" layoutY="153.0" prefHeight="33.0" prefWidth="108.0" text="Subject">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="70.0" layoutY="205.0" prefHeight="33.0" prefWidth="108.0" text="Subject">
+                  <Label alignment="CENTER" layoutX="144.0" layoutY="195.0" prefHeight="33.0" prefWidth="108.0" text="Class">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="70.0" layoutY="255.0" prefHeight="33.0" prefWidth="108.0" text="Class">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <MFXComboBox fx:id="name_student" layoutX="178.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
-                  <MFXComboBox fx:id="name_subject" layoutX="182.0" layoutY="212.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
-                  <MFXComboBox fx:id="name_class" layoutX="190.0" layoutY="258.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
+                  <MFXComboBox fx:id="name_subject" layoutX="265.0" layoutY="157.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
+                  <MFXComboBox fx:id="name_class" layoutX="265.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
                </children></AnchorPane>
       </content>
     </Tab>
