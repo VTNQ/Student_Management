@@ -1,6 +1,7 @@
 package com.team_fortune.student_management_teacher;
 
 import com.team_fortune.student_management_teacher.dialog.DialogAlert;
+import com.team_fortune.student_management_teacher.model.Student;
 import com.team_fortune.student_management_teacher.model.Subject;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
@@ -105,17 +106,22 @@ public class MainSubjectController implements Initializable {
     private TableColumn<?, ?> colSession_Subject=new TableColumn<>();
 
     @FXML
-    private TableColumn<?, ?> colStudent=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, Boolean> colStudent=new TableColumn<>();
     
     @FXML
     private TableColumn<?, ?> col_class=new TableColumn<>();
 
     @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Class> list_class=new TableView<>();
-
-
+    
     @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Subject> TableListSubject=new TableView<>();
+    
+    @FXML
+    private TableColumn<?, ?> col_student=new TableColumn<>();
+
+    @FXML
+    private TableView<com.team_fortune.student_management_teacher.model.Student> list_student=new TableView<>();
 
     private ObservableList<com.team_fortune.student_management_teacher.model.Class> Class = FXCollections.observableArrayList();
     private ObservableList<com.team_fortune.student_management_teacher.model.Subject> Subject = FXCollections.observableArrayList();
@@ -237,12 +243,60 @@ public class MainSubjectController implements Initializable {
                 button.setOnAction(event->{
                     Subject selectSubject =getTableView().getItems().get(getIndex());
                     try{
-                        
+                        FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/ListClass.fxml"));
+                        AnchorPane listClass=loader.load();
+                        Class.addAll(new getDatabaseToModel().getDataFromDatabaseClassWithSubject(selectSubject.getName()));
+                        list_class.setItems(Class);
+                        col_class.setCellValueFactory(new PropertyValueFactory<>("name"));
+                        Stage list= new Stage();
+                        list.initModality(Modality.APPLICATION_MODAL);
+                        list.setScene(new Scene(listClass));
+                        list.showAndWait();
                     }catch(Exception e){
                         e.printStackTrace();
                     }
                 });
             }
+            @Override
+                protected void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(button);
+                    }
+                }
+        });
+        colStudent.setCellValueFactory(new PropertyValueFactory<>("isActive"));
+        colStudent.setCellFactory(column->new TableCell<Subject,Boolean>(){
+            private final MFXButton button=new MFXButton("View");
+            {
+                button.setOnAction(event->{
+                    Subject selectSubject =getTableView().getItems().get(getIndex());
+                    try{
+                        FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/ListStudent.fxml"));
+                        AnchorPane listStudent=loader.load();
+                        Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudentWithSubject(selectSubject.getName()));
+                        list_student.setItems(Student);
+                        col_student.setCellValueFactory(new PropertyValueFactory<>("name"));
+                        Stage list= new Stage();
+                        list.initModality(Modality.APPLICATION_MODAL);
+                        list.setScene(new Scene(listStudent));
+                        list.showAndWait();
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                });
+            }
+            @Override
+                protected void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || isEmpty()) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(button);
+                    }
+                }
         });
     }
 
