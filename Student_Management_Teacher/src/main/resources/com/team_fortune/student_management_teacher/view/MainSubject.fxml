@@ -49,17 +49,10 @@
                <children>
                   <TableView fx:id="TableSubject" layoutX="94.0" layoutY="102.0" prefHeight="168.0" prefWidth="418.0">
                     <columns>
-<<<<<<< HEAD
-                        <TableColumn fx:id="colSubject" prefWidth="77.60003662109375" text="Subject" />
-                        <TableColumn fx:id="colSession" prefWidth="77.60003662109375" text="Session" />
-                        <TableColumn fx:id="colSubject11" prefWidth="77.60003662109375" text="Lession_link" />
-                        <TableColumn fx:id="colSubject111" prefWidth="77.60003662109375" text="Class" />
-=======
                         <TableColumn fx:id="colNameSubject" prefWidth="111.20001220703125" text="Name Subject" />
                         <TableColumn fx:id="colSessionSubject" prefWidth="70.4000244140625" text="Session" />
                         <TableColumn fx:id="colLessionSubject" prefWidth="157.5999755859375" text="Lession link" />
                         <TableColumn fx:id="colView" prefWidth="75.0" text="Update" />
->>>>>>> origin/main
                     </columns>
                   </TableView>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" text="UPDATE SUBJECT" textFill="RED">

@@ -20,6 +20,11 @@ import com.team_fortune.student_management_teacher.model.Class;
 import com.team_fortune.student_management_teacher.util.MD5;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -69,19 +74,67 @@ public class MainClassController implements Initializable {
     @FXML
     private Tab updateClass;
     @FXML
-    private TableView<?> tblremove;
+    private TableView<com.team_fortune.student_management_teacher.model.Class> tblremove=new TableView<>();
     @FXML
-    private TableColumn<?,?>DeleteName;
-
+    private TableColumn<com.team_fortune.student_management_teacher.model.Class,String>DeleteName=new TableColumn<>();
+    String className;
     @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Class> Classtbl = new TableView<>();
 
     @FXML
-    private TableColumn<Class, String> colClass;
+    private TableColumn<Class, String> colClass=new TableColumn<>();
     private Connection conn;
     ObservableList<com.team_fortune.student_management_teacher.model.Class> model = FXCollections.observableArrayList();
     ObservableList<com.team_fortune.student_management_teacher.model.Class> models = FXCollections.observableArrayList();
-   
+    ObservableList<com.team_fortune.student_management_teacher.model.Class> model1=FXCollections.observableArrayList();
+   void deleteSearch(){
+       com.team_fortune.student_management_teacher.util.getDatabaseToModel modest=new com.team_fortune.student_management_teacher.util.getDatabaseToModel();
+   List<com.team_fortune.student_management_teacher.model.Class> classes=modest.getDataFromDatabaseClass();
+   if(classes!=null){
+       model1.clear();
+       model1.addAll(classes);
+    tblremove.setItems(model1);
+       DeleteName.setCellValueFactory(new PropertyValueFactory<>("name"));
+         tblremove.setOnMouseClicked(event -> {
+    if (event.getClickCount() == 1) { // Kiểm tra xem người dùng đã kích đúp chuột hay chưa
+        Class selectedClass = tblremove.getSelectionModel().getSelectedItem(); // Lấy lớp được chọn
+        if (selectedClass != null) {
+             className = selectedClass.getName(); // Lấy tên lớp
+            System.out.println("Bạn đã chọn lớp: " + className);
+        }
+    }
+}); 
+   }else{
+       
+   }
+      
+       
+     
+       
+   }
+    @FXML
+    void Removebtn(ActionEvent event) {
+        try {
+            Connection conn=DBConnection.getConnection();
+          String checkQuery="Select Count(*) From class_subject Where id_class IN(Select id From class Where name=?)";
+          PreparedStatement stmt=conn.prepareStatement(checkQuery);
+            stmt.setString(1, className);
+            ResultSet result=stmt.executeQuery();
+            if(result.next() && result.getInt(1)>0){
+                com.team_fortune.student_management_teacher.dialog.DialogAlert.DialogError("cannot be deleted because the class has students in it");
+            }else{
+                String query="Delete From class Where name=?";
+                PreparedStatement deletestmt=conn.prepareStatement(query);
+                deletestmt.executeUpdate();
+                com.team_fortune.student_management_teacher.dialog.DialogAlert.DialogSuccess("Delete success");
+                  model1.clear();
+            deleteSearch();
+            }
+          
+        } catch (SQLException ex) {
+            Logger.getLogger(MainClassController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     void searchdata(String searchitem) {
         try {
             conn = DBConnection.getConnection();
@@ -103,21 +156,36 @@ public class MainClassController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainClassController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if(txtsearch.getText().isEmpty()){
+            model.clear();
+        }
 
     }
+    void searchdisplay(){
+            com.team_fortune.student_management_teacher.util.getDatabaseToModel modest=new com.team_fortune.student_management_teacher.util.getDatabaseToModel();
+       List<com.team_fortune.student_management_teacher.model.Class> classes=modest.getDataFromDatabaseClass();
+       if(classes!=null){
+           model.clear();
+           model.addAll(classes);
+         Classtbl.setItems(model);
+                colClass.setCellValueFactory(new PropertyValueFactory<>("name"));
+       }else{
+
+       }
     
+    }
     void displayrecord(){
         try {
            Connection  conn=DBConnection.getConnection();
            
-           String query="Select a.name_class,a.id From class a "+"Join class_subject b ON a.id=b.id_class "+
-                   "Join teacher C ON C.id=b.id_teacher "+"Where C.username=?";
+           String query="Select id,name From class";
            PreparedStatement stmt=conn.prepareStatement(query);
-           stmt.setString(1, MD5.Md5(HomeController.username));
-        
+         
+          
            ResultSet rs=stmt.executeQuery();
+           models.clear();
            while(rs.next()){
-               String name_class=rs.getString("name_class");
+               String name_class=rs.getString("name");
                int id=rs.getInt("id");
                 com.team_fortune.student_management_teacher.model.Class ob = new com.team_fortune.student_management_teacher.model.Class(id, name_class);
                models.add(ob);
@@ -152,6 +220,7 @@ public class MainClassController implements Initializable {
         }catch(Exception ex){
         ex.printStackTrace();
         }
+       
         });
         }
          @Override
@@ -168,11 +237,17 @@ public class MainClassController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
     }
-
+private void startUpdating(){
+    ScheduledExecutorService executor=Executors.newSingleThreadScheduledExecutor();
+    executor.scheduleAtFixedRate(()->{
+        Platform.runLater(this::displayrecord);
+    }, 0, 1, TimeUnit.SECONDS);
+}
     public void showPopup(Class selectedclass) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Update.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/UpdateClass.fxml"));
             AnchorPane newpopup = fxmlLoader.load();
             MainClassController mainclass = fxmlLoader.getController();
             mainclass.init(selectedclass.getName());
@@ -183,6 +258,8 @@ public class MainClassController implements Initializable {
             popupStage.setScene(new Scene(newpopup));
 
             popupStage.showAndWait();
+            
+             searchdisplay();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -219,7 +296,9 @@ public class MainClassController implements Initializable {
             stmt.setString(2, oldname.getText());
 
             stmt.executeUpdate();
-
+            oldname.setText(newName.getText());
+             Classtbl.refresh();
+             newName.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MainClassController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -227,12 +306,14 @@ public class MainClassController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+       deleteSearch();
+       searchdisplay();
         txtsearch.textProperty().addListener((observable, oldvalue, newValue) -> {
             searchdata(newValue);
         });
         
         displayrecord();
+         startUpdating();
         Classtbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -240,6 +321,8 @@ public class MainClassController implements Initializable {
                     com.team_fortune.student_management_teacher.model.Class tbl = Classtbl.getSelectionModel().getSelectedItem();
                     if (tbl != null) {
                         showPopup(tbl);
+                        txtsearch.setText("");
+                        searchdisplay();
                     }
                 }
             }

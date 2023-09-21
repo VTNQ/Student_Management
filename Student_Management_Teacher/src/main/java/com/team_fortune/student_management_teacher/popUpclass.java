@@ -37,15 +37,15 @@ public class popUpclass implements Initializable{
     public void Informationclass(String class_name){
         try {
             Connection conn=DBConnection.getConnection();
-            String query="Select a.name_class,b.name From class a "+"JOIN class_subject c ON a.id=c.id_class "
-                    +"JOIN student b ON c.id_student=b.id "+"JOIN teacher d ON d.id=c.id_teacher "+"Where d.username=? And a.name_class=?";
+            String query="Select a.name,b.name From class a "+"JOIN class_subject c ON a.id=c.id_class "
+                    +"JOIN student b ON c.id_student=b.id "+"JOIN teacher d ON d.id=c.id_teacher "+"Where d.username=? And a.name=?";
             PreparedStatement stmt=conn.prepareStatement(query);
             stmt.setString(1, MD5.Md5(HomeController.username));
             stmt.setString(2, class_name);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
-                String name_class=rs.getString("name_class");
-                String name_student=rs.getString("name");
+                String name_class=rs.getString("a.name");
+                String name_student=rs.getString("b.name");
                 com.team_fortune.student_management_teacher.model.Class ob = new com.team_fortune.student_management_teacher.model.Class(name_class, name_student);
                popup.add(ob);
             }

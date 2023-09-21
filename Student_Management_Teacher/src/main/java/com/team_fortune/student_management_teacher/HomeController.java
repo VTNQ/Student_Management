@@ -49,7 +49,7 @@ public class HomeController implements Initializable {
     private MenuButton btnSubject;
 
     public void chartClass() throws SQLException {
-        String searchClassStudent = "select c.name_class, count(cs.id_student) as total from class_subject cs join class c on c.id=cs.id_class join teacher t on cs.id_teacher=t.id where t.username=? group by c.name_class order by c.id ASC";
+        String searchClassStudent = "select c.name, count(cs.id_student) as total from class_subject cs join class c on c.id=cs.id_class join teacher t on cs.id_teacher=t.id where t.username=? group by c.name order by c.id ASC";
         Connection conn = DBConnection.getConnection();
         try {
             Char_Class.setTitle("Student Of Class");
@@ -205,7 +205,23 @@ public class HomeController implements Initializable {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+@FXML
+    void Add_assignment(ActionEvent event) {
+        FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+         btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
+        try {
+        TabPane AssignmentPanel=loader.load();
+        AssignmentPanel.getSelectionModel().select(0);
+         main_display.getChildren().clear();
+            main_display.getChildren().setAll(AssignmentPanel);
+    } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     @FXML
     void delete_subject(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainSubject.fxml"));
