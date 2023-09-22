@@ -108,7 +108,7 @@
             </MenuButton>
             <MenuButton fx:id="btnSubject" alignment="CENTER" layoutY="128.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Subject">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Add">
+                  <MenuItem mnemonicParsing="false" onAction="#add_subject" text="Add">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -117,7 +117,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Update">
+                  <MenuItem mnemonicParsing="false" onAction="#update_subject" text="Update">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -126,7 +126,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="List">
+                  <MenuItem mnemonicParsing="false" onAction="#list_subject" text="List">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -135,7 +135,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Delete">
+                  <MenuItem mnemonicParsing="false" onAction="#delete_subject" text="Delete">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -209,7 +209,7 @@
             <Line endX="125.19998168945312" layoutX="18.0" layoutY="191.0" startX="-17.9999942779541" startY="0.199981689453125" stroke="WHITE" />
             <MenuButton fx:id="btnAssignment" alignment="CENTER" layoutY="254.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Assignment">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Add">
+                  <MenuItem mnemonicParsing="false" onAction="#Add_assignment" text="Add">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>

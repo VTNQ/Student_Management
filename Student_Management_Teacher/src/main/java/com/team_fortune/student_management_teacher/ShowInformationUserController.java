@@ -31,7 +31,7 @@ public class ShowInformationUserController implements Initializable {
             String searchQuery="select*from teacher where status=1 and username=?";
             Connection conn=DBConnection.getConnection();
             PreparedStatement ps =conn.prepareStatement(searchQuery);
-            ps.setString(1, LoginController.username);
+            ps.setString(1, HomeController.username);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 showName.setText(rs.getString("name"));
@@ -53,7 +53,7 @@ public class ShowInformationUserController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             Information();
-            showUsername.setText(LoginController.username);
+            showUsername.setText(HomeController.username);
         } catch (SQLException ex) {
             Logger.getLogger(ShowInformationUserController.class.getName()).log(Level.SEVERE, null, ex);
         }
