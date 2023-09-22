@@ -22,7 +22,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@css/primary.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_student.SecondaryController">
    <children>
-      <AnchorPane fx:id="Home" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <AnchorPane fx:id="Home" prefHeight="200.0" prefWidth="200.0">
          <children>
             <BorderPane prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <top>
@@ -32,14 +32,6 @@
                            <children>
                               <MenuButton layoutX="699.0" layoutY="9.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                                  <items>
-                                    <MenuItem mnemonicParsing="false">
-                                       <graphic>
-                                          <Label fx:id="sa" text="Marcoman">
-                                             <font>
-                                                <Font size="15.0" />
-                                             </font></Label>
-                                       </graphic>
-                                    </MenuItem>
                                     <MenuItem mnemonicParsing="false" onAction="#signout" text="Sign out">
                                        <graphic>
                                           <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -130,7 +122,7 @@
                                  </font>
                               </Button>
                               <Line endX="100.0" layoutX="108.0" layoutY="215.0" startX="-107.99999237060547" startY="0.5999908447265625" stroke="WHITE" />
-                              <Button layoutX="-2.0" layoutY="230.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
+                              <Button fx:id="btnWord" layoutX="-2.0" layoutY="230.0" mnemonicParsing="false" onAction="#changeForm" prefHeight="42.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -199,11 +191,6 @@
                               </Label>
                               <MenuButton layoutX="698.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                                  <items>
-                                    <MenuItem mnemonicParsing="false">
-                                       <graphic>
-                                          <Label fx:id="sa1" text="Marcoman" />
-                                       </graphic>
-                                    </MenuItem>
                                     <MenuItem mnemonicParsing="false" onAction="#signout" text="Sign out">
                                        <graphic>
                                           <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -284,7 +271,7 @@
                                  </font>
                               </Button>
                               <Line endX="100.0" layoutX="101.0" layoutY="226.0" startX="-100.0" stroke="WHITE" />
-                              <Button layoutY="236.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
+                              <Button fx:id="btnWord1" layoutY="236.0" mnemonicParsing="false" onAction="#changeForm" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -383,11 +370,6 @@
                               </Label>
                               <MenuButton layoutX="698.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                                  <items>
-                                    <MenuItem mnemonicParsing="false">
-                                       <graphic>
-                                          <Label fx:id="sa2" text="Marcoman" />
-                                       </graphic>
-                                    </MenuItem>
                                     <MenuItem mnemonicParsing="false" onAction="#signout" text="Sign out">
                                        <graphic>
                                           <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -468,7 +450,7 @@
                                  </font>
                               </Button>
                               <Line endX="100.0" layoutX="101.0" layoutY="226.0" startX="-100.0" stroke="WHITE" />
-                              <Button layoutY="236.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
+                              <Button fx:id="btnWord2" layoutY="236.0" mnemonicParsing="false" onAction="#changeForm" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -542,7 +524,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Schedule" layoutX="2.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="Schedule" layoutX="2.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <BorderPane prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <top>
@@ -562,11 +544,6 @@
                               </Label>
                               <MenuButton layoutX="698.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                                  <items>
-                                    <MenuItem mnemonicParsing="false">
-                                       <graphic>
-                                          <Label fx:id="sa21" text="Marcoman" />
-                                       </graphic>
-                                    </MenuItem>
                                     <MenuItem mnemonicParsing="false" onAction="#signout" text="Sign out">
                                        <graphic>
                                           <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -647,7 +624,7 @@
                                  </font>
                               </Button>
                               <Line endX="100.0" layoutX="101.0" layoutY="226.0" startX="-100.0" stroke="WHITE" />
-                              <Button layoutY="236.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
+                              <Button fx:id="btnWord3" layoutY="236.0" mnemonicParsing="false" onAction="#changeForm" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -743,11 +720,6 @@
                               </Label>
                               <MenuButton layoutX="698.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                                  <items>
-                                    <MenuItem mnemonicParsing="false">
-                                       <graphic>
-                                          <Label fx:id="sa211" text="Marcoman" />
-                                       </graphic>
-                                    </MenuItem>
                                     <MenuItem mnemonicParsing="false" onAction="#signout" text="Sign out">
                                        <graphic>
                                           <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -828,7 +800,7 @@
                                  </font>
                               </Button>
                               <Line endX="100.0" layoutX="101.0" layoutY="226.0" startX="-100.0" stroke="WHITE" />
-                              <Button layoutY="236.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
+                              <Button fx:id="btnWord4" layoutY="236.0" mnemonicParsing="false" onAction="#changeForm" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -903,7 +875,7 @@
             </BorderPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Exercise1" layoutX="7.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <AnchorPane fx:id="Word" layoutX="7.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <BorderPane prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <top>
@@ -923,11 +895,6 @@
                               </Label>
                               <MenuButton layoutX="698.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                                  <items>
-                                    <MenuItem mnemonicParsing="false">
-                                       <graphic>
-                                          <Label fx:id="sa2111" text="Marcoman" />
-                                       </graphic>
-                                    </MenuItem>
                                     <MenuItem mnemonicParsing="false" onAction="#signout" text="Sign out">
                                        <graphic>
                                           <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">

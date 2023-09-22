@@ -13,6 +13,8 @@ import java.net.URISyntaxException;
 import javafx.scene.image.Image;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -26,6 +28,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Base64;
 import java.util.Locale;
 import javafx.scene.control.TableCell;
 import java.util.ResourceBundle;
@@ -35,14 +38,17 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -75,9 +81,16 @@ public class SecondaryController implements Initializable{
     private Connection connection;
     @FXML
     private TableColumn<modelExample,Boolean>Columnassignment;
-    @FXML
-   
+  
+            LocalDateTime starTime;
+            Long startsecondsRemaining;
+    private boolean buttonclicked=false;
+    private long secondsRemaining;
+    LocalDateTime endtime;
+   Timeline timeline1;
+     @FXML
     private AnchorPane Home;
+    public String countDown;
     @FXML
     private Button btnexercise;
     public String name_class;
@@ -113,13 +126,7 @@ public class SecondaryController implements Initializable{
     private PieChart biechart;
     @FXML
     private BarChart<String,Number> Barchart;
-    @FXML
-    public   Label sa;
-
-   @FXML
-    public   Label sa1;
-    @FXML
-    public   Label sa2;
+   
     @FXML
     private TableView<model> tbl;
 @FXML
@@ -180,6 +187,7 @@ private TableColumn<modelsubject,String>colsubject1;
     private Button btncalender;
         @FXML
     private Button btncalender1;
+    
         @FXML
         private Button btnExercise1;
             @FXML
@@ -209,6 +217,8 @@ public static int assignmentId;
     
     @FXML
     private AnchorPane updateprofile;
+        @FXML
+        private AnchorPane Word;
 @FXML
 private Button searchbutton311;
 @FXML
@@ -221,6 +231,26 @@ private Button btnex;
 private Button btncalex;
 @FXML
 private TableColumn<modelcalender,String>Endtime;
+@FXML
+        private Button btnWord;
+@FXML
+        private Button btnWord1;
+@FXML
+        private Button btnWord2;
+@FXML
+        private Button btnWord3;
+@FXML
+        private Button btnWord4;
+@FXML
+        private Button Homebtnex1;
+@FXML
+        private Button Searchbtnex1;
+@FXML
+        private Button Scorebtnex1;
+@FXML
+        private Button btnex1;
+@FXML
+        private Button btncalex1;
 String link_examp;
 @FXML
     void changeForm(ActionEvent event) {
@@ -230,6 +260,79 @@ String link_examp;
             Search.setVisible(false);
             Schedule.setVisible(false);
             Exercise.setVisible(false);
+            Word.setVisible(false);
+        }else if(event.getSource()==btncalex1){
+              Home.setVisible(false);
+            Score.setVisible(false);
+            Search.setVisible(false);
+            Schedule.setVisible(true);
+            Exercise.setVisible(false);
+            Word.setVisible(false);
+        }else if(event.getSource()==btnex1){
+              Home.setVisible(false);
+            Score.setVisible(false);
+            Search.setVisible(false);
+            Schedule.setVisible(false);
+            Exercise.setVisible(true);
+            Word.setVisible(false);
+        }else if(event.getSource()==Scorebtnex1){
+             Home.setVisible(false);
+            Score.setVisible(true);
+            Search.setVisible(false);
+            Schedule.setVisible(false);
+            Exercise.setVisible(false);
+            Word.setVisible(false);
+        }else if(event.getSource()==Searchbtnex1){
+            Home.setVisible(false);
+            Score.setVisible(false);
+            Search.setVisible(true);
+            Schedule.setVisible(false);
+            Exercise.setVisible(false);
+            Word.setVisible(false);
+        }else if(event.getSource()==Homebtnex1){
+            Home.setVisible(true);
+            Score.setVisible(false);
+            Search.setVisible(false);
+            Schedule.setVisible(false);
+            Exercise.setVisible(false);
+            Word.setVisible(false);
+        }else if(event.getSource()==btnWord4){
+            Home.setVisible(false);
+            Score.setVisible(false);
+            Search.setVisible(false);
+            Schedule.setVisible(false);
+            Exercise.setVisible(false);
+            Word.setVisible(true);
+        }else if(event.getSource()==btnWord3){
+             Home.setVisible(false);
+            Score.setVisible(false);
+            Search.setVisible(false);
+            Schedule.setVisible(false);
+            Exercise.setVisible(false);
+            Word.setVisible(true);
+        }else if(event.getSource()==btnWord2){
+            Home.setVisible(false);
+            Score.setVisible(false);
+            Search.setVisible(false);
+            Schedule.setVisible(false);
+            Exercise.setVisible(false);
+            Word.setVisible(true);
+        }else if(event.getSource()==btnWord){
+            Home.setVisible(false);
+            Score.setVisible(false);
+            Search.setVisible(false);
+            Schedule.setVisible(false);
+            Exercise.setVisible(false);
+            Word.setVisible(true);
+        }else if(event.getSource()==btnWord1){
+            models.clear();
+            txtserach.setText("");
+             Home.setVisible(false);
+            Score.setVisible(false);
+            Search.setVisible(false);
+            Schedule.setVisible(false);
+            Exercise.setVisible(false);
+            Word.setVisible(true);
         }else if(event.getSource()==searchbutton311){
              Home.setVisible(false);
             Score.setVisible(false);
@@ -308,6 +411,8 @@ String link_examp;
             Search.setVisible(false);
             Schedule.setVisible(false);
         }else if(event.getSource()==btnExercise1){
+            models.clear();
+            txtserach.setText("");
             Home.setVisible(false);
             Score.setVisible(false);
             Search.setVisible(false);
@@ -358,7 +463,7 @@ String link_examp;
             Search.setVisible(false);
             Schedule.setVisible(false);
         }else if(event.getSource()==btncalender1){
-            model.clear();
+            models.clear();
             txtserach.setText("");
             Home.setVisible(false);
             Score.setVisible(false);
@@ -418,7 +523,7 @@ String link_examp;
     private TableColumn<modelWord,String>colWorldclass;
   
     private String coutdown;
- 
+    private String endfor;
     private void displayErrorMessage(String message) {
     Alert alert = new Alert(AlertType.ERROR);
     alert.setTitle("Error");
@@ -435,7 +540,7 @@ private final ObservableList<modelWord>World=FXCollections.observableArrayList()
   connection = PrimaryController.connectDB();
    String className = null;
       try {
-          String query="Select c.name_class From class c "
+          String query="Select c.name as name_class From class c "
                   +"JOIN class_subject cs ON c.id=cs.id_class "
                   +"JOIN student s ON cs.id_student=s.id "
                   +"Where s.username=?";
@@ -480,10 +585,10 @@ private final ObservableList<modelWord>World=FXCollections.observableArrayList()
        }
 }
    public void Example(){
-       String query="Select t1.name_subject,t3.name,t4.link,t5.name_class,t4.id_ass From subject t1 "
+       String query="Select t1.name as name_subject,t3.name,t4.link,t5.name as name_class,t4.id as id_ass From subject t1 "
                +"JOIN class_subject t2 ON t1.id=t2.id_subject "
                +"JOIN teacher t3 ON t2.id_teacher=t3.id "
-               +"Join assignments t4 On t4.id_ass=t2.id_assignments "
+               +"Join assignments t4 On t4.id=t2.id_assignments "
                +"Join class t5 ON t5.id=t2.id_class "
                +"Join student t6 ON t6.id=t2.id_student "
                +"Where t6.id = ? ";
@@ -516,7 +621,7 @@ private final ObservableList<modelWord>World=FXCollections.observableArrayList()
        String chart="SELECT COUNT(DISTINCT t1.id_subject) as total FROM class_subject t1 " +
                    "JOIN student t2 ON t1.id_student = t2.id " +
                    "JOIN class t3 ON t1.id_class=t3.id "+
-                   "WHERE t2.id = ? AND t3.name_class = ?";
+                   "WHERE t2.id = ? AND t3.name = ?";
        connection=PrimaryController.connectDB();
        ObservableList<PieChart.Data> piechartData=FXCollections.observableArrayList();
        try {
@@ -537,75 +642,55 @@ private final ObservableList<modelWord>World=FXCollections.observableArrayList()
        }
        biechart.setData(piechartData);
    }
- public void selectExample() {
-    String query = "SELECT t1.name_subject, t3.name_class, t4.start,t4.link_exam,t4.end " +
-                   "FROM subject t1 " +
-                   "JOIN class_subject t5 ON t1.id = t5.id_subject " +
-                   "JOIN class t3 ON t5.id_class = t3.id " +
-                   "JOIN student t6 ON t5.id_student = t6.id " +
-                   "JOIN exam_schedule t4 ON t5.id_exam = t4.id " +
-                   "JOIN teacher t2 ON t2.id = t5.id_teacher " +
-                   "WHERE t6.id = ? ";
+    public void selectExample() {
+       String query = "SELECT t1.name as name_subject, t3.name as name_class, t4.start,t4.link_exam,t4.end " +
+                      "FROM subject t1 " +
+                      "JOIN class_subject t5 ON t1.id = t5.id_subject " +
+                      "JOIN class t3 ON t5.id_class = t3.id " +
+                      "JOIN student t6 ON t5.id_student = t6.id " +
+                      "JOIN exam_schedule t4 ON t5.id_exam = t4.id " +
+                      "JOIN teacher t2 ON t2.id = t5.id_teacher " +
+                      "WHERE t6.id = ? ";
 
-    connection = PrimaryController.connectDB();
-    try {
-        PreparedStatement stmt = connection.prepareStatement(query);
-        stmt.setInt(1, PrimaryController.loggedInStudentId);
-        ResultSet rs = stmt.executeQuery();
-        int index = 1;
-        while(rs.next()){
-            String subject = rs.getString("name_subject");
-            
-            String className = rs.getString("name_class");
-             link_examp=rs.getString("link_exam");
-            LocalDateTime startTime = rs.getTimestamp("start").toLocalDateTime();
-            String startcout=startcountdown(startTime);
-            System.out.println(startcout); 
-            LocalDateTime endtime=rs.getTimestamp("end").toLocalDateTime();
-            DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm",new Locale("vi","VN"));
-            String formatdate=startTime.format(formatter);
-           
-            DateTimeFormatter endformat=DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm",new Locale("vi","VN"));
-            String endfor=endtime.format(endformat);
-         linkDisplay ="chua co tai lieu";
+       connection = PrimaryController.connectDB();
+       try {
+           PreparedStatement stmt = connection.prepareStatement(query);
+           stmt.setInt(1, PrimaryController.loggedInStudentId);
+           ResultSet rs = stmt.executeQuery();
+           int index = 1;
+           while(rs.next()){
+               String subject = rs.getString("name_subject");
 
-            data.add(new modelcalender(index,subject , className, startcout,linkDisplay,endfor));
+               String className = rs.getString("name_class");
+                link_examp=rs.getString("link_exam");
+                starTime = rs.getTimestamp("start").toLocalDateTime();
 
-      
 
-            index++;
-        }
 
-     
-        updatestart(data);
-        
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
- public String startcountdown(LocalDateTime startTime1){
- LocalDateTime now=LocalDateTime.now();
- 
- long tottalSeconddifference=java.time.Duration.between(now, startTime1).getSeconds();
- if(tottalSeconddifference<=15*60){
-     Timeline tl=new Timeline();
-     tl.setCycleCount(Timeline.INDEFINITE);
-     KeyFrame keyframe=new KeyFrame(Duration.seconds(1), event->{
-     long seconddiiff=java.time.Duration.between(LocalDateTime.now(), startTime1).getSeconds();
-     long minutes=seconddiiff/60;
-     long second=seconddiiff%60;
-     if(seconddiiff<=0){
-         tl.stop();
-     }
-     String resultcoutdown=String.format("%02d:%02d", minutes,second);
-     coutdown=resultcoutdown;
-     });
-     tl.getKeyFrames().add(keyframe);
-     tl.play();
- }
- return coutdown;
+                endtime=rs.getTimestamp("end").toLocalDateTime();
+               DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm",new Locale("vi","VN"));
+               String formatdate=starTime.format(formatter);
 
- }
+               DateTimeFormatter endformat=DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm",new Locale("vi","VN"));
+                endfor=endtime.format(endformat);
+            linkDisplay ="chua co tai lieu";
+
+               data.add(new modelcalender(index,subject , className, formatdate,linkDisplay,endfor));
+
+
+
+               index++;
+           }
+
+
+           updatestart(data);
+
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+   }
+
+
    private String formatTime(long minute,long seconds){
         return String.format("%02d:%02d", minute,seconds);
     }
@@ -643,7 +728,7 @@ private String caculaterating(Timestamp startTime){
           void searchdata(String searchitem){
               connection=PrimaryController.connectDB();
             models.clear();
-               String query = "SELECT t1.id,tc.name,st.name_subject,sc.name_class FROM student t1 " +
+               String query = "SELECT t1.id,tc.name,st.name as name_subject,sc.name as name_class FROM student t1 " +
                "JOIN class_subject t2 ON t1.id = t2.id_student " +
                "JOIN class sc ON t2.id_class = sc.id " +
                "JOIN subject st ON t2.id_subject = st.id " +
@@ -673,10 +758,11 @@ private String caculaterating(Timestamp startTime){
                     models.clear();
                 }
           }
+        
           private void WorldStudent(){
               connection=PrimaryController.connectDB();
               World.clear();
-              String query="Select t1.name_subject,t3.name,t1.lession_link,t6.name_class From subject t1 "
+              String query="Select t1.name as name_subject,t3.name,t1.lession_link,t6.name as name_class From subject t1 "
                +"Join class_subject t2 ON t1.id=t2.id_subject "
                +"JOIN teacher t3 ON t2.id_teacher=t3.id "
                
@@ -705,15 +791,15 @@ private String caculaterating(Timestamp startTime){
           public int idassignment(String assignment){
               int id=-1;
               connection=PrimaryController.connectDB();
-              String query="Select t1.id_ass From assignments t1 "
-                      +"JOIN class_subject  t2 ON t1.id_ass=t2.id_assignments "
-                      +"JOIN subject t3 ON t2.id_subject=t3.id "+"Where t3.name_subject = ?";
+              String query="Select t1.id From assignments t1 "
+                      +"JOIN class_subject  t2 ON t1.id=t2.id_assignments "
+                      +"JOIN subject t3 ON t2.id_subject=t3.id "+"Where t3.name = ?";
               try {
                   PreparedStatement stmt=connection.prepareStatement(query);
                   stmt.setString(1, assignment);
                   ResultSet rs=stmt.executeQuery();
                   while(rs.next()){
-                       id=rs.getInt("id_ass");
+                       id=rs.getInt("id");
                   }
               } catch (Exception e) {
                   e.printStackTrace();
@@ -750,6 +836,7 @@ private final HBox buttonsContainer = new HBox();
             Stage popupStage=new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(newPopup,600,400));
+              popupStage.setResizable(false);
             popupStage.show();
             } catch (IOException ex) {
                 Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
@@ -757,7 +844,7 @@ private final HBox buttonsContainer = new HBox();
            
         });
         home.setOnAction(event -> {
-            // Your home button action
+           
            modelExample calender=getTableView().getItems().get(getIndex());
         
         String subject=calender.getNameSubject();
@@ -772,6 +859,7 @@ private final HBox buttonsContainer = new HBox();
                 Stage popupStage=new Stage();
                 popupStage.initModality(Modality.APPLICATION_MODAL);
                 popupStage.setScene(new Scene(newPopup,668,462));
+                popupStage.setResizable(false);
                 popupStage.show();
             } catch (IOException ex) {
                 Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
@@ -786,6 +874,7 @@ private final HBox buttonsContainer = new HBox();
     protected void updateItem(Boolean item, boolean empty) {
         super.updateItem(item, empty);
         submit.getStyleClass().add("button-design");
+        home.getStyleClass().add("button-design");
         if (empty || item == null ) {
             setGraphic(null);
         } else {
@@ -827,6 +916,7 @@ private final HBox buttonsContainer = new HBox();
                           
                           });
                           setGraphic(hyperlink);
+                          
                       }
                   }
               };
@@ -841,9 +931,258 @@ private final HBox buttonsContainer = new HBox();
      colteacher11.setCellValueFactory(new PropertyValueFactory<>("name_Subject"));
 
      colclass1.setCellValueFactory(new PropertyValueFactory<>("name_class"));
-     Time.setCellValueFactory(new PropertyValueFactory<>("StartTime")); 
+     Time.setCellValueFactory(new PropertyValueFactory<>("StartTime"));
+     Endtime.setCellValueFactory(new PropertyValueFactory<>("Endtime"));
+     Time.setCellFactory(column -> {
+    return new TableCell<modelcalender, String>() {
+         Label label=new Label();
+          HBox hbox=new HBox();
+            private void EndCountDownEverySecond(LocalDateTime endTime){
+      Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        LocalDateTime now = LocalDateTime.now();
+        secondsRemaining = java.time.Duration.between(now, endtime).getSeconds();
+if(secondsRemaining>0){
+    
+        
+            long minutes = secondsRemaining / 60;
+            long seconds = secondsRemaining % 60;
+            String countdown = String.format("%02d:%02d", minutes, seconds);
+            label.setText(countdown); 
+       
+        }else {
+            label.setText("00:00");
+            setGraphic(Submit);
+           label.setStyle("-fx-text-fill:red");
+          
+        }
+    }));
+    timeline.setCycleCount(Animation.INDEFINITE);
+    timeline.play();
+            }
+          private void startCountdownEverySecond(LocalDateTime startTime) {
+    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        LocalDateTime now = LocalDateTime.now();
+        startsecondsRemaining = java.time.Duration.between(now, starTime).getSeconds();
+
+        if (startsecondsRemaining < 900 && startsecondsRemaining>0) {
+            long minutes = startsecondsRemaining / 60;
+            long seconds = startsecondsRemaining % 60;
+            String countdown = String.format("%02d:%02d", minutes, seconds);
+            setText(countdown);
+            
+            setGraphic(hbox);
+            eventButton.getStyleClass().add("button-design");
+           Submit.getStyleClass().add("button-design");
+        } else if(startsecondsRemaining>900){
+            String formatdaated=starTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+            setText(formatdaated);// Countdown đã kết thúc
+              setGraphic(hbox);
+               eventButton.getStyleClass().add("button-design");
+           Submit.getStyleClass().add("button-design");
+        }else if(startsecondsRemaining<=0){
+            setText("00:00");
+            setGraphic(hbox);
+           eventButton.getStyleClass().add("button-design");
+           Submit.getStyleClass().add("button-design");
+            setStyle("-fx-text-fill:red");
+        }
+    }));
+    timeline.setCycleCount(Animation.INDEFINITE);
+    timeline.play();
+}
+       private final    Button eventButton=new Button("join");
+        private final    Button Submit=new Button("submit");
+        Hyperlink hyperlink=new Hyperlink();
+        Label la=new Label();
+       {
+          hbox.getChildren().addAll(eventButton, Submit);
+          Submit.setOnAction(event->{
+          modelcalender calender=getTableView().getItems().get(getIndex());
+          
+          String Subject=calender.getName_Subject();
+          String name_class=calender.getName_class();
+          
+             
+          try{
+          FXMLLoader fxloader=new FXMLLoader(App.class.getResource("SubmitExercise.fxml"));
+          AnchorPane newPopup;
+          newPopup=fxloader.load();
+              SubmitExerciseController exercise=fxloader.getController();
+              exercise.init(Subject,name_class);
+              Stage PopupStage=new Stage();
+              PopupStage.initModality(Modality.APPLICATION_MODAL);
+               PopupStage.setScene(new Scene(newPopup,600,400));
+                PopupStage.setResizable(false);
+                PopupStage.show();
+          }catch(Exception ex){
+              
+          }
+          });
+      eventButton.setOnAction(event->{
+      
+               buttonclicked=true;
+       modelcalender item=getTableView().getItems().get(getIndex());
+       
+       if(item.getLink().equals("chua co tai lieu")){
+           if(startsecondsRemaining<0){
+                item.setLink(link_examp);
+                 hyperlink=new Hyperlink(link_examp);
+                   hyperlink.setOnAction(e->{
+               try {
+                   java.awt.Desktop.getDesktop().browse(new URI(link_examp));
+                } catch (IOException ex) {
+                        displayErrorMessage("URLI ERROR");
+                    } catch (URISyntaxException ex) {
+                        displayErrorMessage("URLI ERROR");
+                    }
+           });
+           }else{
+               item.setLink("chua co tai lieu");
+                hyperlink=new Hyperlink("chua co tai lieu");
+                hyperlink.getStyleClass().add("hyperlink-style");
+               
+           }
+          
+          
+         
+    
+   
+           Endtime.setCellFactory(col->new TableCell<modelcalender,String>(){
+           @Override
+           protected void updateItem(String item,boolean empty){
+               super.updateItem(item, empty);
+               if(item==null|empty){
+                   setGraphic(null);
+                                setText(null);
+               }else{
+                   if(!buttonclicked ){
+                    setGraphic(Submit);
+                   }else if(buttonclicked){
+                       if(startsecondsRemaining<0){
+                          hbox.getChildren().remove(eventButton);
+                      eventButton.setVisible(false);
+                      EndCountDownEverySecond(endtime);
+                      
+                   setGraphic(label);
+                       }else{
+                         label.setText(endfor);
+                         
+                           setGraphic(label);
+                           
+                          hbox.getChildren().remove(Submit);
+                             Submit.setVisible(false);
+                             
+                       }
+                      
+    
+                   }
+                   
+                  
+                   setText(null);
+               }
+           }
+           });
+         
+    colCountdown.setCellFactory(column->new TableCell<modelcalender,String>(){
+       @Override
+       protected void updateItem(String item,boolean empty){
+           super.updateItem(item, empty);
+           if(item==null|empty){
+               setGraphic(null);
+               setText(null);
+           }else{
+               if(!buttonclicked ){
+                       setGraphic(Submit);
+                   }else if(buttonclicked) {
+                         if(startsecondsRemaining<0){
+                          hbox.getChildren().remove(eventButton);
+                      eventButton.setVisible(false);
+                       }else{
+                            
+                             hbox.getChildren().remove(Submit);
+                             Submit.setVisible(false);
+                       }
+                      
+                   }
+               setGraphic(hyperlink);
+               
+               setText(null);
+           }
+       }
+                });
+       }else{
+           colCountdown.setCellFactory(column->new TableCell<modelcalender,String>(){
+           @Override
+       protected void updateItem(String item,boolean empty){
+           super.updateItem(item, empty);
+           if(item==null|empty){
+               setGraphic(null);
+               setText(null);
+           }else{
+                if(!buttonclicked ){
+                       setGraphic(Submit);
+                   }else if(buttonclicked) {
+                       if(startsecondsRemaining<0){
+                          hbox.getChildren().remove(eventButton);
+                      eventButton.setVisible(false);
+                       }else{
+                          
+                            hbox.getChildren().remove(Submit);
+                             Submit.setVisible(false);
+                       }
+                      
+                   }
+               setGraphic(null);
+             
+               setText(item);
+           }
+       }
+       
+           });
+          
+       }
+      
+     
+
+       });
+       }
+        @Override
+        protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (item == null || empty) {
+                setText(null);
+            } else {
+                setText(item);
+               if(!buttonclicked){
+                       setGraphic(Submit);
+                   }else if(buttonclicked) {
+                         if(startsecondsRemaining<0){
+                          hbox.getChildren().remove(eventButton);
+                          hbox.getChildren().remove(Submit);
+                      eventButton.setVisible(false);
+                     Submit.setVisible(false);
+                       }else{
+                             Platform.runLater(() -> displayErrorMessage("It's not time for the exam yet"));
+                             hbox.getChildren().remove(Submit);
+                             Submit.setVisible(false);
+                       }
+                      
+                   }
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", new Locale("vi", "VN"));
+                LocalDateTime startTime = LocalDateTime.parse(item, formatter);
+                
+               
+                startCountdownEverySecond(startTime);
+              
+            }
+           
+        }
+        
+    };
+});
  colCountdown.setCellValueFactory(new PropertyValueFactory<>("link"));
-   Endtime.setCellValueFactory(new PropertyValueFactory<>("Endtime"));
+   
 } 
 
        
@@ -872,7 +1211,7 @@ private final HBox buttonsContainer = new HBox();
                   void displayrecord(){
                connection = PrimaryController.connectDB();
     model.clear();
-    String query = "SELECT t3.id,t1.name_subject,t5.score,t6.name_class,t5.status FROM subject t1 " +
+    String query = "SELECT t3.id,t1.name As name_subject,t5.score,t6.name as name_class,t5.status FROM subject t1 " +
                    "JOIN class_subject t2 ON t1.id = t2.id_subject " +
                    "JOIN student t3 On t2.id_student=t3.id " +
                    "JOIN exam_schedule t4 On t2.id_exam=t4.id " +
@@ -903,9 +1242,10 @@ private final HBox buttonsContainer = new HBox();
     }
     updatedish(model);
                   }
-
+        
     @Override
    public void initialize(URL url, ResourceBundle rb) {
+        
     selectExample();
         WorldStudent();
   colExam.setCellFactory(column -> {
@@ -933,9 +1273,8 @@ private final HBox buttonsContainer = new HBox();
     System.out.println("LoggedInStudentId in initialize: " + PrimaryController.loggedInStudentId);
     chart();
     piechart();
-    sa.setText(PrimaryController.loggedInUsername);
-    sa1.setText(PrimaryController.loggedInUsername);
-    sa2.setText(PrimaryController.loggedInUsername);
+    
+   
     txtserach.textProperty().addListener((observable, oldValue, newValue) -> {
         searchdata(newValue);
     });

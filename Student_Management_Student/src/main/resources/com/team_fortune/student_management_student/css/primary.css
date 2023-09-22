@@ -12,6 +12,10 @@
     -fx-border-radius:20px;
     -fx-text-inner-color:#000;
 }
+.hyperlink-style{
+    -fx-underline:false;
+    -fx-text-fill:black;
+}
 .button-design{
     -fx-background-color:#30363f;
     -fx-background-radius:40px;

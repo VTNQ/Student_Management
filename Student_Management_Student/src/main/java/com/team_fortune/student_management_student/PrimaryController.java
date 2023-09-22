@@ -177,7 +177,7 @@ private void displaysuccessfully(String message){
     @FXML
     private Label marco;
     @FXML
-    private MFXButton back;
+    private                   Button back;
     @FXML
     private Label marco1;
 
@@ -217,7 +217,7 @@ private void displaysuccessfully(String message){
     }
                 @FXML
     void updatepassword(ActionEvent event) throws NoSuchAlgorithmException {
-        String username=pass_username.getText();
+        String username=encryptPasswordMD5(pass_username.getText());
         String hashedPassword;
   
         

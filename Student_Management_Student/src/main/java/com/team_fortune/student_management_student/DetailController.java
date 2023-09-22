@@ -91,6 +91,22 @@ public class DetailController implements Initializable {
          return cell;
         });
         colstatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colstatus.setCellFactory(column -> {
+        return new TableCell<modelsolution, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (!empty && "tot".equals(item)) {
+                    getStyleClass().add("field-success");
+                } else {
+                    getStyleClass().add("field-error");
+                }
+
+                setText(item);
+            }
+        };
+    });
         colreason.setCellValueFactory(new PropertyValueFactory<>("reason"));
     }
       private void displayErrorMessage(String message) {
@@ -103,11 +119,11 @@ public class DetailController implements Initializable {
     void displayrecord(){
         conn=PrimaryController.connectDB();
         model.clear();
-        String query="Select t1.name_subject,t2.name_class,t3.link,t3.status,t3.reason From subject t1 "
+        String query="Select t1.name as name_subject,t2.name as name_class,t3.link,t3.status,t3.reason From subject t1 "
                 +"JOIN class_subject t4 ON t1.id=t4.id_subject "
                 +"JOIN class t2 ON t2.id=t4.id_class "
-                +"JOIN  assignments t5 ON t4.id_assignments=t5.id_ass "
-                +"JOIN  solution t3 ON t3.id_assignments=t5.id_ass "
+                +"JOIN  assignments t5 ON t4.id_assignments=t5.id "
+                +"JOIN  solution t3 ON t3.id_assignments=t5.id "
                 +"JOIN  student t6 ON t6.id=t4.id_student "
                 +"Where t6.id =? And t3.id_assignments = ?";
         try {
@@ -138,5 +154,6 @@ public class DetailController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        displayrecord();
+    
     }
 }
