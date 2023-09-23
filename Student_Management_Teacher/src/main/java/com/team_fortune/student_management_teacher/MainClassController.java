@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import com.team_fortune.student_management_teacher.model.Class;
+import static com.team_fortune.student_management_teacher.popUpclass.infoclass;
 import com.team_fortune.student_management_teacher.util.MD5;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import java.io.IOException;
@@ -29,7 +30,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableCell;
@@ -46,100 +46,113 @@ public class MainClassController implements Initializable {
 
     @FXML
     private TabPane mainClass;
-    
+
     @FXML
     private TextField name_class;
     public static String class_name;
     @FXML
     private Label oldname;
-   
+
     @FXML
     private MFXTextField newName;
     @FXML
     private Tab addClass;
-
+    private int id_class;
     @FXML
     private Tab deleteClass;
     @FXML
     private MFXTextField txtsearch = new MFXTextField();
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Class,String>ViewCLass=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_teacher.model.Class, String> ViewCLass = new TableColumn<>();
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Class,Boolean>View=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_teacher.model.Class, Boolean> View = new TableColumn<>();
     @FXML
-    private TableView<com.team_fortune.student_management_teacher.model.Class>ListTable=new TableView<>();
+    private TableView<com.team_fortune.student_management_teacher.model.Class> ListTable = new TableView<>();
     @FXML
     private Tab listClass;
 
     @FXML
     private Tab updateClass;
     @FXML
-    private TableView<com.team_fortune.student_management_teacher.model.Class> tblremove=new TableView<>();
+    private TableView<com.team_fortune.student_management_teacher.model.Class> tblremove = new TableView<>();
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Class,String>DeleteName=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_teacher.model.Class, String> DeleteName = new TableColumn<>();
     String className;
     @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Class> Classtbl = new TableView<>();
 
     @FXML
-    private TableColumn<Class, String> colClass=new TableColumn<>();
+    private TableColumn<Class, String> colClass = new TableColumn<>();
     private Connection conn;
     ObservableList<com.team_fortune.student_management_teacher.model.Class> model = FXCollections.observableArrayList();
     ObservableList<com.team_fortune.student_management_teacher.model.Class> models = FXCollections.observableArrayList();
-    ObservableList<com.team_fortune.student_management_teacher.model.Class> model1=FXCollections.observableArrayList();
-   void deleteSearch(){
-       com.team_fortune.student_management_teacher.util.getDatabaseToModel modest=new com.team_fortune.student_management_teacher.util.getDatabaseToModel();
-   List<com.team_fortune.student_management_teacher.model.Class> classes=modest.getDataFromDatabaseClass();
-   if(classes!=null){
-       model1.clear();
-       model1.addAll(classes);
-    tblremove.setItems(model1);
-       DeleteName.setCellValueFactory(new PropertyValueFactory<>("name"));
-         tblremove.setOnMouseClicked(event -> {
-    if (event.getClickCount() == 1) { // Kiểm tra xem người dùng đã kích đúp chuột hay chưa
-        Class selectedClass = tblremove.getSelectionModel().getSelectedItem(); // Lấy lớp được chọn
-        if (selectedClass != null) {
-             className = selectedClass.getName(); // Lấy tên lớp
-            System.out.println("Bạn đã chọn lớp: " + className);
+    ObservableList<com.team_fortune.student_management_teacher.model.Class> model1 = FXCollections.observableArrayList();
+
+    void deleteSearch() {
+        
+        com.team_fortune.student_management_teacher.util.getDatabaseToModel modest = new com.team_fortune.student_management_teacher.util.getDatabaseToModel();
+        List<com.team_fortune.student_management_teacher.model.Class> classes = modest.getDataFromDatabaseClass();
+        if (classes != null) {
+            model1.clear();
+            model1.addAll(classes);
+            tblremove.setItems(model1);
+            DeleteName.setCellValueFactory(new PropertyValueFactory<>("name"));
+            tblremove.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1) {
+                    Class selectedClass = tblremove.getSelectionModel().getSelectedItem();
+                    if (selectedClass != null) {
+                        className = selectedClass.getName();
+                        id_class=selectedClass.getId();
+                        
+                    }
+                }
+            });
+        } else {
+
         }
+
     }
-}); 
-   }else{
-       
-   }
-      
-       
-     
-       
-   }
+
     @FXML
     void Removebtn(ActionEvent event) {
         try {
+            
              conn=DBConnection.getConnection();
-          String checkQuery="Select Count(*) From class_subject Where id_class IN(Select id From class Where name=?)";
+          String checkQuery="Select Count(*) From class_subject a Join class b ON a.id_class=b.id Where  a.id_student IS NOT NULL AND b.name =?";
           PreparedStatement stmt=conn.prepareStatement(checkQuery);
+            Connection conn = DBConnection.getConnection();
+            
             stmt.setString(1, className);
-            ResultSet result=stmt.executeQuery();
-            if(result.next() && result.getInt(1)>0){
-                com.team_fortune.student_management_teacher.dialog.DialogAlert.DialogError("cannot be deleted because the class has students in it");
-            }else{
-                String query="Delete From class Where name=?";
-                PreparedStatement deletestmt=conn.prepareStatement(query);
-                deletestmt.executeUpdate();
+            
+            ResultSet result = stmt.executeQuery();
+            if (result.next() && result.getInt(1) > 0) {
+                String queryclass_subject="Delete From class_subject Where id_class=?";
+                PreparedStatement deletestmtclass=conn.prepareStatement(queryclass_subject);
+                deletestmtclass.setInt(1, id_class);
+                deletestmtclass.executeUpdate();
+              
+                    String query = "Delete From class Where name=?";
+                    PreparedStatement smt=conn.prepareStatement(query);
+                    smt.setString(1, className);
+                    smt.executeUpdate();
                 com.team_fortune.student_management_teacher.dialog.DialogAlert.DialogSuccess("Delete success");
-                  model1.clear();
-            deleteSearch();
+                model1.clear();
+                deleteSearch();
+               
+            } else {
+                 com.team_fortune.student_management_teacher.dialog.DialogAlert.DialogError("Delete error");
             }
-          
+
         } catch (SQLException ex) {
             Logger.getLogger(MainClassController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     void searchdata(String searchitem) {
         try {
             conn = DBConnection.getConnection();
             model.clear();
-            String query = "Select id,name From class Where name like ?";
+            String query = "Select a.id,a.name From class a Join class_subject b ON a.id=b.id_class Where name like ? GROUP BY a.id,a.name";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, "%" + searchitem + "%");
             ResultSet rs = stmt.executeQuery();
@@ -156,26 +169,30 @@ public class MainClassController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(MainClassController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(txtsearch.getText().isEmpty()){
+        if (txtsearch.getText().isEmpty()) {
             model.clear();
+            
         }
 
     }
-    void searchdisplay(){
-            com.team_fortune.student_management_teacher.util.getDatabaseToModel modest=new com.team_fortune.student_management_teacher.util.getDatabaseToModel();
-       List<com.team_fortune.student_management_teacher.model.Class> classes=modest.getDataFromDatabaseClass();
-       if(classes!=null){
-           model.clear();
-           model.addAll(classes);
-         Classtbl.setItems(model);
-                colClass.setCellValueFactory(new PropertyValueFactory<>("name"));
-       }else{
 
-       }
-    
+    void searchdisplay() {
+        com.team_fortune.student_management_teacher.util.getDatabaseToModel modest = new com.team_fortune.student_management_teacher.util.getDatabaseToModel();
+        List<com.team_fortune.student_management_teacher.model.Class> classes = modest.getDataFromDatabaseClass();
+        if (classes != null) {
+            model.clear();
+            model.addAll(classes);
+            Classtbl.setItems(model);
+            colClass.setCellValueFactory(new PropertyValueFactory<>("name"));
+        } else {
+
+        }
+
     }
-    void displayrecord(){
+
+    void displayrecord() {
         try {
+
            conn=DBConnection.getConnection();
            
            String query="Select id,name From class";
@@ -184,67 +201,76 @@ public class MainClassController implements Initializable {
           
            ResultSet rs=stmt.executeQuery();
            models.clear();
-           while(rs.next()){
-               String name_class=rs.getString("name");
-               int id=rs.getInt("id");
-                com.team_fortune.student_management_teacher.model.Class ob = new com.team_fortune.student_management_teacher.model.Class(id, name_class);
-               models.add(ob);
-           }
-           ListTable.setItems(models);
-           ViewCLass.setCellValueFactory(new PropertyValueFactory<>("name"));
-           View.setCellValueFactory(new PropertyValueFactory<>("isstatic"));
-           View.setCellFactory(column->new TableCell<Class,Boolean>(){
-        private final MFXButton button=new MFXButton("view");
-        {
-        button.setOnAction(event->{
-            Class classcontroller=getTableView().getItems().get(getIndex());
-              class_name=classcontroller.getName();
-              System.out.println(class_name);
-              
-        try{
-        FXMLLoader fxmloader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/popclass.fxml"));
-        AnchorPane newpopup=fxmloader.load();
-        popUpclass main=fxmloader.getController();
-        main.up();
-      
-           
           
-           
             
-        Stage popupStage=new Stage();
-         popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.setScene(new Scene(newpopup));
-    
-            popupStage.showAndWait();
-          
-        }catch(Exception ex){
-        ex.printStackTrace();
-        }
-       
-        });
-        }
-         @Override
-        protected void updateItem(Boolean item, boolean empty){
-            super.updateItem(item,empty);
-            if(item==null||empty){
-                setGraphic(null);
-            }else{
-                setGraphic(button);
-                   button.getStyleClass().add("button-design");
+            while (rs.next()) {
+                String name_class = rs.getString("name");
+                int id = rs.getInt("id");
+
+                com.team_fortune.student_management_teacher.model.Class ob = new com.team_fortune.student_management_teacher.model.Class(id, name_class);
+                models.add(ob);
             }
-        }
-        });
+            ListTable.setItems(models);
+            ViewCLass.setCellValueFactory(new PropertyValueFactory<>("name"));
+            View.setCellValueFactory(new PropertyValueFactory<>("isActive"));
+            View.setCellFactory(column -> new TableCell<Class, Boolean>() {
+                private final MFXButton button = new MFXButton("view");
+                {
+                    button.setOnAction(event -> {
+                        Class classcontroller = getTableView().getItems().get(getIndex());
+                        class_name = classcontroller.getName();
+                             boolean check_data_table= popUpclass.infoclass(MainClassController.class_name);
+                          
+                        try {
+                           
+                            if(check_data_table){
+                                FXMLLoader fxmloader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/popclass.fxml"));
+                    AnchorPane newpopup = fxmloader.load();
+                    popUpclass main = fxmloader.getController();
+                    main.up();
+                    Stage popupStage = new Stage();
+                    popupStage.initModality(Modality.APPLICATION_MODAL);
+                    popupStage.setScene(new Scene(newpopup));
+
+                    popupStage.showAndWait();
+                            }else{
+                                DialogAlert.DialogInformation("Table is Empty");
+                            }
+                    
+                
+                           
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+
+                    });
+                }
+
+                @Override
+                protected void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(button);
+                        button.getStyleClass().add("button-design");
+                    }
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
-private void startUpdating(){
-    ScheduledExecutorService executor=Executors.newSingleThreadScheduledExecutor();
-    executor.scheduleAtFixedRate(()->{
-        Platform.runLater(this::displayrecord);
-    }, 0, 1, TimeUnit.SECONDS);
-}
+
+    private void startUpdating() {
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        executor.scheduleAtFixedRate(() -> {
+            Platform.runLater(this::displayrecord);
+        }, 0, 1, TimeUnit.SECONDS);
+    }
+
     public void showPopup(Class selectedclass) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/UpdateClass.fxml"));
@@ -252,14 +278,11 @@ private void startUpdating(){
             MainClassController mainclass = fxmlLoader.getController();
             mainclass.init(selectedclass.getName());
             Stage popupStage = new Stage();
-            System.out.println(selectedclass.getName());
-
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(newpopup));
-
             popupStage.showAndWait();
-            
-             searchdisplay();
+
+            searchdisplay();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -269,12 +292,11 @@ private void startUpdating(){
         oldname.setText(className);
     }
 
-    
-
     @FXML
     void Addclass(ActionEvent event) {
         try {
-            int id = 0;
+            if(!name_class.getText().isEmpty()){
+                 int id = 0;
             int id_class=0;
             conn = DBConnection.getConnection();
             String query1="Select id From teacher Where username=?";
@@ -301,6 +323,10 @@ private void startUpdating(){
             stmt2.executeUpdate();
             DialogAlert.DialogSuccess("Add class successfully");
             name_class.setText("");
+            }else{
+                DialogAlert.DialogError("Fiele is Empty");
+            }
+           
            
         } catch (SQLException ex) {
             Logger.getLogger(MainClassController.class.getName()).log(Level.SEVERE, null, ex);
@@ -310,7 +336,8 @@ private void startUpdating(){
     @FXML
     void Updateclass(ActionEvent event) {
         try {
-            conn = DBConnection.getConnection();
+            if(!newName.getText().isEmpty()){
+               conn = DBConnection.getConnection();
             String query = "Update class set name=? where name=? ";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, newName.getText());
@@ -318,8 +345,12 @@ private void startUpdating(){
 
             stmt.executeUpdate();
             oldname.setText(newName.getText());
-             Classtbl.refresh();
-             newName.setText("");
+            Classtbl.refresh();
+            newName.setText("");  
+            }else{
+                DialogAlert.DialogError("Field is Empty");
+            }
+           
         } catch (SQLException ex) {
             Logger.getLogger(MainClassController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -327,14 +358,20 @@ private void startUpdating(){
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       deleteSearch();
-       searchdisplay();
+        deleteSearch();
+        searchdisplay();
         txtsearch.textProperty().addListener((observable, oldvalue, newValue) -> {
-            searchdata(newValue);
+           
+    if (!newValue.isEmpty()) {
+         model.clear(); 
+        searchdata(newValue); 
+    } else {
+       searchdisplay();
+    }
         });
-        
+
         displayrecord();
-         startUpdating();
+        startUpdating();
         Classtbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

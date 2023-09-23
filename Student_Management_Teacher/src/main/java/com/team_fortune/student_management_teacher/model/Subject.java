@@ -5,6 +5,17 @@ public class Subject {
     private String name;
     private String session;
     private String lession_link;
+    private Boolean Act;
+
+    public Boolean getAct() {
+        return Act;
+    }
+
+    public void setAct(Boolean Act) {
+        this.Act = Act;
+    }
+
+    
 
     public Subject() {
     }
@@ -14,6 +25,7 @@ public class Subject {
         this.name = name;
         this.session = session;
         this.lession_link = lession_link;
+         this.Act=true;
     }
 
     public int getId() {

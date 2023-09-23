@@ -9,7 +9,16 @@ package com.team_fortune.student_management_teacher.model;
  * @author tranp
  */
 public class Assignments {
-    private String name_student;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+   
     private String name_Subject;
     private String name_class;
     private String Assignment;
@@ -36,21 +45,15 @@ public class Assignments {
         return Assignment;
     }
 
-    public Assignments(String name_student, String name_Subject, String name_class, String Assignment, boolean Status) {
-        this.name_student= name_student;
+    public Assignments( String name_Subject, String name_class, String Assignment, boolean Status,int id) {
         this.name_Subject = name_Subject;
         this.name_class = name_class;
         this.Assignment = Assignment;
         this.Status = Status;
+        this.id=id;
     }
 
-    public String getName_student() {
-        return name_student;
-    }
-
-    public void setName_student(String name_student) {
-        this.name_student = name_student;
-    }
+    
  public Assignments(){
      
  }

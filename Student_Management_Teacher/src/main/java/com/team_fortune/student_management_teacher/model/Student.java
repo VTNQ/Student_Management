@@ -10,6 +10,15 @@ public class Student {
     private Date since;
     private String password;
     private boolean status;
+    private Boolean isActive;
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
 
     public Student() {
     }
@@ -22,6 +31,7 @@ public class Student {
         this.since = since;
         this.password = password;
         this.status = status;
+        this.isActive=true;
     }
 
     public int getId() {

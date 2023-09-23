@@ -6,7 +6,7 @@ package com.team_fortune.student_management_teacher;
 
 import com.team_fortune.student_management_teacher.dialog.DialogAlert;
 import com.team_fortune.student_management_teacher.model.Assignments;
-import com.team_fortune.student_management_teacher.model.Subject;
+
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.MD5;
 import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
@@ -17,24 +17,32 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -47,24 +55,41 @@ public class AssignmentController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    private TableView<com.team_fortune.student_management_teacher.model.Assignments>ListAssignment;
+    private TableView<com.team_fortune.student_management_teacher.model.Assignments>ListAssignment=new TableView<>();
 @FXML
-private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>name_Subject;
+private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>name_Subject=new TableColumn<>();
 @FXML
-private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>Class_ass;
+private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>Class_ass=new TableColumn<>();
 @FXML
-private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colAssignment;
+private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colAssignment=new TableColumn<>();
 @FXML
-private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Boolean>colStatus;
+private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Boolean>colStatus=new TableColumn<>();
 @FXML
-private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colStudent;
+private TableView<com.team_fortune.student_management_teacher.model.Assignments>colupdatetable=new TableView<>();
+@FXML
+private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>coluddatesubject=new TableColumn<>();
+@FXML
+private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colUpdateclass=new TableColumn<>();
+@FXML
+private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colupdateAssignment=new TableColumn<>();
+@FXML
+private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Boolean>colupdateStatus=new TableColumn<>();
+    
     @FXML
     private MFXComboBox<String> name_student=new MFXComboBox<>();
         @FXML
     private MFXComboBox<String> name_subject=new MFXComboBox<>();
+        @FXML
+        private Label labelClass;
+        @FXML
+        private TextField Assignment_link;
         private Connection conn;
+            @FXML
+    private MFXTextField txtsearch=new MFXTextField();
     @FXML
     private MFXComboBox<String> name_class=new MFXComboBox<>();
+    private int id_ass;
+    
      ObservableList<com.team_fortune.student_management_teacher.model.Assignments> model=FXCollections.observableArrayList();
     private List<String> getClassName(){
         List<com.team_fortune.student_management_teacher.model.Class>classes=new getDatabaseToModel().getDataFromDatabaseClass();
@@ -73,6 +98,9 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
             Classnames.add(cls.getName());
         }
         return Classnames;
+    }
+    private void searchassignmentdisplay(){
+        
     }
     private List<String>getClassSubject(){
         List<com.team_fortune.student_management_teacher.model.Subject> Subject=new getDatabaseToModel().getAllDataFromDataBaseSubject();
@@ -127,6 +155,13 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
                        checkbox.setOnAction(event->{
                        Assignments assignment=getTableView().getItems().get(getIndex());
                        assignment.setStatus(checkbox.isSelected());
+                          updateAssignment(assignment.getStatus(),assignment.getId());
+                          if(assignment.getStatus()==true){
+                               DialogAlert.DialogSuccess("Active Success");
+                          }else{
+                               DialogAlert.DialogSuccess("Unactive Success");
+                          }
+                         
                        });
                    }else{
                        setGraphic(null);
@@ -134,24 +169,23 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
                }
                 
                 });
-                colStudent.setCellValueFactory(new PropertyValueFactory<>("name_student"));
+               
        }
       
     }
-    private List<String>getStudent(){
-        List<com.team_fortune.student_management_teacher.model.Student> student=new getDatabaseToModel().getDataFromDatabaseStudent();
-        if(student!=null){
-            List<String>StudentName=new ArrayList<>();
-        for (com.team_fortune.student_management_teacher.model.Student st : student) {
-            StudentName.add(st.getName());
+    private void updateAssignment(Boolean status,int id_Assignment){
+        try {
+            conn=DBConnection.getConnection();
+            String query="Update assignments set status=? Where id=?";
+            PreparedStatement stmt=conn.prepareStatement(query);
+            stmt.setBoolean(1, status);
+            stmt.setInt(2, id_Assignment);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return StudentName;
-        }else{
-            return new ArrayList<>();
-        }
-        
     }
-  
+   
         @FXML
     private MFXTextField Link_assignment;
        @FXML
@@ -236,18 +270,214 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
            } catch (Exception e) {
                e.printStackTrace();
            }
-         
-        
-       
+    }
+    
+    public void searchdisplay(){
+        com.team_fortune.student_management_teacher.util.getDatabaseToModel modest=new com.team_fortune.student_management_teacher.util.getDatabaseToModel();
+        List<com.team_fortune.student_management_teacher.model.Assignments>Assign=modest.getAssignments();
+        if(Assign!=null){
+            model.clear();
+            model.addAll(Assign);
+             colupdatetable.setItems(model);
+            coluddatesubject.setCellValueFactory(new PropertyValueFactory<>("name_Subject"));
+            colUpdateclass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
+            colupdateAssignment.setCellValueFactory(new PropertyValueFactory<>("Assignment"));
+             colupdateAssignment.setCellFactory(column->{
+                return new TableCell<Assignments,String>(){
 
+                    @Override
+                    protected void updateItem(String Item, boolean empty) {
+                        super.updateItem(Item, empty);
+                        if(!empty && Item!=null && !Item.isEmpty()){
+                            Hyperlink hyperlink=new Hyperlink(Item);
+                            hyperlink.setOnAction(event->{
+                                try {
+                                    java.awt.Desktop.getDesktop().browse(new URI(Item));
+                                } catch (Exception e) {
+                                    DialogAlert.DialogError("URL is not Found");
+                                }
+                            });
+                            setGraphic(hyperlink);
+                        }else{
+                            setGraphic(null);
+                        }
+                    }
+
+                };
+                });
+             
+            colupdateStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+            colupdateStatus.setCellFactory(column->new CheckBoxTableCell<Assignments,Boolean>(){
+                @Override
+                public void updateItem(Boolean Item, boolean empty) {
+                    super.updateItem(Item, empty);
+                    if(Item!=null && !empty){
+                        CheckBox checkbox=new CheckBox();
+                        checkbox.setSelected(Item);
+                        setGraphic(checkbox);
+                        checkbox.setOnAction(event->{
+                       Assignments assignment=getTableView().getItems().get(getIndex());
+                       assignment.setStatus(checkbox.isSelected());
+                            updateAssignment(assignment.getStatus(), assignment.getId());
+                            if(assignment.getStatus()==true){
+                               DialogAlert.DialogSuccess("Active is success");
+                            }else{
+                                DialogAlert.DialogSuccess("Unsctive is success");
+                            }
+                        });
+                    }else{
+                        setGraphic(null);
+                    }
+                }
+                
+        });
+        }
+    }
+    private void showpopup(Assignments assign){
+        try {
+            FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assign_popup.fxml"));
+            AnchorPane  newpopup=loader.load();
+            AssignmentController assignment=loader.getController();
+            assignment.init(assign.getName_class());
+            assignment.setidass(assign.getId());
+            Stage popupStage=new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setScene(new Scene(newpopup));
+            popupStage.setResizable(false);
+            popupStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void init(String name_class){
+        labelClass.setText(name_class);
+    }
+    @FXML
+    private void updatepopup(){
+        String query="Update assignments set link=? Where id=?";
+        try {
+            conn=DBConnection.getConnection();
+            PreparedStatement stmt=conn.prepareStatement(query);
+            stmt.setString(1, Assignment_link.getText());
+            stmt.setInt(2, getidass());
+            stmt.executeUpdate();
+            Assignment_link.setText("");
+           
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void searchfield(String searchfield){
+        String query="SELECT  c.id AS id,a.name AS subject_name, b.name AS class_name, c.link, c.status FROM subject a " +
+                       "INNER JOIN class_subject d ON a.id = d.id_subject " +
+                       "INNER JOIN class b ON b.id = d.id_class " +
+                       "INNER JOIN assignments c ON c.id = d.id_assignments " +
+                       "INNER JOIN teacher f ON f.id = d.id_teacher " +
+                       "WHERE f.username = ? And b.name like ? "+"Group by c.id,a.name,b.name,c.link,c.status";
+        try {
+            model.clear();
+            conn=DBConnection.getConnection();
+            PreparedStatement stmt=conn.prepareStatement(query);
+            stmt.setString(1, MD5.Md5(HomeController.username));
+            stmt.setString(2, "%" + searchfield + "%");
+            ResultSet result=stmt.executeQuery();
+            while(result.next()){
+                int id=result.getInt("id");
+                String name_subject=result.getString("subject_name");
+                String name_class=result.getString("class_name");
+                String link=result.getString("link");
+                Boolean status=result.getBoolean("status");
+                com.team_fortune.student_management_teacher.model.Assignments ass=new com.team_fortune.student_management_teacher.model.Assignments(name_subject, name_class, link, status, id);
+                model.add(ass);
+            }
+            colupdatetable.setItems(model);
+            coluddatesubject.setCellValueFactory(new PropertyValueFactory<>("name_Subject"));
+            colUpdateclass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
+            colupdateAssignment.setCellValueFactory(new PropertyValueFactory<>("Assignment"));
+            colupdateAssignment.setCellFactory(column->{
+                return new TableCell<Assignments,String>(){
+
+                    @Override
+                    protected void updateItem(String Item, boolean empty) {
+                        super.updateItem(Item, empty);
+                        if(!empty && Item!=null && !Item.isEmpty()){
+                            Hyperlink hyperlink=new Hyperlink(Item);
+                            hyperlink.setOnAction(event->{
+                                try {
+                                    java.awt.Desktop.getDesktop().browse(new URI(Item));
+                                } catch (Exception e) {
+                                    DialogAlert.DialogError("URL is not Found");
+                                }
+                            });
+                            setGraphic(hyperlink);
+                        }else{
+                            setGraphic(null);
+                        }
+                    }
+
+                };
+                });
+
+            colupdateStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
+            colupdateStatus.setCellFactory(column->new CheckBoxTableCell<Assignments,Boolean>(){
+                @Override
+                public void updateItem(Boolean Item, boolean empty) {
+                    super.updateItem(Item, empty);
+                    if(Item!=null && !empty){
+                        CheckBox checkbox=new CheckBox();
+                        checkbox.setSelected(Item);
+                        setGraphic(checkbox);
+                        checkbox.setOnAction(event->{
+                       Assignments assignment=getTableView().getItems().get(getIndex());
+                       assignment.setStatus(checkbox.isSelected());
+                        });
+                    }else{
+                        setGraphic(null);
+                    }
+                }
+                
+        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+}
+    private void setidass(int id_Ass){
+        id_ass=id_Ass;
+    }
+    private int getidass(){
+        return id_ass;
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        searchdisplay();
+             txtsearch.textProperty().addListener((observable, oldvalue, newValue) -> {
+                 if(!newValue.isEmpty()){
+                     model.clear();
+                    searchfield(newValue);
+                 }else{
+                    searchdisplay();
+                 }
+                 
+    });
+                     
         name_class.getItems().addAll(getClassName());
         name_subject.getItems().addAll(getClassSubject());
-        name_student.getItems().addAll(getStudent());
         displayrecord();
+          colupdatetable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 1) {
+                    com.team_fortune.student_management_teacher.model.Assignments ass = colupdatetable.getSelectionModel().getSelectedItem();
+                    if (ass != null) {
+                        showpopup(ass);
+                        txtsearch.setText("");
+                        searchdisplay();
+                    }
+                }
+            }
+        });
+
     }   
     
 }

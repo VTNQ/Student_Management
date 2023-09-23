@@ -218,7 +218,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Update">
+                  <MenuItem mnemonicParsing="false" onAction="#update_Assignment" text="Update">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -227,7 +227,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="List">
+                  <MenuItem mnemonicParsing="false" onAction="#ListAssignment" text="List">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -236,7 +236,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Delete">
+                  <MenuItem mnemonicParsing="false" onAction="#DeleteAssign" text="Delete">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
