@@ -18,92 +18,202 @@
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <VBox prefHeight="370.0" prefWidth="600.0">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                        <VBox prefHeight="370.0" prefWidth="600.0">
                            <children>
-                              <Label alignment="CENTER" text="ADD TEACHER">
-                                 <font>
-                                    <Font name="System Bold" size="36.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="165.0" prefWidth="600.0">
-                           <children>
-                              <VBox alignment="CENTER_LEFT" prefHeight="270.0" prefWidth="300.0">
+                              <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Label text="Name">
-                                       <VBox.margin>
-                                          <Insets left="163.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label text="Username">
-                                       <VBox.margin>
-                                          <Insets left="163.0" top="13.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label text="Email">
-                                       <VBox.margin>
-                                          <Insets left="163.0" top="13.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label text="Since">
-                                       <VBox.margin>
-                                          <Insets left="163.0" top="13.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label text="Phone">
-                                       <VBox.margin>
-                                          <Insets left="163.0" top="13.0" />
-                                       </VBox.margin>
+                                    <Label alignment="CENTER" text="ADD TEACHER">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
                                     </Label>
                                  </children>
-                              </VBox>
-                              <VBox prefHeight="270.0" prefWidth="300.0">
+                              </HBox>
+                              <HBox prefHeight="165.0" prefWidth="600.0">
                                  <children>
-                                    <MFXTextField fx:id="nameTeacher" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Name Teacher" styleClass="mfx-text-field" stylesheets="@css/application.css">
-                                       <VBox.margin>
-                                          <Insets left="13.0" top="6.0" />
-                                       </VBox.margin>
-                                    </MFXTextField>
-                                    <MFXTextField fx:id="usernameTeacher" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Username for Teacher" styleClass="mfx-text-field" stylesheets="@css/application.css">
-                                       <VBox.margin>
-                                          <Insets left="13.0" top="6.0" />
-                                       </VBox.margin>
-                                    </MFXTextField>
-                                    <MFXTextField fx:id="emailTeacher" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Email for Teacher" styleClass="mfx-text-field" stylesheets="@css/application.css">
-                                       <VBox.margin>
-                                          <Insets left="13.0" top="6.0" />
-                                       </VBox.margin>
-                                    </MFXTextField>
-                                    <MFXDatePicker fx:id="SinceTeacher" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Since of Teacher" styleClass="mfx-date-picker" stylesheets="@css/application.css">
-                                       <VBox.margin>
-                                          <Insets left="13.0" top="6.0" />
-                                       </VBox.margin>
-                                    </MFXDatePicker>
-                                    <MFXTextField fx:id="phoneTeacher" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Phone Teacher" styleClass="mfx-text-field" stylesheets="@css/application.css">
-                                       <VBox.margin>
-                                          <Insets left="13.0" top="6.0" />
-                                       </VBox.margin>
-                                    </MFXTextField>
+                                    <VBox alignment="CENTER_LEFT" prefHeight="270.0" prefWidth="300.0">
+                                       <children>
+                                          <Label text="Name">
+                                             <VBox.margin>
+                                                <Insets left="163.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label text="Username">
+                                             <VBox.margin>
+                                                <Insets left="163.0" top="13.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label text="Email">
+                                             <VBox.margin>
+                                                <Insets left="163.0" top="13.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label text="Since">
+                                             <VBox.margin>
+                                                <Insets left="163.0" top="13.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label text="Phone">
+                                             <VBox.margin>
+                                                <Insets left="163.0" top="13.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="270.0" prefWidth="300.0">
+                                       <children>
+                                          <MFXTextField fx:id="nameTeacher" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Name Teacher" styleClass="mfx-text-field" stylesheets="@css/application.css">
+                                             <VBox.margin>
+                                                <Insets left="13.0" top="6.0" />
+                                             </VBox.margin>
+                                          </MFXTextField>
+                                          <MFXTextField fx:id="usernameTeacher" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Username for Teacher" styleClass="mfx-text-field" stylesheets="@css/application.css">
+                                             <VBox.margin>
+                                                <Insets left="13.0" top="6.0" />
+                                             </VBox.margin>
+                                          </MFXTextField>
+                                          <MFXTextField fx:id="emailTeacher" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Email for Teacher" styleClass="mfx-text-field" stylesheets="@css/application.css">
+                                             <VBox.margin>
+                                                <Insets left="13.0" top="6.0" />
+                                             </VBox.margin>
+                                          </MFXTextField>
+                                          <MFXDatePicker fx:id="SinceTeacher" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Since of Teacher" styleClass="mfx-date-picker" stylesheets="@css/application.css">
+                                             <VBox.margin>
+                                                <Insets left="13.0" top="6.0" />
+                                             </VBox.margin>
+                                          </MFXDatePicker>
+                                          <MFXTextField fx:id="phoneTeacher" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Phone Teacher" styleClass="mfx-text-field" stylesheets="@css/application.css">
+                                             <VBox.margin>
+                                                <Insets left="13.0" top="6.0" />
+                                             </VBox.margin>
+                                          </MFXTextField>
+                                       </children>
+                                    </VBox>
                                  </children>
-                              </VBox>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <MFXButton alignment="TOP_CENTER" contentDisplay="CENTER" onMouseClicked="#addTeacher" styleClass="mfx-button" stylesheets="@css/application.css" text="Add" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </MFXButton>
+                                 </children>
+                              </HBox>
                            </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <MFXButton alignment="TOP_CENTER" contentDisplay="CENTER" onMouseClicked="#addTeacher" styleClass="mfx-button" stylesheets="@css/application.css" text="Add" textAlignment="CENTER">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </MFXButton>
-                           </children>
-                        </HBox>
+                        </VBox>
                      </children>
-                  </VBox>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </content></Tab>
+      <Tab text="Add Student">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="370.0" prefWidth="600.0">
+                           <children>
+                              <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label alignment="CENTER" text="ADD STUDENT">
+                                       <font>
+                                          <Font name="System Bold" size="36.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="165.0" prefWidth="600.0">
+                                 <children>
+                                    <VBox alignment="CENTER_LEFT" prefHeight="270.0" prefWidth="300.0">
+                                       <children>
+                                          <Label text="Name">
+                                             <VBox.margin>
+                                                <Insets left="163.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label text="Username">
+                                             <VBox.margin>
+                                                <Insets left="163.0" top="13.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label text="Email">
+                                             <VBox.margin>
+                                                <Insets left="163.0" top="13.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label text="Since">
+                                             <VBox.margin>
+                                                <Insets left="163.0" top="13.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label text="Phone">
+                                             <VBox.margin>
+                                                <Insets left="163.0" top="13.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="270.0" prefWidth="300.0">
+                                       <children>
+                                          <MFXTextField fx:id="nameStudent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Name Student" styleClass="mfx-text-field" stylesheets="@css/application.css">
+                                             <VBox.margin>
+                                                <Insets left="13.0" top="6.0" />
+                                             </VBox.margin>
+                                          </MFXTextField>
+                                          <MFXTextField fx:id="usernameStudent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Username for Student" styleClass="mfx-text-field" stylesheets="@css/application.css">
+                                             <VBox.margin>
+                                                <Insets left="13.0" top="6.0" />
+                                             </VBox.margin>
+                                          </MFXTextField>
+                                          <MFXTextField fx:id="emailStudent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Email for Student" styleClass="mfx-text-field" stylesheets="@css/application.css">
+                                             <VBox.margin>
+                                                <Insets left="13.0" top="6.0" />
+                                             </VBox.margin>
+                                          </MFXTextField>
+                                          <MFXDatePicker fx:id="SinceStudent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Since of Student" styleClass="mfx-date-picker" stylesheets="@css/application.css">
+                                             <VBox.margin>
+                                                <Insets left="13.0" top="6.0" />
+                                             </VBox.margin>
+                                          </MFXDatePicker>
+                                          <MFXTextField fx:id="phoneStudent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="163.0" promptText="Phone Student" styleClass="mfx-text-field" stylesheets="@css/application.css">
+                                             <VBox.margin>
+                                                <Insets left="13.0" top="6.0" />
+                                             </VBox.margin>
+                                          </MFXTextField>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <MFXButton alignment="TOP_CENTER" contentDisplay="CENTER" onMouseClicked="#addStudent" styleClass="mfx-button" stylesheets="@css/application.css" text="Add" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </MFXButton>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Reset Password Teacher">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab text="Reset Password Student">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
   </tabs>
 </TabPane>

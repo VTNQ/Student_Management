@@ -25,24 +25,67 @@ import javax.mail.internet.MimeMessage;
 public class SecondaryController {
 
     @FXML
+    private MFXDatePicker SinceStudent;
+
+    @FXML
     private MFXDatePicker SinceTeacher;
 
     @FXML
-    private MFXTextField nameTeacher;
-
-    @FXML
-    private MFXTextField phoneTeacher;
-
-    @FXML
-    private MFXTextField usernameTeacher;
+    private MFXTextField emailStudent;
 
     @FXML
     private MFXTextField emailTeacher;
 
     @FXML
+    private MFXTextField nameStudent;
+
+    @FXML
+    private MFXTextField nameTeacher;
+
+    @FXML
+    private MFXTextField phoneStudent;
+
+    @FXML
+    private MFXTextField phoneTeacher;
+
+    @FXML
+    private MFXTextField usernameStudent;
+
+    @FXML
+    private MFXTextField usernameTeacher;
+
+    @FXML
+    void addStudent(MouseEvent event) {
+        String username = MD5.Md5(usernameStudent.getText());
+        try {
+            String insertQuery = "insert into student(name,username,phone,email,since,password,status) values(?,?,?,?,?,?,?)";
+            DateTimeFormatter local = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String since = SinceStudent.getValue().format(local);
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(insertQuery);
+            ps.setString(1, nameStudent.getText());
+            ps.setString(2, username);
+            ps.setString(3, phoneStudent.getText());
+            ps.setString(4, emailStudent.getText());
+            ps.setString(5, since);
+            ps.setString(6, username);
+            ps.setInt(7, 0);
+
+            sendConfirmationEmail(emailStudent.getText());
+
+            ps.executeUpdate();
+            usernameStudent.clear();
+            nameStudent.clear();
+            phoneStudent.clear();
+            SinceStudent.clear();
+        } catch (SQLException ex) {
+            Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
     void addTeacher(MouseEvent event) {
         String username = MD5.Md5(usernameTeacher.getText());
-        System.out.println(username);
         try {
             String insertQuery = "insert into teacher(name,username,phone,email,since,password,status) values(?,?,?,?,?,?,?)";
             DateTimeFormatter local = DateTimeFormatter.ofPattern("yyyy-MM-dd");
