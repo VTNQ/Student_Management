@@ -78,6 +78,7 @@ public class SecondaryController {
             nameStudent.clear();
             phoneStudent.clear();
             SinceStudent.clear();
+            emailStudent.clear();
         } catch (SQLException ex) {
             Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -107,6 +108,7 @@ public class SecondaryController {
             nameTeacher.clear();
             phoneTeacher.clear();
             SinceTeacher.clear();
+            emailTeacher.clear();
         } catch (SQLException ex) {
             Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -115,7 +117,7 @@ public class SecondaryController {
     private void sendConfirmationEmail(String email) {
 
         String username = "votannamquoc@gmail.com";
-        String password = "fjez jcln hjst fxts";
+        String password = "itzr uyfy qjua uxoa";
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
