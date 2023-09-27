@@ -7,12 +7,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_admin.SecondaryController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_admin.SecondaryController">
   <tabs>
     <Tab text="Add Teacher">
          <content>
@@ -207,12 +210,49 @@
       </Tab>
       <Tab text="Reset Password Teacher">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="TableTeacher" layoutX="200.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="colTeacher" prefWidth="100.0" text="Name" />
+                      <TableColumn fx:id="colResetTeacher" prefWidth="103.20001220703125" text="Reset" />
+                    </columns>
+                  </TableView>
+                  <Label layoutX="143.0" layoutY="7.0" text="Reset Password For Teacher">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="132.0" layoutY="50.0" prefHeight="32.0" prefWidth="110.0" text="Search Teacher">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Label>
+                  <TextField fx:id="searchTeacher" layoutX="251.0" layoutY="53.0" promptText="Search Teacher" />
+               </children></AnchorPane>
         </content>
       </Tab>
       <Tab text="Reset Password Student">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="TableStudent" layoutX="200.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TableColumn fx:id="colStudent" prefWidth="99.99993896484375" text="Name" />
+                        <TableColumn fx:id="colResetStudent" prefWidth="100.800048828125" text="Reset" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="143.0" text="Reset Password For Student">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="160.0" layoutY="42.0" prefHeight="27.0" prefWidth="118.0" text="Search Student">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="Searchstudent" layoutX="279.0" layoutY="43.0" promptText="Search Student" />
+               </children></AnchorPane>
         </content>
       </Tab>
   </tabs>
