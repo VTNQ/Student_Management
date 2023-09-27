@@ -10,13 +10,13 @@ public class Student {
     private Date since;
     private String password;
     private boolean status;
-    private Boolean isActive;
+    private boolean isActive;
 
-    public Boolean getIsActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(Boolean isActive) {
+    public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
 

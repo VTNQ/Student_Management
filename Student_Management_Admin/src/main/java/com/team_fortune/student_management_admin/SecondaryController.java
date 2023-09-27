@@ -169,8 +169,8 @@ public class SecondaryController implements Initializable {
     void showStudent(){
         TableStudent.setItems(Student);
         colStudent.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colResetStudent.setCellValueFactory(new PropertyValueFactory<>("Isactive"));
-        colResetTeacher.setCellFactory(column->new TableCell<com.team_fortune.student_management_admin.model.Teacher,Boolean>(){
+        colResetStudent.setCellValueFactory(new PropertyValueFactory<>("isActive"));
+        colResetStudent.setCellFactory(column->new TableCell<com.team_fortune.student_management_admin.model.Student,Boolean>(){
         private final Button button=new Button("Reset");
         {
         button.setOnAction(event->{
@@ -190,6 +190,7 @@ public class SecondaryController implements Initializable {
             }
         
         });
+        
     }
     void showTeacher() {
         TableTeacher.setItems(Teacher);
@@ -276,6 +277,7 @@ public class SecondaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Teacher.addAll(new getDatabaseToModel().getDataFromDatabaseTeacher());
+        Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudent());
         showTeacher();
         searchTeacher.textProperty().addListener((observable, oldvalue, newvalue) -> {
             if (searchTeacher.getText().isEmpty() || searchTeacher.getText().isBlank()) {
@@ -289,16 +291,5 @@ public class SecondaryController implements Initializable {
             }
         });
         showStudent();
-//        TableTeacher.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                if (event.getClickCount() == 1) {
-//                    com.team_fortune.student_management_admin.model.Teacher teacher = TableTeacher.getSelectionModel().getSelectedItem();
-//                    if (!teacher.equals(null)) {
-//                        
-//                    }
-//                }
-//            }
-//        });
     }
 }
