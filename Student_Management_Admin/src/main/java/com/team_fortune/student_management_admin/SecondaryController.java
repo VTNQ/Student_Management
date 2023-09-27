@@ -290,6 +290,17 @@ public class SecondaryController implements Initializable {
                 showTeacher();
             }
         });
+        Searchstudent.textProperty().addListener((ObservableList,oldvalue,newvalue)->{
+        if(Searchstudent.getText().isEmpty() || Searchstudent.getText().isBlank()){
+            Student.clear();
+        Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudent());
+        showStudent();
+        }else{
+            Student.clear();
+        Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudentWithKey(newvalue));
+        showStudent();
+        }
+        });
         showStudent();
     }
 }
