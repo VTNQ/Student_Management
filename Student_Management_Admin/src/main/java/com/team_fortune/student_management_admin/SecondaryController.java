@@ -6,7 +6,6 @@ import com.team_fortune.student_management_admin.model.Teacher;
 import com.team_fortune.student_management_admin.util.DBConnection;
 import com.team_fortune.student_management_admin.util.MD5;
 import com.team_fortune.student_management_admin.util.getDatabaseToModel;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.net.URL;
@@ -16,11 +15,8 @@ import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -128,7 +124,7 @@ public class SecondaryController implements Initializable {
             Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudent());
             showStudent();
         } catch (SQLException ex) {
-            Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -167,7 +163,7 @@ public class SecondaryController implements Initializable {
             Teacher.addAll(new getDatabaseToModel().getDataFromDatabaseTeacher());
             showTeacher();
         } catch (SQLException ex) {
-            Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
     void showStudent(){
