@@ -39,9 +39,9 @@ public class SecondaryController implements Initializable {
 
     @FXML
     private MFXDatePicker SinceStudent;
-    
+
     @FXML
-    private TextField Searchstudent;
+    private TextField searchStudent;
     @FXML
     private MFXDatePicker SinceTeacher;
 
@@ -119,7 +119,7 @@ public class SecondaryController implements Initializable {
             phoneStudent.clear();
             SinceStudent.clear();
             emailStudent.clear();
-            
+
             Student.clear();
             Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudent());
             showStudent();
@@ -139,9 +139,9 @@ public class SecondaryController implements Initializable {
             PreparedStatement ps = conn.prepareStatement(insertQuery);
             ps.setString(1, nameTeacher.getText());
             ps.setString(2, username);
-            if(phoneTeacher.getText().isEmpty()){
+            if (phoneTeacher.getText().isEmpty()) {
                 ps.setString(3, null);
-            }else{
+            } else {
                 ps.setString(3, phoneTeacher.getText());
             }
             ps.setString(4, emailTeacher.getText());
@@ -158,7 +158,7 @@ public class SecondaryController implements Initializable {
             phoneTeacher.clear();
             SinceTeacher.clear();
             emailTeacher.clear();
-            
+
             Teacher.clear();
             Teacher.addAll(new getDatabaseToModel().getDataFromDatabaseTeacher());
             showTeacher();
@@ -166,55 +166,59 @@ public class SecondaryController implements Initializable {
             ex.printStackTrace();
         }
     }
-    void showStudent(){
+
+    void showStudent() {
         TableStudent.setItems(Student);
         colStudent.setCellValueFactory(new PropertyValueFactory<>("name"));
         colResetStudent.setCellValueFactory(new PropertyValueFactory<>("isActive"));
-        colResetStudent.setCellFactory(column->new TableCell<com.team_fortune.student_management_admin.model.Student,Boolean>(){
-        private final Button button=new Button("Reset");
-        {
-        button.setOnAction(event->{
-        
-        });
-        }
+        colResetStudent.setCellFactory(column -> new TableCell<com.team_fortune.student_management_admin.model.Student, Boolean>() {
+            private final Button button = new Button("Reset");
+
+            {
+                button.setOnAction(event -> {
+
+                });
+            }
 
             @Override
             protected void updateItem(Boolean Item, boolean empty) {
                 super.updateItem(Item, empty);
                 button.getStyleClass().add("button-design");
-                if(Item==null||empty){
+                if (Item == null || empty) {
                     setGraphic(null);
-                }else{
+                } else {
                     setGraphic(button);
-                }   
+                }
             }
-        
+
         });
-        
+
     }
+
     void showTeacher() {
         TableTeacher.setItems(Teacher);
         colTeacher.setCellValueFactory(new PropertyValueFactory<>("name"));
         colResetTeacher.setCellValueFactory(new PropertyValueFactory<>("Isactive"));
-        colResetTeacher.setCellFactory(column->new TableCell<com.team_fortune.student_management_admin.model.Teacher,Boolean>(){
-        private final Button button=new Button("Reset");
-        {
-        button.setOnAction(event->{
-        
-        });
-        }
+        colResetTeacher.setCellFactory(column -> new TableCell<com.team_fortune.student_management_admin.model.Teacher, Boolean>() {
+            private final Button button = new Button("Reset");
+
+            {
+                button.setOnAction(event -> {
+
+                });
+            }
 
             @Override
             protected void updateItem(Boolean Item, boolean empty) {
                 super.updateItem(Item, empty);
                 button.getStyleClass().add("button-design");
-                if(Item==null||empty){
+                if (Item == null || empty) {
                     setGraphic(null);
-                }else{
+                } else {
                     setGraphic(button);
-                }   
+                }
             }
-        
+
         });
     }
 
@@ -279,6 +283,7 @@ public class SecondaryController implements Initializable {
         Teacher.addAll(new getDatabaseToModel().getDataFromDatabaseTeacher());
         Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudent());
         showTeacher();
+        showStudent();
         searchTeacher.textProperty().addListener((observable, oldvalue, newvalue) -> {
             if (searchTeacher.getText().isEmpty() || searchTeacher.getText().isBlank()) {
                 Teacher.clear();
@@ -290,17 +295,16 @@ public class SecondaryController implements Initializable {
                 showTeacher();
             }
         });
-        Searchstudent.textProperty().addListener((ObservableList,oldvalue,newvalue)->{
-        if(Searchstudent.getText().isEmpty() || Searchstudent.getText().isBlank()){
-            Student.clear();
-        Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudent());
-        showStudent();
-        }else{
-            Student.clear();
-        Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudentWithKey(newvalue));
-        showStudent();
-        }
+        searchStudent.textProperty().addListener((ObservableList, oldvalue, newvalue) -> {
+            if (searchStudent.getText().isEmpty() || searchStudent.getText().isBlank()) {
+                Student.clear();
+                Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudent());
+                showStudent();
+            } else {
+                Student.clear();
+                Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudentWithKey(newvalue));
+                showStudent();
+            }
         });
-        showStudent();
     }
 }

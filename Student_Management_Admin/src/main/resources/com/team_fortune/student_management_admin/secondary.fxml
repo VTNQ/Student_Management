@@ -251,7 +251,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="Searchstudent" layoutX="279.0" layoutY="43.0" promptText="Search Student" />
+                  <TextField fx:id="searchStudent" layoutX="279.0" layoutY="43.0" promptText="Search Student" />
                </children></AnchorPane>
         </content>
       </Tab>
