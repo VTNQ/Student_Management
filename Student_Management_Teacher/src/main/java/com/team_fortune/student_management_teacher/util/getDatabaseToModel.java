@@ -251,7 +251,7 @@ public class getDatabaseToModel {
     }
    public static List<com.team_fortune.student_management_teacher.model.Assignments>WatchAssStudent(String name_class,int id_Assignment,String name_subject){
        List<com.team_fortune.student_management_teacher.model.Assignments>ExAssign=new ArrayList<>();
-       String query="Select a.name as name_student,b.link as link,b.status as status  From student a Join class_subject c ON a.id=c.id_student "
+       String query="Select b.id_assignments,a.name as name_student,b.link as link,b.status as status  From student a Join class_subject c ON a.id=c.id_student "
                + "Join subject d ON d.id=c.id_subject JOIN class e ON e.id=c.id_class JOIN assignments f ON f.id=c.id_assignments "
                + "Join solution b ON f.id=b.id_assignments Where b.id_assignments=? And e.name=? And d.name=?";
        try {
@@ -263,9 +263,10 @@ public class getDatabaseToModel {
            ResultSet result=stmt.executeQuery();
            while(result.next()){
                String name_student=result.getString("name_student");
+               int id=result.getInt("id_assignments");
                String Link=result.getString("link");
-               String Status=result.getString("status");
-               ExAssign.add(new Assignments(name_student, Link, Status));
+               int Status=result.getInt("status");
+               ExAssign.add(new Assignments(id,name_student, Link, Status));
            }
            DBConnection.closeConnection(conn);
        } catch (Exception e) {

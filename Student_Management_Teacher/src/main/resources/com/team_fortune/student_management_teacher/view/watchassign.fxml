@@ -17,9 +17,9 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="201.0" layoutY="14.0" prefHeight="44.0" prefWidth="168.0">
+            <Label fx:id="set_name_subject" alignment="CENTER" layoutX="201.0" layoutY="14.0" prefHeight="44.0" prefWidth="95.0">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <ImageView fitHeight="108.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
@@ -34,7 +34,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="120.0" layoutY="94.0" prefHeight="44.0" prefWidth="168.0">
+      <Label fx:id="set_name_class" alignment="CENTER" layoutX="120.0" layoutY="94.0" prefHeight="44.0" prefWidth="95.0">
          <font>
             <Font size="18.0" />
          </font>
