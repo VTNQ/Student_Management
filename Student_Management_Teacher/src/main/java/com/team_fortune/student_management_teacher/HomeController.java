@@ -234,6 +234,74 @@ public class HomeController implements Initializable {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    @FXML
+    void update_Assignment(ActionEvent event) {
+FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+         btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
+        try {
+            TabPane AssignmentPanel=loader.load();
+            AssignmentPanel.getSelectionModel().select(1);
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(AssignmentPanel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    void ListAssignment(ActionEvent event){
+        FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+         btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
+        try {
+            TabPane AssignmentPanel=loader.load();
+            AssignmentPanel.getSelectionModel().select(2);
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(AssignmentPanel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    void DeleteAssign(ActionEvent event){
+        FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+         btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
+        try {
+            TabPane AssignmentPanel=loader.load();
+            AssignmentPanel.getSelectionModel().select(3);
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(AssignmentPanel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    void Add_Examp(ActionEvent event){
+         FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Exampleview.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+         btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
+        try {
+        TabPane AssignmentPanel=loader.load();
+        AssignmentPanel.getSelectionModel().select(0);
+         main_display.getChildren().clear();
+            main_display.getChildren().setAll(AssignmentPanel);
+    } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 @FXML
     void Add_assignment(ActionEvent event) {
         FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));

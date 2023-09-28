@@ -9,7 +9,13 @@ public class Class {
     public Boolean getIsActive() {
         return isActive;
     }
+ public String getName_student() {
+        return name_student;
+    }
 
+    public void setName_student(String name_student) {
+        this.name_student = name_student;
+    }
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
@@ -34,6 +40,8 @@ public class Class {
     public void setId(int id) {
         this.id = id;
     }
+
+   
 
     public void setName(String name) {
         this.name = name;

@@ -158,7 +158,7 @@
             </MenuButton>
             <MenuButton fx:id="btnExam" alignment="CENTER" layoutY="190.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Exam">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Add">
+                  <MenuItem mnemonicParsing="false" onAction="#Add_Examp" text="Add">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -218,7 +218,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Update">
+                  <MenuItem mnemonicParsing="false" onAction="#update_Assignment" text="Update">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -227,7 +227,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="List">
+                  <MenuItem mnemonicParsing="false" onAction="#ListAssignment" text="List">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -236,7 +236,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Delete">
+                  <MenuItem mnemonicParsing="false" onAction="#DeleteAssign" text="Delete">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>

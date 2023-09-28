@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.AssignmentController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.AssignmentController">
   <tabs>
     <Tab text="Add Assignment">
       <content>
@@ -22,39 +22,33 @@
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="70.0" layoutY="121.0" prefHeight="33.0" prefWidth="108.0" text="link_assignment">
+                  <Label alignment="CENTER" layoutX="144.0" layoutY="119.0" prefHeight="33.0" prefWidth="108.0" text="link_assignment">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="Link_assignment" layoutX="178.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Assignment" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
-                  <MFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="202.0" layoutY="315.0" onAction="#AddAssignment" prefHeight="42.0" prefWidth="141.0" styleClass="mfx-button" stylesheets="@../css/application.css" text="ADD" textAlignment="CENTER" textFill="RED">
+                  <MFXTextField fx:id="Link_assignment" layoutX="265.0" layoutY="123.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Assignment" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+                  <MFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="216.0" layoutY="248.0" onAction="#AddAssignment" prefHeight="42.0" prefWidth="141.0" styleClass="mfx-button" stylesheets="@../css/application.css" text="ADD" textAlignment="CENTER" textFill="RED">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </MFXButton>
-                  <Label alignment="CENTER" layoutX="70.0" layoutY="161.0" prefHeight="33.0" prefWidth="108.0" text="Student">
+                  <Label alignment="CENTER" layoutX="144.0" layoutY="153.0" prefHeight="33.0" prefWidth="108.0" text="Subject">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="70.0" layoutY="205.0" prefHeight="33.0" prefWidth="108.0" text="Subject">
+                  <Label alignment="CENTER" layoutX="144.0" layoutY="195.0" prefHeight="33.0" prefWidth="108.0" text="Class">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="70.0" layoutY="255.0" prefHeight="33.0" prefWidth="108.0" text="Class">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <MFXComboBox fx:id="name_student" layoutX="178.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
-                  <MFXComboBox fx:id="name_subject" layoutX="182.0" layoutY="212.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
-                  <MFXComboBox fx:id="name_class" layoutX="190.0" layoutY="258.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
+                  <MFXComboBox fx:id="name_subject" layoutX="265.0" layoutY="157.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
+                  <MFXComboBox fx:id="name_class" layoutX="265.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Untitled Tab 2">
+    <Tab text="Update Assignment">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -69,12 +63,12 @@
                      </font>
                   </Label>
                   <MFXTextField fx:id="txtsearch" layoutX="197.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
-                  <TableView layoutX="127.0" layoutY="137.0" prefHeight="200.0" prefWidth="304.0">
+                  <TableView fx:id="colupdatetable" layoutX="107.0" layoutY="136.0" prefHeight="200.0" prefWidth="385.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Teacher" />
-                      <TableColumn prefWidth="75.0" text="Subject" />
-                        <TableColumn prefWidth="75.0" text="Class" />
-                        <TableColumn prefWidth="75.0" text="Assignment" />
+                      <TableColumn fx:id="coluddatesubject" prefWidth="92.0" text="Subject" />
+                        <TableColumn fx:id="colUpdateclass" prefWidth="78.4000244140625" text="Class" />
+                        <TableColumn fx:id="colupdateAssignment" prefWidth="109.60003662109375" text="Assignment" />
+                        <TableColumn fx:id="colupdateStatus" prefWidth="109.60003662109375" text="Status" />
                     </columns>
                   </TableView>
                </children></AnchorPane>
@@ -89,20 +83,20 @@
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="ListAssignment" layoutX="71.0" layoutY="137.0" prefHeight="200.0" prefWidth="475.0">
+                  <TableView fx:id="ListAssignment" layoutX="81.0" layoutY="86.0" prefHeight="200.0" prefWidth="426.0">
                      <columns>
                         <TableColumn fx:id="name_Subject" prefWidth="75.0" text="Subject" />
                         <TableColumn fx:id="Class_ass" prefWidth="75.0" text="Class" />
-                        <TableColumn fx:id="colAssignment" prefWidth="132.7999267578125" text="Assignment" />
-                        <TableColumn fx:id="colStatus" prefWidth="96.800048828125" text="Status" />
-                        <TableColumn fx:id="colStudent" prefWidth="96.800048828125" text="Student" />
+                        <TableColumn fx:id="colAssignment" prefWidth="97.60003662109375" text="Assignment" />
+                        <TableColumn fx:id="colStatus" prefWidth="80.79998779296875" text="Status" />
+                        <TableColumn fx:id="colassign" prefWidth="96.0000061035156" text="See submission" />
                      </columns>
                   </TableView>
                </children>
             </AnchorPane>
          </content>
       </Tab>
-      <Tab text="Untitled Tab 2">
+      <Tab text="Delete Assignment">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -111,14 +105,15 @@
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <TableView layoutX="127.0" layoutY="137.0" prefHeight="200.0" prefWidth="304.0">
+                  <TableView fx:id="tblDelete" layoutX="138.0" layoutY="86.0" prefHeight="200.0" prefWidth="304.0">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="Teacher" />
-                        <TableColumn prefWidth="75.0" text="Subject" />
-                        <TableColumn prefWidth="75.0" text="Class" />
-                        <TableColumn prefWidth="75.0" text="Assignment" />
+                        <TableColumn fx:id="colsubject" prefWidth="75.0" text="Subject" />
+                        <TableColumn fx:id="colclass" prefWidth="75.0" text="Class" />
+                        <TableColumn fx:id="Assignmentcl" prefWidth="75.0" text="Assignment" />
+                        <TableColumn fx:id="Status" prefWidth="75.0" text="Status" />
                      </columns>
                   </TableView>
+                  <MFXButton layoutX="249.0" layoutY="302.0" onAction="#Deletebtn" prefHeight="39.0" prefWidth="73.0" styleClass="button-design" stylesheets="@../css/application.css" text="Delete" />
                </children>
             </AnchorPane>
          </content>

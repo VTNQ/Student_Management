@@ -124,7 +124,7 @@ public class MainSubjectController implements Initializable {
 
     private ObservableList<com.team_fortune.student_management_teacher.model.Class> Class = FXCollections.observableArrayList();
     private ObservableList<com.team_fortune.student_management_teacher.model.Subject> Subject = FXCollections.observableArrayList();
-
+ private ObservableList<com.team_fortune.student_management_teacher.model.Subject> model = FXCollections.observableArrayList();
     private ObservableList<com.team_fortune.student_management_teacher.model.Class_Subject> Class_Subject = FXCollections.observableArrayList();
     private ObservableList<com.team_fortune.student_management_teacher.model.Student> Student = FXCollections.observableArrayList();
 
@@ -320,7 +320,7 @@ public class MainSubjectController implements Initializable {
         Class.addAll(new getDatabaseToModel().getDataFromDatabaseClass());
         Class_Subject.addAll(new getDatabaseToModel().getDataFromDatabaseClassSubject());
         name_class.getItems().addAll(getClassNames());
-        Subject.addAll(new getDatabaseToModel().getDataFromDatabaseSubject());
+       
         showSuject();
         showListSubject();
         key_search.textProperty().addListener((observable, oldvalue, newValue) -> {
