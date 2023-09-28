@@ -16,11 +16,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class popUpclass implements Initializable{
      @FXML
-    private TableView<com.team_fortune.student_management_teacher.model.Class>tblSubkect=new TableView<>();
-      ObservableList<com.team_fortune.student_management_teacher.model.Class> popup=FXCollections.observableArrayList();
+    public  TableView<com.team_fortune.student_management_teacher.model.Class>tblSubkect=new TableView<>();
+     public ObservableList<com.team_fortune.student_management_teacher.model.Class> popup=FXCollections.observableArrayList();
     @FXML
     private TableColumn<com.team_fortune.student_management_teacher.model.Class,String>ClassSubject=new TableColumn<>();
     @FXML
@@ -37,13 +38,40 @@ public class popUpclass implements Initializable{
             while(rs.next()){
                 String name_class=rs.getString("a.name");
                 String name_student=rs.getString("b.name");
-
-            
+                com.team_fortune.student_management_teacher.model.Class newclass=new com.team_fortune.student_management_teacher.model.Class();
+                newclass.setName(name_class);
+                
+                newclass.setName_student(name_student);
+                popup.add(newclass);
             }
+
+           tblSubkect.setItems(popup);
+            System.out.println(tblSubkect);
+         ClassSubject.setCellValueFactory(new PropertyValueFactory<>("name"));
+           classStudent.setCellValueFactory(new PropertyValueFactory<>("name_student"));
            
         } catch (SQLException ex) {
             Logger.getLogger(MainClassController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public  static boolean infoclass(String class_name){
+            try {
+                Connection conn=DBConnection.getConnection();
+            String query="Select a.name,b.name From class a "+"JOIN class_subject c ON a.id=c.id_class "
+                    +"JOIN student b ON c.id_student=b.id "+"JOIN teacher d ON d.id=c.id_teacher "+"Where d.username=? And a.name=?";
+            PreparedStatement stmt=conn.prepareStatement(query);
+            stmt.setString(1, MD5.Md5(HomeController.username));
+            stmt.setString(2, class_name);
+            ResultSet rs=stmt.executeQuery();
+            boolean hasData=rs.next();
+            rs.close();
+            stmt.close();
+            conn.close();
+            return hasData;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
     }
 public void up(){
     
@@ -51,5 +79,7 @@ public void up(){
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Informationclass(MainClassController.class_name);
+       
+       
     }
 }

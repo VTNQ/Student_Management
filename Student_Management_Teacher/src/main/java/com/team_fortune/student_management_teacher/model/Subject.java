@@ -23,7 +23,9 @@ public class Subject {
         this.name = name;
         this.session = session;
         this.lession_link = lession_link;
+
         this.isActive=true;
+
     }
 
     public int getId() {
