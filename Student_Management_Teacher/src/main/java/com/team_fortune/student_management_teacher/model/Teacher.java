@@ -7,7 +7,7 @@ public class Teacher {
     private int id;
     private String name;
     private String username;
-    private int phone;
+    private String phone;
     private Date since;
     private String password;
     private boolean status;
@@ -15,7 +15,7 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(int id, String name, String username, int phone, Date since, String password, boolean status) {
+    public Teacher(int id, String name, String username, String phone, Date since, String password, boolean status) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -37,7 +37,7 @@ public class Teacher {
         return username;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -65,7 +65,7 @@ public class Teacher {
         this.username = username;
     }
     
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

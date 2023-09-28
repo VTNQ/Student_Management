@@ -6,7 +6,6 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -114,22 +113,7 @@
                      
                </children>
             </HBox>
-            <HBox alignment="TOP_RIGHT" prefHeight="28.0" prefWidth="400.0">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <children>
-                  <Hyperlink alignment="CENTER_RIGHT" contentDisplay="RIGHT" focusTraversable="false" graphicTextGap="3.0" onAction="#openPopupForgetgPassword" prefHeight="24.0" prefWidth="247.0" text="Forgot Password?" textAlignment="CENTER" textFill="RED" underline="true">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Hyperlink>
-               </children>
-               <padding>
-                  <Insets right="83.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="124.0" prefWidth="400.0">
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="93.0" prefWidth="400.0">
                <children>
                   <MFXButton fx:id="btn_Login" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#CheckLogin" opacity="0.73" prefHeight="37.0" prefWidth="62.0" style="-fx-background-color: linear-gradient(to right, #be93c5, #7bc6cc);" styleClass="mfx-button" stylesheets="@css/application.css" text="Login" textAlignment="CENTER" textFill="RED">
                      <font>

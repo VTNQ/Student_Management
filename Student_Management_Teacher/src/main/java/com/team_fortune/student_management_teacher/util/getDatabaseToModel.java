@@ -1,15 +1,12 @@
 package com.team_fortune.student_management_teacher.util;
 
 import com.team_fortune.student_management_teacher.HomeController;
-import com.team_fortune.student_management_teacher.MainSubjectController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class getDatabaseToModel {
     
@@ -39,7 +36,7 @@ public class getDatabaseToModel {
             }
             return classes;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
     }
@@ -62,7 +59,7 @@ public class getDatabaseToModel {
             }
             return subjects;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
     }
@@ -86,7 +83,7 @@ public class getDatabaseToModel {
             }
             return subjects;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
     }
@@ -111,7 +108,7 @@ public class getDatabaseToModel {
             }
             return classs_subjects;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
     }
@@ -153,7 +150,7 @@ public class getDatabaseToModel {
             }
             return classes;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
     }
@@ -193,27 +190,7 @@ public class getDatabaseToModel {
 
     return null;
 }
-    public List<com.team_fortune.student_management_teacher.model.Subject> getAllDataFromDataBaseSubject(){
-        try {
-            String searchQuery="Select * From Subject";
-            Connection conn=DBConnection.getConnection();
-            PreparedStatement stmt=conn.prepareStatement(searchQuery);
-            ResultSet rs=stmt.executeQuery();
-            List<com.team_fortune.student_management_teacher.model.Subject> Subject=new ArrayList<>();
-            while(rs.next()){
-                com.team_fortune.student_management_teacher.model.Subject sub=new com.team_fortune.student_management_teacher.model.Subject();
-                sub.setId(rs.getInt("id"));
-                sub.setName(rs.getString("name"));
-                sub.setSession(rs.getString("session"));
-                sub.setLession_link(rs.getString("lession_link"));
-                Subject.add(sub);
-            }
-            return Subject;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    
     public List<com.team_fortune.student_management_teacher.model.Student>getDataFromDatabaseStudent(){
         try {
             String searchQuery="select s.id,s.name,s.phone,s.since,s.status from student s inner join class_subject cs on cs.id_student=s.id inner join teacher t on cs.id_teacher=t.id where t.id=? group by s.name";
@@ -233,7 +210,7 @@ public class getDatabaseToModel {
             }
             return students;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
     }
@@ -258,7 +235,31 @@ public class getDatabaseToModel {
             }
             return students;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    public List<com.team_fortune.student_management_teacher.model.Teacher>getDataFromDatabaseTeacher(){
+        try {
+            String searchQuery="select t.id,t.name,t.phone,t.since,t.status from teacher t inner join class_subject cs on cs.id_teacher=t.id inner where t.id=? group by t.name";
+            Connection conn=DBConnection.getConnection();
+            PreparedStatement preparedStatement=conn.prepareStatement(searchQuery);
+            preparedStatement.setInt(1, id_teacher);
+            ResultSet rs =preparedStatement.executeQuery();
+            List<com.team_fortune.student_management_teacher.model.Teacher> Teachers=new ArrayList<>();
+            while(rs.next()){
+                com.team_fortune.student_management_teacher.model.Teacher Tea = new com.team_fortune.student_management_teacher.model.Teacher();
+                Tea.setId(rs.getInt("t.id"));
+                Tea.setName(rs.getString("t.name"));
+                Tea.setPhone(rs.getString("t.phone"));
+                Tea.setSince(rs.getDate("t.since"));
+                Tea.setStatus(rs.getBoolean("t.status"));
+                Teachers.add(Tea);
+            }
+            return Teachers;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return null;
     }

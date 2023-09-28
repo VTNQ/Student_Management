@@ -1,7 +1,6 @@
 package com.team_fortune.student_management_teacher;
 
 import com.team_fortune.student_management_teacher.dialog.DialogAlert;
-import com.team_fortune.student_management_teacher.model.Student;
 import com.team_fortune.student_management_teacher.model.Subject;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.getDatabaseToModel;

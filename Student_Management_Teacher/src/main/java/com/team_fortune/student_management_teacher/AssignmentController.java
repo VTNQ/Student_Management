@@ -72,7 +72,7 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
         return Classnames;
     }
     private List<String>getClassSubject(){
-        List<com.team_fortune.student_management_teacher.model.Subject> Subject=new getDatabaseToModel().getAllDataFromDataBaseSubject();
+        List<com.team_fortune.student_management_teacher.model.Subject> Subject=new getDatabaseToModel().getDataFromDatabaseSubject();
         List<String>Subjectname=new ArrayList<>();
         for (com.team_fortune.student_management_teacher.model.Subject sj : Subject) {
             Subjectname.add(sj.getName());
