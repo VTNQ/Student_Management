@@ -10,12 +10,12 @@ import java.util.List;
 
 public class getDatabaseToModel {
     public List<com.team_fortune.student_management_admin.model.Student>getDataFromDatabaseStudent(){
+        List<com.team_fortune.student_management_admin.model.Student> Students=new ArrayList<>();
         try{
             String searchQuery="select*from student";
             Connection conn=DBConnection.getConnection();
             Statement s =conn.createStatement();
             ResultSet rs=s.executeQuery(searchQuery);
-            List<com.team_fortune.student_management_admin.model.Student> Students=new ArrayList<>();
             while(rs.next()){
                 com.team_fortune.student_management_admin.model.Student student=new com.team_fortune.student_management_admin.model.Student();
                 student.setId(rs.getInt("id"));
@@ -25,19 +25,21 @@ public class getDatabaseToModel {
                 student.setStatus(rs.getBoolean("status"));
                 Students.add(student);
             }
-            return Students;
+            rs.close();
+            s.close();
+            DBConnection.closeConnection(conn);
         }catch(SQLException ex){
             ex.printStackTrace();
         }
-        return null;
+        return Students;
     }
     public List<com.team_fortune.student_management_admin.model.Teacher> getDataFromDatabaseTeacher() {
+        List<com.team_fortune.student_management_admin.model.Teacher> Teachers=new ArrayList<>();
         try{
             String searchQuery="select*from teacher";
             Connection conn=DBConnection.getConnection();
             Statement s =conn.createStatement();
             ResultSet rs=s.executeQuery(searchQuery);
-            List<com.team_fortune.student_management_admin.model.Teacher> Teachers=new ArrayList<>();
             while(rs.next()){
                 com.team_fortune.student_management_admin.model.Teacher teacher=new com.team_fortune.student_management_admin.model.Teacher();
                 teacher.setId(rs.getInt("id"));
@@ -47,20 +49,22 @@ public class getDatabaseToModel {
                 teacher.setStatus(rs.getBoolean("status"));
                 Teachers.add(teacher);
             }
-            return Teachers;
+            rs.close();
+            s.close();
+            DBConnection.closeConnection(conn);
         }catch(SQLException ex){
             ex.printStackTrace();
         }
-        return null;
+        return Teachers;
     }
      public List<com.team_fortune.student_management_admin.model.Teacher> getDataFromDatabaseTeacherWithKey(String name) {
+         List<com.team_fortune.student_management_admin.model.Teacher> Teachers=new ArrayList<>();
         try{
             String searchQuery="select*from teacher where name like ?";
             Connection conn=DBConnection.getConnection();
             PreparedStatement ps =conn.prepareStatement(searchQuery);
             ps.setString(1,'%'+name+'%');
             ResultSet rs=ps.executeQuery();
-            List<com.team_fortune.student_management_admin.model.Teacher> Teachers=new ArrayList<>();
             while(rs.next()){
                 com.team_fortune.student_management_admin.model.Teacher teacher=new com.team_fortune.student_management_admin.model.Teacher();
                 teacher.setId(rs.getInt("id"));
@@ -70,20 +74,22 @@ public class getDatabaseToModel {
                 teacher.setStatus(rs.getBoolean("status"));
                 Teachers.add(teacher);
             }
-            return Teachers;
+            rs.close();
+            ps.close();
+            DBConnection.closeConnection(conn);
         }catch(SQLException ex){
             ex.printStackTrace();
         }
-        return null;
+        return Teachers;
     }
     public List<com.team_fortune.student_management_admin.model.Student> getDataFromDatabaseStudentWithKey(String name) {
+        List<com.team_fortune.student_management_admin.model.Student> Students=new ArrayList<>();
         try{
             String searchQuery="select*from student where name like ?";
             Connection conn=DBConnection.getConnection();
             PreparedStatement ps =conn.prepareStatement(searchQuery);
             ps.setString(1,'%'+name+'%');
             ResultSet rs=ps.executeQuery();
-            List<com.team_fortune.student_management_admin.model.Student> Students=new ArrayList<>();
             while(rs.next()){
                 com.team_fortune.student_management_admin.model.Student student=new com.team_fortune.student_management_admin.model.Student();
                 student.setId(rs.getInt("id"));
@@ -93,10 +99,12 @@ public class getDatabaseToModel {
                 student.setStatus(rs.getBoolean("status"));
                 Students.add(student);
             }
-            return Students;
+            rs.close();
+            ps.close();
+            DBConnection.closeConnection(conn);
         }catch(SQLException ex){
             ex.printStackTrace();
         }
-        return null;
+        return Students;
     }
 }

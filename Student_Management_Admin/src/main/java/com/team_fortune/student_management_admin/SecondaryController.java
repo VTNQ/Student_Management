@@ -11,10 +11,13 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -176,7 +179,27 @@ public class SecondaryController implements Initializable {
 
             {
                 button.setOnAction(event -> {
-
+                    Student students = getTableView().getItems().get(getIndex());
+                    try {
+                        String username_student="";
+                        Connection conn=DBConnection.getConnection();
+                        PreparedStatement ps=conn.prepareStatement("selecct username from student where name=?");
+                        ps.setString(1, students.getName());
+                        ResultSet rs=ps.executeQuery();
+                        while(rs.next()){
+                            username_student=rs.getString("username");
+                        }
+                        PreparedStatement preparedStatement =conn.prepareStatement("update student set password=? where name=?");
+                        preparedStatement.setString(1, username_student);
+                        preparedStatement.setString(2, students.getName());
+                        preparedStatement.executeUpdate();
+                        preparedStatement.close();
+                        rs.close();
+                        ps.close();
+                        DBConnection.closeConnection(conn);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
                 });
             }
 
@@ -204,7 +227,27 @@ public class SecondaryController implements Initializable {
 
             {
                 button.setOnAction(event -> {
-
+                    Teacher teachers =getTableView().getItems().get(getIndex());
+                    try {
+                        String username_teacher="";
+                        Connection conn=DBConnection.getConnection();
+                        PreparedStatement ps=conn.prepareStatement("select username from teacher where name=?");
+                        ps.setString(1, teachers.getName());
+                        ResultSet rs=ps.executeQuery();
+                        while(rs.next()){
+                            username_teacher=rs.getString("username");
+                        }
+                        PreparedStatement preparedStatement=conn.prepareStatement("update teacher set password=? where name=?");
+                        preparedStatement.setString(1, username_teacher);
+                        preparedStatement.setString(2, teachers.getName());
+                        preparedStatement.executeUpdate();
+                        preparedStatement.close();
+                        rs.close();
+                        ps.close();
+                        DBConnection.closeConnection(conn);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
                 });
             }
 
