@@ -158,7 +158,7 @@
             </MenuButton>
             <MenuButton fx:id="btnExam" alignment="CENTER" layoutY="190.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Exam">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Add">
+                  <MenuItem mnemonicParsing="false" onAction="#Add_Examp" text="Add">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>

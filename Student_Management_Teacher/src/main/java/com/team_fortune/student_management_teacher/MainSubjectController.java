@@ -232,18 +232,11 @@ public class MainSubjectController implements Initializable {
     }
 
     void showListSubject() {
-         com.team_fortune.student_management_teacher.util.getDatabaseToModel modest = new com.team_fortune.student_management_teacher.util.getDatabaseToModel();
-        List<com.team_fortune.student_management_teacher.model.Subject> subject = modest.getDataFromDatabaseSubject();
-        if (subject != null) {
-            model.clear();
-            model.addAll(subject);
-            TableListSubject.setItems(model);
-            
-     
+        TableListSubject.setItems(Subject);
         colName_Subject.setCellValueFactory(new PropertyValueFactory<>("name"));
         colSession_Subject.setCellValueFactory(new PropertyValueFactory<>("session"));
+        colLession_Subject.setCellValueFactory(new PropertyValueFactory<>("lession_link"));
         colClass.setCellValueFactory(new PropertyValueFactory<>("isActive"));
-    
         colClass.setCellFactory(column-> new TableCell<Subject,Boolean>(){
             private MFXButton button=new MFXButton("View");
             {
@@ -274,9 +267,39 @@ public class MainSubjectController implements Initializable {
                     }
                 }
         });
-        
+        colStudent.setCellValueFactory(new PropertyValueFactory<>("isActive"));
+        colStudent.setCellFactory(column->new TableCell<Subject,Boolean>(){
+            private final MFXButton button=new MFXButton("View");
+            {
+                button.setOnAction(event->{
+                    Subject selectSubject =getTableView().getItems().get(getIndex());
+                    try{
+                        FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/ListStudent.fxml"));
+                        AnchorPane listStudent=loader.load();
+                        Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudentWithSubject(selectSubject.getName()));
+                        list_student.setItems(Student);
+                        col_student.setCellValueFactory(new PropertyValueFactory<>("name"));
+                        Stage list= new Stage();
+                        list.initModality(Modality.APPLICATION_MODAL);
+                        list.setScene(new Scene(listStudent));
+                        list.showAndWait();
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                });
+            }
+            @Override
+                protected void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || isEmpty()) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(button);
+                    }
+                }
+        });
     }
-    }
+
     public void showUpdate(com.team_fortune.student_management_teacher.model.Subject selectSubject) {
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/UpdateSubject.fxml"));

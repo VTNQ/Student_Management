@@ -9,21 +9,19 @@ public class Class {
     public Boolean getIsActive() {
         return isActive;
     }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-public String getName_student() {
+ public String getName_student() {
         return name_student;
     }
 
     public void setName_student(String name_student) {
         this.name_student = name_student;
     }
-    public Class() {
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
-    
+    public Class() {
+    }
 
     public Class(int id, String name) {
         this.id = id;
@@ -42,6 +40,8 @@ public String getName_student() {
     public void setId(int id) {
         this.id = id;
     }
+
+   
 
     public void setName(String name) {
         this.name = name;

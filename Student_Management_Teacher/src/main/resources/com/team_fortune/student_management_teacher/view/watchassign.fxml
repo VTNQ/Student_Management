@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.AssignmentController">
+   <children>
+      <AnchorPane layoutX="3.0" prefHeight="84.0" prefWidth="600.0" style="-fx-background-radius: 8px; -fx-effect: dropshadow(three-pass-box,rgb(0,0,0,0.4),6,0,0,0);" styleClass="card1" stylesheets="@../css/application.css">
+         <children>
+            <Label alignment="CENTER" layoutX="70.0" layoutY="14.0" prefHeight="44.0" prefWidth="168.0" text="Exercise Subject">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="201.0" layoutY="14.0" prefHeight="44.0" prefWidth="168.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="108.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asset/videoconference.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Label alignment="CENTER" layoutX="24.0" layoutY="94.0" prefHeight="44.0" prefWidth="168.0" text="Class">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="120.0" layoutY="94.0" prefHeight="44.0" prefWidth="168.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tblexstudent" layoutX="61.0" layoutY="138.0" prefHeight="200.0" prefWidth="484.0">
+        <columns>
+          <TableColumn fx:id="colStudent" prefWidth="83.20000457763672" text="Student" />
+          <TableColumn fx:id="colStudentAssignment" prefWidth="204.0" text="students' completed assignments" />
+            <TableColumn fx:id="colRequest" prefWidth="100.0" text="Approve" />
+            <TableColumn fx:id="colCancel" prefWidth="95.19998168945312" text="Cancel" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

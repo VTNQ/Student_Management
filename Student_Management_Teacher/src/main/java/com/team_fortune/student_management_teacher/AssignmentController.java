@@ -10,17 +10,26 @@ import com.team_fortune.student_management_teacher.model.Assignments;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.MD5;
 import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import java.awt.Desktop;
 import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +40,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -56,6 +66,8 @@ public class AssignmentController implements Initializable {
      */
     @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Assignments>ListAssignment=new TableView<>();
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Boolean>colCancel=new TableColumn<>();
 @FXML
 private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>name_Subject=new TableColumn<>();
 @FXML
@@ -79,16 +91,44 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
     private MFXComboBox<String> name_student=new MFXComboBox<>();
         @FXML
     private MFXComboBox<String> name_subject=new MFXComboBox<>();
+          @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, Boolean> colRequest;
+
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> colStudent;
+
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> colStudentAssignment;
+
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, Boolean> colSubmit;
+
+    @FXML
+    private TableView<com.team_fortune.student_management_teacher.model.Assignments> tblexstudent;
         @FXML
         private Label labelClass;
         @FXML
         private TextField Assignment_link;
+        @FXML
+        private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Boolean>Status=new TableColumn<>();
+       
+        @FXML
+        private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colsubject=new TableColumn<>();
+        @FXML
+        private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colclass=new TableColumn<>();
+        @FXML
+        private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>Assignmentcl=new TableColumn<>();
+        @FXML
+        private TableView<com.team_fortune.student_management_teacher.model.Assignments>tblDelete=new TableView<>();
         private Connection conn;
             @FXML
     private MFXTextField txtsearch=new MFXTextField();
     @FXML
     private MFXComboBox<String> name_class=new MFXComboBox<>();
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Boolean>colassign=new TableColumn<>();
     private int id_ass;
+    private int id_assignment;
     
      ObservableList<com.team_fortune.student_management_teacher.model.Assignments> model=FXCollections.observableArrayList();
     private List<String> getClassName(){
@@ -99,11 +139,109 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
         }
         return Classnames;
     }
+    private void deleteview(){
+         List<com.team_fortune.student_management_teacher.model.Assignments>resultList=getDatabaseToModel.getAssignments();
+            ObservableList<com.team_fortune.student_management_teacher.model.Assignments> observableList=FXCollections.observableArrayList(resultList);
+            tblDelete.setItems(observableList);
+         colsubject.setCellValueFactory(new PropertyValueFactory<>("name_Subject"));
+         colclass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
+         Assignmentcl.setCellValueFactory(new PropertyValueFactory<>("Assignment"));
+         Assignmentcl.setCellFactory(column->{
+         return new TableCell<Assignments,String>(){
+             @Override
+             protected void updateItem(String Item, boolean empty) {
+                 super.updateItem(Item, empty);
+                 if(!empty && Item!=null && !Item.isEmpty()){
+                      Hyperlink hyperlink=new Hyperlink(Item);
+                      hyperlink.setOnAction(event->{
+                                try {
+                                    java.awt.Desktop.getDesktop().browse(new URI(Item));
+                                } catch (Exception e) {
+                                    DialogAlert.DialogError("URL is not Found");
+                                }
+                            });
+                      setGraphic(hyperlink);
+                 }else{
+                     setGraphic(null);
+                 }
+             }
+         
+         };
+         });
+         Status.setCellValueFactory(new PropertyValueFactory<>("Status"));
+         Status.setCellFactory(column->new CheckBoxTableCell<Assignments,Boolean>(){
+               @Override
+               public void updateItem(Boolean Item, boolean empty) {
+                   super.updateItem(Item, empty); 
+                   if(Item!=null || !empty){
+                       CheckBox checkbox=new CheckBox();
+                       checkbox.setSelected(Item);
+                       setGraphic(checkbox);
+                   }else{
+                       setGraphic(null);
+                   }
+               }
+         
+         });
+         tblDelete.setOnMouseClicked(event->{
+          if(event.getClickCount()==1){
+              com.team_fortune.student_management_teacher.model.Assignments selectedItem=tblDelete.getSelectionModel().getSelectedItem();
+              if(selectedItem!=null){
+                   id_assignment=selectedItem.getId();
+      
+              }
+          }
+         });
+       
+    }
+       @FXML
+    void Deletebtn(ActionEvent event) {
+        String solution="Select count(*) as total From solution where id_assignments=?";
+         String query="Update class_subject set id_assignments=Null Where id_assignments=?";
+         String querydelete="Delete From assignments where id=?";
+        
+         
+        try {
+            Connection conn=DBConnection.getConnection();
+             PreparedStatement stmtsolution=conn.prepareStatement(solution);
+         stmtsolution.setInt(1, id_assignment);
+         ResultSet rssolution=stmtsolution.executeQuery();
+         if(rssolution.next()){
+             int count=rssolution.getInt(1);
+             if(count>0){
+                DialogAlert.DialogError("Can not Delete");
+             }else{
+                  PreparedStatement stmt=conn.prepareStatement(query);
+            stmt.setInt(1, id_assignment);
+            stmt.executeUpdate();
+            PreparedStatement deletestmt=conn.prepareStatement(querydelete);
+            deletestmt.setInt(1, id_assignment);
+            deletestmt.executeUpdate();
+              startUpdating();
+             }
+         }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AssignmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void startUpdating(){
+        ScheduledExecutorService Excuter=Executors.newSingleThreadScheduledExecutor();
+         Excuter.scheduleAtFixedRate(() -> {
+            Platform.runLater(()->{
+            deleteview();
+            displayrecord();
+                searchdisplay();
+                searchfield(txtsearch.getText());
+            });
+        }, 0, 1, TimeUnit.SECONDS);
+    }
+
     private void searchassignmentdisplay(){
         
     }
     private List<String>getClassSubject(){
-        List<com.team_fortune.student_management_teacher.model.Subject> Subject=new getDatabaseToModel().getAllDataFromDataBaseSubject();
+        List<com.team_fortune.student_management_teacher.model.Subject> Subject=new getDatabaseToModel().getDataFromDatabaseSubject();
         List<String>Subjectname=new ArrayList<>();
         for (com.team_fortune.student_management_teacher.model.Subject sj : Subject) {
             Subjectname.add(sj.getName());
@@ -111,12 +249,13 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
         return Subjectname;
     }
     private void displayrecord(){
-          com.team_fortune.student_management_teacher.util.getDatabaseToModel modest=new com.team_fortune.student_management_teacher.util.getDatabaseToModel();
-       List<com.team_fortune.student_management_teacher.model.Assignments> Assignment=modest.getAssignments();
-       if(Assignment!=null){
+          List<com.team_fortune.student_management_teacher.model.Assignments>resultList=getDatabaseToModel.getAssignments();
+            ObservableList<com.team_fortune.student_management_teacher.model.Assignments> observableList=FXCollections.observableArrayList(resultList);
+           
+      
            model.clear();
-           model.addAll(Assignment);
-         ListAssignment.setItems(model);
+           
+       ListAssignment.setItems(observableList);
                 name_Subject.setCellValueFactory(new PropertyValueFactory<>("name_Subject"));
                 Class_ass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
                 colAssignment.setCellValueFactory(new PropertyValueFactory<>("Assignment"));
@@ -169,8 +308,43 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
                }
                 
                 });
+               colassign.setCellValueFactory(new PropertyValueFactory<>("seeAssignment"));
+               colassign.setCellFactory(column->new TableCell<>(){
+               private final MFXButton button=new MFXButton("Watch");
+               {
+               button.setOnAction(event->{
+                   com.team_fortune.student_management_teacher.model.Assignments Ass=getTableView().getItems().get(getIndex());
+              try{
+                    FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/watchassign.fxml"));
+            AnchorPane  newpopup=loader.load();
+           AssignmentController assignment=loader.getController();
+                  System.out.println(Ass.getId());
+           assignment.WatchAssign(Ass.getName_class(),Ass.getName_Subject(),Ass.getId());
+            Stage popupStage=new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setScene(new Scene(newpopup));
+            popupStage.setResizable(false);
+            popupStage.showAndWait(); 
+              }catch(Exception ex){
+                  ex.printStackTrace();
+              }
+               });
+               }
+
+              @Override
+              protected void updateItem(Boolean Item, boolean empty) {
+                  super.updateItem(Item, empty);
+                  button.getStyleClass().add("button-design");
+                  if(empty || Item==null){
+                      setGraphic(null);
+                  }else{
+                      setGraphic(button);
+                  }
+              }
                
-       }
+               
+               });
+       
       
     }
     private void updateAssignment(Boolean status,int id_Assignment){
@@ -194,91 +368,146 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
         int id_subject=0;
         int id_teacher=0;
         int id_Assignment=0;
-          String query="Select id From class Where name=?";
-          String querysubject="Select id From subject Where name=?";
-          String queryclass_subject="Select COUNT(*) AS count From class_subject Where id_class=? And id_subject=?";
-          String queryTeacher="Select id From teacher where username=?";
-          String queryUpdate="Update class_subject set id_assignments=? Where id_teacher=? AND id_subject=? AND id_class=?";
-          String insertquery="Insert into assignments(link,status) values(?,?)";
-          String latestQuery="Select id From assignments ORDER BY id DESC LIMIT 1";
-          String insertClass_subject="Insert into class_subject(id_class,id_subject,id_teacher,id_assignments) values(?,?,?,?)";
-           try {
-                conn=DBConnection.getConnection();
-                PreparedStatement stmt=conn.prepareStatement(query);
-                stmt.setString(1, name_class.getValue());
-                ResultSet result=stmt.executeQuery();
-                while(result.next()){
-                    id_class=result.getInt("id");
-                }
-                PreparedStatement stmt2=conn.prepareStatement(querysubject);
-                stmt2.setString(1, name_subject.getValue());
-                ResultSet rs=stmt2.executeQuery();
-                while(rs.next()){
-                    id_subject=rs.getInt("id");
-                }
-                PreparedStatement smt3=conn.prepareStatement(queryTeacher);
-                smt3.setString(1, MD5.Md5(HomeController.username));
-                ResultSet rs2=smt3.executeQuery();
-                while(rs2.next()){
-                    id_teacher=rs2.getInt("id");
-                }
-                
-                PreparedStatement checkStmt=conn.prepareStatement(queryclass_subject);
-                checkStmt.setInt(1, id_class);
-                checkStmt.setInt(2, id_subject);
-                ResultSet checkResult=checkStmt.executeQuery();
-                if(checkResult.next()){
-                    int count=checkResult.getInt("count");
-                    if(count==2){
-                        PreparedStatement insert=conn.prepareStatement(insertquery);
-                    insert.setString(1, Link_assignment.getText());
-                    insert.setBoolean(2, false);
-                    insert.executeUpdate();
-                    PreparedStatement latest=conn.prepareStatement(latestQuery);
-                    ResultSet latestResult=latest.executeQuery();
-                    while(latestResult.next()){
-                    id_Assignment=latestResult.getInt("id");
-                    }
-                    PreparedStatement updateInsert=conn.prepareStatement(queryUpdate);
+         try{
+             Connection conn=DBConnection.getConnection();
+             String query="Select id From class Where name=?";
+             String update_Assign="Update class_subject set id_assignments=? Where id_class=? And id_subject=?";
+             String insertAssignment="Insert into assignments(link) values(?)";
+             String check_query="Select Count(*) AS total From class_subject Where id_class=? And id_subject=?  And id_teacher=?";
+             String query_Teacher="Select id From teacher Where username=?";
+             String latest_Query="Select id From assignments ORDER BY id DESC LIMIT 1";
+             String solution="Insert into solution(id_assignments) values(?)";
+             PreparedStatement stmt=conn.prepareStatement(query);
+             stmt.setString(1, name_class.getValue());
+             ResultSet result=stmt.executeQuery();
+             while(result.next()){
+                 id_class=result.getInt("id");
+             }
+            String query_subject="Select id From subject Where name=?";
+            PreparedStatement stmtsubject=conn.prepareStatement(query_subject);
+            stmtsubject.setString(1, name_subject.getValue());
+            ResultSet resultsubject=stmtsubject.executeQuery();
+            while(resultsubject.next()){
+             id_subject=resultsubject.getInt("id");
+         }
+            PreparedStatement stmt_teacher=conn.prepareStatement(query_Teacher);
+            stmt_teacher.setString(1, MD5.Md5(HomeController.username));
+            ResultSet rs_teacher=stmt_teacher.executeQuery();
+            while(rs_teacher.next()){
+                id_teacher=rs_teacher.getInt("id");
+            }
+            PreparedStatement stmt_check=conn.prepareStatement(check_query);
+            stmt_check.setInt(1, id_class);
+            stmt_check.setInt(2, id_subject);
+            stmt_check.setInt(3, id_teacher);
+            ResultSet result_check=stmt_check.executeQuery();
+            if(result_check.next()){
+                int total=result_check.getInt("total");
+                if(total>0){
+                  PreparedStatement stmt_insert=conn.prepareStatement(insertAssignment);
+                  stmt_insert.setString(1, Link_assignment.getText());
+                  stmt_insert.executeUpdate();
+                   PreparedStatement stmt_Assignment=conn.prepareStatement(latest_Query);
+            ResultSet rs_Assignment=stmt_Assignment.executeQuery();
+            while(rs_Assignment.next()){
+                id_Assignment=rs_Assignment.getInt("id");
+            }
+                    PreparedStatement updateInsert=conn.prepareStatement(update_Assign);
                     updateInsert.setInt(1, id_Assignment);
-                    updateInsert.setInt(2, id_teacher);
+                    updateInsert.setInt(2, id_class);
                     updateInsert.setInt(3, id_subject);
-                    updateInsert.setInt(4, id_class);
                     updateInsert.executeUpdate();
-                    DialogAlert.DialogSuccess("Add Assignment Successfully");
-                    
-                    
-                }else{
-                        PreparedStatement insert=conn.prepareStatement(insertquery);
-                    insert.setString(1, Link_assignment.getText());
-                    insert.setBoolean(2, false);
-                    insert.executeUpdate();
-                    PreparedStatement latest=conn.prepareStatement(latestQuery);
-                    ResultSet latestResult=latest.executeQuery();
-                    while(latestResult.next()){
-                    id_Assignment=latestResult.getInt("id");
-                    }
-                    PreparedStatement queryinsert=conn.prepareStatement(insertClass_subject);
-                    queryinsert.setInt(1, id_class);
-                    queryinsert.setInt(2, id_subject);
-                    queryinsert.setInt(3, id_teacher);
-                    queryinsert.setInt(4, id_Assignment);
-                    queryinsert.executeUpdate();
-                    }
-                    
+                    PreparedStatement solutioninsert=conn.prepareStatement(solution);
+                    solutioninsert.setInt(1, id_Assignment);
+                    solutioninsert.executeUpdate();
+                    DialogAlert.DialogSuccess("Add Assignment");
+                    startUpdating();
                 }
+               
+            }
+            DBConnection.closeConnection(conn);
            } catch (Exception e) {
                e.printStackTrace();
            }
     }
-    
+    private void WatchAssign(String name_class,String name_subject,int id_Assignment){
+        List<com.team_fortune.student_management_teacher.model.Assignments>resullist=getDatabaseToModel.WatchAssStudent(name_class, id_Assignment, name_subject);
+        ObservableList<com.team_fortune.student_management_teacher.model.Assignments>observableList=FXCollections.observableArrayList(resullist);
+        tblexstudent.setItems(observableList);
+        colStudent.setCellValueFactory(new PropertyValueFactory<>("name_student"));
+        colStudentAssignment.setCellValueFactory(new PropertyValueFactory<>("link_student"));
+        colStudentAssignment.setCellFactory(column -> {
+            
+    return new TableCell<com.team_fortune.student_management_teacher.model.Assignments, String>() {
+        private final Hyperlink hyperlink=new Hyperlink();
+       
+        @Override
+        protected void updateItem(String linkStudent, boolean empty) {
+            
+            super.updateItem(linkStudent, empty);
+             {
+        hyperlink.setOnAction(event->{
+            try {
+                  Desktop.getDesktop().browse(new URI(linkStudent));
+            } catch (Exception e) {
+                DialogAlert.DialogError("URL is not found");
+            }
+              
+        });
+        }
+            if (!empty && getTableRow() != null && getTableRow().getItem() != null) {
+                
+                com.team_fortune.student_management_teacher.model.Assignments assignment = getTableRow().getItem();
+                if (assignment.getName_student()!= null && !assignment.getName_student().isEmpty()
+          ||assignment.getLink_student()!=null && !assignment.getLink_student().isEmpty()) {
+                    
+                   
+                    if (linkStudent != null && !linkStudent.isEmpty()) {
+                        hyperlink.setText(linkStudent);
+                        setGraphic(hyperlink);
+                    } else {
+                        setText("The student has not submitted the assignment yet");
+                    }
+                } else {
+                    setText("");
+                }
+            } else {
+                setText("");
+            }
+        }
+    };
+});
+        colRequest.setCellValueFactory(new PropertyValueFactory<>("statussolution"));
+      
+          colRequest.setCellFactory(column->new TableCell<com.team_fortune.student_management_teacher.model.Assignments,Boolean>(){
+              
+        private final MFXButton Button=new MFXButton("Approve");
+       
+ 
+            @Override
+            protected void updateItem(Boolean Item, boolean empty) {
+                super.updateItem(Item, empty);
+               
+               
+                Button.getStyleClass().add("button-design");
+                com.team_fortune.student_management_teacher.model.Assignments assignment = getTableRow().getItem();
+                
+               if (Item == null || empty) {
+                   setGraphic(Button);
+            
+        } else {
+            setGraphic(null);
+        }
+            }
+        
+        });
+    }
     public void searchdisplay(){
-        com.team_fortune.student_management_teacher.util.getDatabaseToModel modest=new com.team_fortune.student_management_teacher.util.getDatabaseToModel();
-        List<com.team_fortune.student_management_teacher.model.Assignments>Assign=modest.getAssignments();
-        if(Assign!=null){
-            model.clear();
-            model.addAll(Assign);
-             colupdatetable.setItems(model);
+       List<com.team_fortune.student_management_teacher.model.Assignments>resultList=getDatabaseToModel.getAssignments();
+            ObservableList<com.team_fortune.student_management_teacher.model.Assignments> observableList=FXCollections.observableArrayList(resultList);
+           
+            
+             colupdatetable.setItems(observableList);
             coluddatesubject.setCellValueFactory(new PropertyValueFactory<>("name_Subject"));
             colUpdateclass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
             colupdateAssignment.setCellValueFactory(new PropertyValueFactory<>("Assignment"));
@@ -331,7 +560,7 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
                 }
                 
         });
-        }
+        
     }
     private void showpopup(Assignments assign){
         try {
@@ -450,14 +679,14 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        deleteview();
         searchdisplay();
+      
              txtsearch.textProperty().addListener((observable, oldvalue, newValue) -> {
-                 if(!newValue.isEmpty()){
-                     model.clear();
+                 
+                     
                     searchfield(newValue);
-                 }else{
-                    searchdisplay();
-                 }
+                
                  
     });
                      

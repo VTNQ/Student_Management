@@ -4,6 +4,10 @@
 .bg-active{
     -fx-background-color: #fcd036 !important;
 }
+.card1{
+    -fx-background-color:#89CFEF;
+    -fx-border-width:5px
+}
 .text_field_border-radius{
     -fx-border-radius: 30px; 
     -fx-background-radius:40px;

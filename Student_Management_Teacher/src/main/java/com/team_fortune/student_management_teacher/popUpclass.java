@@ -40,12 +40,14 @@ public class popUpclass implements Initializable{
                 String name_student=rs.getString("b.name");
                 com.team_fortune.student_management_teacher.model.Class newclass=new com.team_fortune.student_management_teacher.model.Class();
                 newclass.setName(name_class);
+                
                 newclass.setName_student(name_student);
                 popup.add(newclass);
             }
+
            tblSubkect.setItems(popup);
             System.out.println(tblSubkect);
-           ClassSubject.setCellValueFactory(new PropertyValueFactory<>("name"));
+         ClassSubject.setCellValueFactory(new PropertyValueFactory<>("name"));
            classStudent.setCellValueFactory(new PropertyValueFactory<>("name_student"));
            
         } catch (SQLException ex) {

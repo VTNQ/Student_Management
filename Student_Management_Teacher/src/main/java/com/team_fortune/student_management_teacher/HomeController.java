@@ -256,6 +256,23 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
             e.printStackTrace();
         }
     }
+    @FXML
+    void Add_Examp(ActionEvent event){
+         FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Exampleview.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+         btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
+        try {
+        TabPane AssignmentPanel=loader.load();
+        AssignmentPanel.getSelectionModel().select(0);
+         main_display.getChildren().clear();
+            main_display.getChildren().setAll(AssignmentPanel);
+    } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 @FXML
     void Add_assignment(ActionEvent event) {
         FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
