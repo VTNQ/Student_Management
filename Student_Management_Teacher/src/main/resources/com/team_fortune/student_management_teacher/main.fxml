@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -258,6 +259,30 @@
                </font>
             </MenuButton>
             <Line endX="125.19998168945312" layoutX="19.0" layoutY="253.0" startX="-17.9999942779541" startY="0.199981689453125" stroke="WHITE" />
+            <Line endX="125.19998168945312" layoutX="18.0" layoutY="317.0" startX="-17.9999942779541" startY="0.199981689453125" stroke="WHITE" />
+            <MenuButton fx:id="btnAssignment1" alignment="CENTER" layoutY="317.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Student">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@asset/assignment.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Request Class" />
+                  <MenuItem mnemonicParsing="false" onAction="#Solutionbtn" text="Solution" />
+                  <MenuItem mnemonicParsing="false" text="Transcript" />
+               </items>
+            </MenuButton>
+            <Line endX="125.19998168945312" layoutX="18.0" layoutY="380.0" startX="-17.9999942779541" startY="0.199981689453125" stroke="WHITE" />
+            <MFXButton layoutX="1.0" layoutY="381.0" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Change Password">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </MFXButton>
          </children>
       </AnchorPane>
    </left>

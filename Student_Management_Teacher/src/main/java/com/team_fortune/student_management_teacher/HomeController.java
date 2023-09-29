@@ -336,6 +336,17 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+   @FXML
+    void Solutionbtn(ActionEvent event) {
+        FXMLLoader loader=new FXMLLoader(App.class.getResource("view/watchassign.fxml"));
+        try {
+           AnchorPane InformationPage=loader.load();
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(InformationPage);
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+    }
 
     @FXML
     void showInformationUser(ActionEvent event) {
