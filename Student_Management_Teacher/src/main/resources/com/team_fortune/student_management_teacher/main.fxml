@@ -273,7 +273,7 @@
                </font>
                <items>
                   <MenuItem mnemonicParsing="false" text="Request Class" />
-                  <MenuItem mnemonicParsing="false" text="Solution" />
+                  <MenuItem mnemonicParsing="false" onAction="#Solutionbtn" text="Solution" />
                   <MenuItem mnemonicParsing="false" text="Transcript" />
                </items>
             </MenuButton>

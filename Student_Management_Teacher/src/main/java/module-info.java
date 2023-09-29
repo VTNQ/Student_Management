@@ -5,6 +5,7 @@ module com.team_fortune.student_management_teacher {
     requires java.base;
     requires java.sql;
     requires MaterialFX;
+
     requires VirtualizedFX;
     
     opens com.team_fortune.student_management_teacher to javafx.fxml;

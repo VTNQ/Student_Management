@@ -20,11 +20,13 @@ public class Assignments {
         this.id = id;
     }
 
-    public Assignments(int id,String name_student, String link_student,int status) {
+    public Assignments(int id,String name_student, String link_student,int status,String name_class,String name_subject) {
         this.name_student = name_student;
         this.link_student = link_student;
         this.statussolution=status;
         this.id=id;
+        this.name_class=name_class;
+        this.name_Subject=name_subject;
         
     }
 
@@ -57,7 +59,6 @@ public class Assignments {
     private String name_class;
     private String Assignment;
     private boolean Status;
-    private boolean seeAssignment;
     private boolean Cancel;
 
     public boolean isCancel() {
@@ -72,15 +73,7 @@ public class Assignments {
 public Assignments(){
      
  }
- public boolean isSeeAssignment() {
-        return seeAssignment;
-    }
 
-    public void setSeeAssignment(boolean seeAssignment) {
-        this.seeAssignment = seeAssignment;
-    }
-    
- 
     public void setAssignment(String Assignment) {
         this.Assignment = Assignment;
     }
@@ -121,7 +114,7 @@ public Assignments(){
         this.Assignment= Assignment;
         this.Status = Status;
         this.id=id;
-        this.seeAssignment=true;
+       
     }
 
 }

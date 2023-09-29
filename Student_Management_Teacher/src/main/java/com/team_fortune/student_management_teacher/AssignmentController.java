@@ -46,6 +46,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -67,6 +68,8 @@ public class AssignmentController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    @FXML
+    private Pagination pagination;
     @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Assignments> ListAssignment = new TableView<>();
     @FXML
@@ -95,19 +98,21 @@ public class AssignmentController implements Initializable {
     @FXML
     private MFXComboBox<String> name_subject = new MFXComboBox<>();
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, Integer> colRequest;
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> colSolution;
 
     @FXML
     private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> colStudent;
-    ObservableList<com.team_fortune.student_management_teacher.model.Assignments> observableList;
+    ObservableList<com.team_fortune.student_management_teacher.model.Assignments> observableList= FXCollections.observableArrayList();
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> colStudentAssignment;
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> solutionclass;
 
     @FXML
     private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, Boolean> colSubmit;
 
     @FXML
-    private TableView<com.team_fortune.student_management_teacher.model.Assignments> tblexstudent;
+    private TableView<com.team_fortune.student_management_teacher.model.Assignments> tblexstudent=new TableView<>();
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>solutionsubject=new TableColumn<>();
     @FXML
     private Label labelClass;
     @FXML
@@ -122,6 +127,8 @@ public class AssignmentController implements Initializable {
     @FXML
     private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> Assignmentcl = new TableColumn<>();
     @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, Integer> colRequest = new TableColumn<>();
+    @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Assignments> tblDelete = new TableView<>();
     private Connection conn;
     @FXML
@@ -132,8 +139,7 @@ public class AssignmentController implements Initializable {
     private MFXTextField txtsearch = new MFXTextField();
     @FXML
     private MFXComboBox<String> name_class = new MFXComboBox<>();
-    @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, Boolean> colassign = new TableColumn<>();
+    
     private int id_ass;
     private int id_assignment;
 
@@ -319,42 +325,7 @@ public class AssignmentController implements Initializable {
             }
 
         });
-        colassign.setCellValueFactory(new PropertyValueFactory<>("seeAssignment"));
-        colassign.setCellFactory(column -> new TableCell<>() {
-            private final MFXButton button = new MFXButton("Watch");
-
-            {
-                button.setOnAction(event -> {
-                    com.team_fortune.student_management_teacher.model.Assignments Ass = getTableView().getItems().get(getIndex());
-                    try {
-                        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/watchassign.fxml"));
-                        AnchorPane newpopup = loader.load();
-                        AssignmentController assignment = loader.getController();
-                        assignment.settext(Ass.getName_class(), Ass.getName_Subject());
-                        assignment.WatchAssign(Ass.getName_class(), Ass.getName_Subject(), Ass.getId());
-                        Stage popupStage = new Stage();
-                        popupStage.initModality(Modality.APPLICATION_MODAL);
-                        popupStage.setScene(new Scene(newpopup));
-                        popupStage.setResizable(false);
-                        popupStage.showAndWait();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                });
-            }
-
-            @Override
-            protected void updateItem(Boolean Item, boolean empty) {
-                super.updateItem(Item, empty);
-                button.getStyleClass().add("button-design");
-                if (empty || Item == null) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(button);
-                }
-            }
-
-        });
+        
 
     }
 
@@ -440,13 +411,16 @@ public class AssignmentController implements Initializable {
         }
     }
 
-    private void WatchAssign(String name_class, String name_subject, int id_Assignment) {
-        List<com.team_fortune.student_management_teacher.model.Assignments> resullist = getDatabaseToModel.WatchAssStudent(name_class, id_Assignment, name_subject);
+    private void WatchAssign() {
+        List<com.team_fortune.student_management_teacher.model.Assignments> resullist = getDatabaseToModel.WatchAssStudent();
         observableList = FXCollections.observableArrayList(resullist);
         tblexstudent.setItems(observableList);
         colStudent.setCellValueFactory(new PropertyValueFactory<>("name_student"));
-        colStudentAssignment.setCellValueFactory(new PropertyValueFactory<>("link_student"));
-        colStudentAssignment.setCellFactory(column -> {
+        solutionclass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
+       colSolution.setCellValueFactory(new PropertyValueFactory<>("link_student"));
+       solutionsubject.setCellValueFactory(new PropertyValueFactory<>("name_Subject"));
+  
+        colSolution.setCellFactory(column -> {
 
             return new TableCell<com.team_fortune.student_management_teacher.model.Assignments, String>() {
                 private final Hyperlink hyperlink = new Hyperlink();
@@ -515,7 +489,7 @@ public class AssignmentController implements Initializable {
                                     stmt.setInt(1, 1);
                                     stmt.setInt(2, Ass.getId());
                                     stmt.executeUpdate();
-                                    List<com.team_fortune.student_management_teacher.model.Assignments> resultlist = getDatabaseToModel.WatchAssStudent(name_class, id_Assignment, name_subject);
+                                    List<com.team_fortune.student_management_teacher.model.Assignments> resultlist = getDatabaseToModel.WatchAssStudent();
                                     observableList.clear();
                                     observableList.addAll(resultlist);
                                     tblexstudent.refresh();
@@ -584,7 +558,7 @@ public class AssignmentController implements Initializable {
                                     stmt.setInt(1, 2);
                                     stmt.setInt(2, Ass.getId());
                                     stmt.executeUpdate();
-                                    List<com.team_fortune.student_management_teacher.model.Assignments> resultlist = getDatabaseToModel.WatchAssStudent(name_class, id_Assignment, name_subject);
+                                    List<com.team_fortune.student_management_teacher.model.Assignments> resultlist = getDatabaseToModel.WatchAssStudent();
                                     observableList.clear();
                                     observableList.addAll(resultlist);
                                     tblexstudent.refresh();
@@ -626,6 +600,24 @@ public class AssignmentController implements Initializable {
             }
 
         });
+              int itemsPerPage = 4; 
+int totalItems = observableList.size(); // Total number of records
+int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage); //tong so trang can hien thi
+
+pagination.setPageCount(totalPages); // Thiết lập tổng số trang
+
+pagination.setPageFactory(pageIndex -> {
+    if (pageIndex >= totalItems) {
+        return null;
+    }
+
+    int fromIndex = pageIndex*itemsPerPage;
+    int toIndex = Math.min(fromIndex+itemsPerPage,totalItems);
+
+   tblexstudent.setItems(FXCollections.observableArrayList(observableList.subList(fromIndex, toIndex)));
+
+    return tblexstudent;
+});
     }
 
     public void searchdisplay() {
@@ -816,6 +808,8 @@ public class AssignmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+  
+        WatchAssign();
         deleteview();
         searchdisplay();
 
