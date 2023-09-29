@@ -1,3 +1,6 @@
+.bg_tranparent{
+    -fx-background-color: transparent !important;
+}
 .btn-design{
    -fx-text-fill: #fff;
 -fx-background-color: #007bff;

@@ -87,15 +87,7 @@ import javafx.util.Duration;
 
 public class SecondaryController implements Initializable{
     private Connection connection;
-    @FXML
-    private TableColumn<modelExample,Boolean>Columnassignment;
-  
-            LocalDateTime starTime;
-            Long startsecondsRemaining;
-    private boolean buttonclicked=false;
-    private long secondsRemaining;
-    LocalDateTime endtime;
-   Timeline timeline1;
+   
      @FXML
      private AnchorPane maindisplay;
     
@@ -103,43 +95,66 @@ public class SecondaryController implements Initializable{
    
     public String name_class;
       
-    @FXML
-    private TextField userfiled;
-    
-    @FXML
-    private TextField phoneupdate;
-        @FXML
-    private MFXDatePicker sinceupdate;
-            @FXML
-    private PasswordField passwordudpate;
-            @FXML
+  @FXML
     private PieChart biechart;
     @FXML
     private BarChart<String,Number> Barchart;
+
+  
+
  
-    @FXML
-    private MenuItem signup;
 
     private String loggedInUsername;
 
+
 public static int assignmentId;
+
+    
+     @FXML
+        private Button btnExercisestudent;
+    @FXML
+    private Button searchbutton;
+        @FXML
+    private Button Homebtn;
+        @FXML
+    private Button Scorebtn;
+        @FXML
+        private Button btnExercise2;
+        @FXML
+        private Button Homebtn311;
+        @FXML
+        private Button  Homebtnex;
+       @FXML
+       private Button update;
+
+    
+    @FXML
+    private AnchorPane updateprofile;
+        @FXML
+        private AnchorPane Word;
+@FXML
+private Button searchbutton311;
+@FXML
+private Button Searchbtnex;
+@FXML
+private Button Scorebtnex;
+@FXML 
+private Button btnex;
+@FXML
+private Button btncalex;
+
+@FXML
+        private Button btnWord;
+
+
 String link_examp;
+
+
   private static int id;
     private String link;
    String linkDisplay;
    
-    @FXML
-    private TableView<modelWord> tblWord;
-    @FXML
-    private TableColumn<modelWord,String>colworldstt;
-    @FXML
-    private TableColumn<modelWord,String>colworldsubject;
-    @FXML
-    private TableColumn<modelWord,String>colworldteacher;
-    @FXML
-    private TableColumn<modelWord,String>colWorl;
-    @FXML
-    private TableColumn<modelWord,String>colWorldclass;
+
   
     private String coutdown;
     private String endfor;
@@ -174,63 +189,7 @@ private final ObservableList<modelWord>World=FXCollections.observableArrayList()
       }
       return className;
   }
-@FXML
-    void searcbutton(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_student/SearchSubject.fxml"));
-        try {
-           AnchorPane classPane = loader.load();
-            
-            maindisplay.getChildren().clear();
-            maindisplay.getChildren().setAll(classPane);
-        } catch (IOException ex) {
-        ex.printStackTrace();
-        }
-    }
-    @FXML
-    void Wordbutton(ActionEvent event){
-         FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_student/Wordview.fxml"));
-        try {
-             AnchorPane classPane = loader.load();
-            
-            maindisplay.getChildren().clear();
-            maindisplay.getChildren().setAll(classPane);
-        } catch (Exception e) {
-            e.printStackTrace();
-    }
-    }
-    @FXML
-    void HomeBtn(ActionEvent event){
-        
-        try {
-            App.setRoot("admin");
-        } catch (IOException ex) {
-            Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    @FXML
-    void ExerciseButton(ActionEvent event){
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_student/Exerciseview.fxml"));
-        try {
-             AnchorPane classPane = loader.load();
-            
-            maindisplay.getChildren().clear();
-            maindisplay.getChildren().setAll(classPane);
-        } catch (Exception e) {
-            e.printStackTrace();
-    }
-    }
-    @FXML
-    void ScoreBtn(ActionEvent event){
-           FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_student/Scoreview.fxml"));
-        try {
-             AnchorPane classPane = loader.load();
-            
-            maindisplay.getChildren().clear();
-            maindisplay.getChildren().setAll(classPane);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
    public void chart() {
     String chartQuery = "SELECT t1.name_subject, t5.score FROM subject t1 " +
             "JOIN class_subject t2 ON t1.id = t2.id_subject " +
@@ -259,8 +218,9 @@ private final ObservableList<modelWord>World=FXCollections.observableArrayList()
        } catch (Exception e) {
        }
 }
-   private void popupchangepassword(){
-   
+
+   public void Example(){
+      
        try {
            String query="Select id From student Where status=? And id=?";
                Connection conn=DBconnect.connectDB();
@@ -309,11 +269,21 @@ private final ObservableList<modelWord>World=FXCollections.observableArrayList()
        }
        biechart.setData(piechartData);
    }
-   
 
-    @FXML
-    void signout(ActionEvent event) {
-        try {
+
+    public void selectExample() {
+       String query = "SELECT t1.name as name_subject, t3.name as name_class, t4.start,t4.link_exam,t4.end " +
+                      "FROM subject t1 " +
+                      "JOIN class_subject t5 ON t1.id = t5.id_subject " +
+                      "JOIN class t3 ON t5.id_class = t3.id " +
+                      "JOIN student t6 ON t5.id_student = t6.id " +
+                      "JOIN exam_schedule t4 ON t5.id_exam = t4.id " +
+                      "JOIN teacher t2 ON t2.id = t5.id_teacher " +
+                      "WHERE t6.id = ? ";
+    }
+      @FXML
+    void logout(ActionEvent event) {
+    try {
             if (PrimaryController.conn != null) {
               
                 
@@ -322,6 +292,86 @@ private final ObservableList<modelWord>World=FXCollections.observableArrayList()
                   }
        
        
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+  
+      
+          public int idassignment(String assignment){
+              int id=-1;
+              connection=PrimaryController.connectDB();
+              String query="Select t1.id From assignments t1 "
+                      +"JOIN class_subject  t2 ON t1.id=t2.id_assignments "
+                      +"JOIN subject t3 ON t2.id_subject=t3.id "+"Where t3.name = ?";
+              try {
+                  PreparedStatement stmt=connection.prepareStatement(query);
+                  stmt.setString(1, assignment);
+                  ResultSet rs=stmt.executeQuery();
+                  while(rs.next()){
+                       id=rs.getInt("id");
+                  }
+              } catch (Exception e) {
+                  e.printStackTrace();
+              }
+              return id;
+          }
+          @FXML
+          void Scorebtn(ActionEvent event){
+                FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_student/Scoreview.fxml"));
+        try {
+             AnchorPane classPane = loader.load();
+            
+            maindisplay.getChildren().clear();
+            maindisplay.getChildren().setAll(classPane);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+          }
+            @FXML
+    void Worldbtn(ActionEvent event) {
+FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_student/Wordview.fxml"));
+        try {
+             AnchorPane classPane = loader.load();
+            
+            maindisplay.getChildren().clear();
+            maindisplay.getChildren().setAll(classPane);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+              @FXML
+    void Exercisebtn(ActionEvent event) {
+ FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_student/Exerciseview.fxml"));
+        try {
+             AnchorPane classPane = loader.load();
+            
+            maindisplay.getChildren().clear();
+            maindisplay.getChildren().setAll(classPane);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+        @FXML
+    void buttonSchedule(ActionEvent event) {
+ FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_student/Calenderview.fxml"));
+        try {
+             AnchorPane classPane = loader.load();
+            
+            maindisplay.getChildren().clear();
+            maindisplay.getChildren().setAll(classPane);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+          @FXML
+    void Searchbtn(ActionEvent event) {
+          FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_student/SearchSubject.fxml"));
+        try {
+             AnchorPane classPane = loader.load();
+            
+            maindisplay.getChildren().clear();
+            maindisplay.getChildren().setAll(classPane);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -350,91 +400,13 @@ FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/stud
         ex.printStackTrace();
         }
     }
-          private void WorldStudent(){
-              connection=PrimaryController.connectDB();
-              World.clear();
-              String query="Select t1.name as name_subject,t3.name,t1.lession_link,t6.name as name_class From subject t1 "
-               +"Join class_subject t2 ON t1.id=t2.id_subject "
-               +"JOIN teacher t3 ON t2.id_teacher=t3.id "
-               
-               +"JOIN class t6 ON t2.id_class=t6.id "
-               +"JOIN student t7 ON t2.id_student=t7.id "
-               +"Where t7.id=? ";
-              try {
-                  PreparedStatement stmt=connection.prepareStatement(query);
-                  stmt.setInt(1, PrimaryController.loggedInStudentId);
-              
-                  ResultSet rs=stmt.executeQuery();
-                  while(rs.next()){
-                      String name_subject=rs.getString("name_subject");
-                      String name_teacher=rs.getString("name");
-                      String link=rs.getString("lession_link");
-                      String name_class=rs.getString("name_class");
-                      World.add(new modelWord( name_subject, name_teacher, link, name_class));
-                     
-                  }
-                  updateWord(World);
-              } catch (Exception e) {
-                  e.printStackTrace();
-              }
-          }
-          public int idassignment(String assignment){
-              int id=-1;
-              connection=PrimaryController.connectDB();
-              String query="Select t1.id From assignments t1 "
-                      +"JOIN class_subject  t2 ON t1.id=t2.id_assignments "
-                      +"JOIN subject t3 ON t2.id_subject=t3.id "+"Where t3.name = ?";
-              try {
-                  PreparedStatement stmt=connection.prepareStatement(query);
-                  stmt.setString(1, assignment);
-                  ResultSet rs=stmt.executeQuery();
-                  while(rs.next()){
-                       id=rs.getInt("id");
-                  }
-              } catch (Exception e) {
-                  e.printStackTrace();
-              }
-              return id;
-          }
-          public void updateWord(ObservableList<modelWord> data){
-              tblWord.setItems(data);
-              colworldsubject.setCellValueFactory(new PropertyValueFactory<>("name_subject"));
-              colworldteacher.setCellValueFactory(new PropertyValueFactory<>("name_teacher"));
-              colWorl.setCellValueFactory(new PropertyValueFactory<>("World"));
-              colWorl.setCellFactory(column ->{
-              TableCell<modelWord,String> cell=new TableCell<modelWord,String>(){
-                  @Override
-                  protected void updateItem(String item,boolean empty){
-                      super.updateItem(item, empty);
-                      if(empty ||item==null ){
-                          setText(null);
-                          setGraphic(null);
-                      }else{
-                          Hyperlink hyperlink=new Hyperlink(item);
-                          hyperlink.setOnAction(event->{
-                              try{
-                                   Desktop.getDesktop().browse(new URI(item));
-                              }catch(Exception ex){
-                                  displayErrorMessage("URL is not found");
-                              
-                              }
-                             
-                          
-                          });
-                          setGraphic(hyperlink);
-                          
-                      }
-                  }
-              };
-                  return cell;
-              });
-              colWorldclass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
-          }
+
+    
+         
         
     @Override
    public void initialize(URL url, ResourceBundle rb) {
-       popupchangepassword();
-        WorldStudent();
+    
     System.out.println("LoggedInStudentId in initialize: " + PrimaryController.loggedInStudentId);
     chart();
     piechart();

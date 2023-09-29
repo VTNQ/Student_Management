@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -9,8 +8,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -21,180 +18,6 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@css/primary.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_student.SecondaryController">
    <children>
-      <AnchorPane fx:id="Word" layoutX="7.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false">
-         <children>
-            <BorderPane prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <top>
-                  <AnchorPane prefHeight="54.0" prefWidth="800.0" styleClass="semi-top-form" stylesheets="@css/primary.css" BorderPane.alignment="CENTER">
-                     <children>
-                        <AnchorPane layoutX="1.4" prefHeight="117.0" prefWidth="799.0" styleClass="top-form" stylesheets="@css/primary.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <ImageView fitHeight="69.0" fitWidth="102.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@asset/graduation-hat.png" />
-                                 </image>
-                              </ImageView>
-                              <Label alignment="CENTER" layoutX="80.0" layoutY="14.0" prefHeight="38.0" prefWidth="126.0" text="Student Page">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <MenuButton layoutX="698.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#signout" text="Sign out">
-                                       <graphic>
-                                          <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@asset/logout%20(1).png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </MenuItem>
-                                 </items>
-                                 <graphic>
-                                    <ImageView fitHeight="41.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@asset/account.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </MenuButton>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
-               </top>
-               <left>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <AnchorPane prefHeight="428.0" prefWidth="200.0" styleClass="dash" stylesheets="@css/primary.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Button fx:id="Homebtnex1" layoutY="1.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Home" textFill="WHITE">
-                                 <graphic>
-                                    <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@asset/house.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Button>
-                              <Line endX="100.0" layoutX="101.0" layoutY="60.0" startX="-100.0" stroke="WHITE" />
-                              <Button fx:id="Searchbtnex1" layoutX="1.0" layoutY="70.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Search" textFill="WHITE">
-                                 <graphic>
-                                    <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@asset/search.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Button>
-                              <Line endX="100.0" layoutX="100.0" layoutY="113.0" startX="-100.0" stroke="WHITE" />
-                              <Button fx:id="Scorebtnex1" layoutX="1.0" layoutY="129.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Score" textFill="WHITE">
-                                 <graphic>
-                                    <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@asset/score.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Button>
-                              <Line endX="100.0" layoutX="101.0" layoutY="172.0" startX="-100.0" stroke="WHITE" />
-                              <Button fx:id="btnex1" layoutY="183.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Exercises" textFill="WHITE">
-                                 <graphic>
-                                    <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@asset/homework.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Button>
-                              <Line endX="100.0" layoutX="101.0" layoutY="226.0" startX="-100.0" stroke="WHITE" />
-                              <Button layoutY="236.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
-                                 <graphic>
-                                    <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@asset/file.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Button>
-                              <Line endX="100.0" layoutX="100.0" layoutY="279.0" startX="-100.0" stroke="WHITE" />
-                              <Button fx:id="btncalex1" layoutY="279.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Calendar" textFill="WHITE">
-                                 <graphic>
-                                    <ImageView fitHeight="36.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@asset/calendar.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
-               </left>
-               <center>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <AnchorPane prefHeight="428.0" prefWidth="597.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <AnchorPane prefHeight="428.0" prefWidth="597.6" stylesheets="@css/primary.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <styleClass>
-                                    <String fx:value="white-bg" />
-                                    <String fx:value="shadow" />
-                                 </styleClass>
-                                 <children>
-                                    <TableView fx:id="tblWord" layoutX="69.0" layoutY="147.0" prefHeight="200.0" prefWidth="399.0">
-                                       <columns>
-                                          <TableColumn fx:id="colworldstt" prefWidth="76.80000114440918" text="STT" />
-                                          <TableColumn fx:id="colworldsubject" prefWidth="73.60003662109375" text="Subject" />
-                                          <TableColumn fx:id="colworldteacher" prefWidth="80.7999267578125" text="Teacher" />
-                                          <TableColumn fx:id="colWorl" maxWidth="202.39999389648438" prefWidth="90.39993286132812" text="Word" />
-                                          <TableColumn fx:id="colWorldclass" maxWidth="202.39999389648438" prefWidth="77.5999755859375" text="Class" />
-                                       </columns>
-                                    </TableView>
-                                    <AnchorPane prefHeight="122.0" prefWidth="603.0" styleClass="card1" stylesheets="@css/primary.css">
-                                       <children>
-                                          <ImageView fitHeight="122.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@asset/sheet.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Label alignment="CENTER" layoutX="122.0" layoutY="23.0" prefHeight="63.0" prefWidth="194.0" text="World Student" textFill="WHITE">
-                                             <font>
-                                                <Font name="System Bold" size="18.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
-               </center>
-            </BorderPane>
-         </children>
-      </AnchorPane>
       <AnchorPane fx:id="Home" prefHeight="200.0" prefWidth="200.0">
          <children>
             <BorderPane prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -205,13 +28,18 @@
                            <children>
                               <MenuButton layoutX="699.0" layoutY="9.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                                  <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#signout" text="Sign out">
+                                    <MenuItem mnemonicParsing="false">
                                        <graphic>
-                                          <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@asset/logout%20(1).png" />
-                                             </image>
-                                          </ImageView>
+                                          <Button mnemonicParsing="false" onAction="#logout" styleClass="bg_tranparent" stylesheets="@../../../../../../../../New%20folder/Student_Management/Student_Management_Teacher/src/main/resources/com/team_fortune/student_management_teacher/css/application.css" text="Logout">
+                                            
+                                             <graphic>
+                                                <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@asset/exit.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
                                        </graphic>
                                     </MenuItem>
                                  </items>
@@ -243,7 +71,7 @@
                      <children>
                         <AnchorPane prefHeight="431.2" prefWidth="200.0" styleClass="dash" stylesheets="@css/primary.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button fx:id="Homebtn" alignment="CENTER" layoutY="-2.0" mnemonicParsing="false" onAction="#HomeBtn" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Home" textFill="WHITE">
+                              <Button alignment="CENTER" layoutY="-2.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Home" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -256,7 +84,7 @@
                                  </font>
                               </Button>
                               <Line endX="111.80001831054688" endY="-3.814697265625E-6" layoutX="101.0" layoutY="48.0" startX="-100.0" stroke="WHITE" />
-                              <Button layoutX="1.0" layoutY="49.0" mnemonicParsing="false" onAction="#searcbutton" prefHeight="42.0" prefWidth="198.0" style="-fx-background-color: transparent;" text="Search" textFill="WHITE">
+                              <Button layoutX="1.0" layoutY="49.0" mnemonicParsing="false" onAction="#Searchbtn" prefHeight="42.0" prefWidth="198.0" style="-fx-background-color: transparent;" text="Search" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -269,7 +97,7 @@
                                  </font>
                               </Button>
                               <Line endX="110.19998168945312" endY="-1.52587890625E-5" layoutX="101.0" layoutY="99.0" startX="-100.0" stroke="WHITE" />
-                              <Button fx:id="Scorebtn" layoutX="2.0" layoutY="109.0" mnemonicParsing="false" onAction="#ScoreBtn" prefHeight="42.0" prefWidth="198.0" style="-fx-background-color: transparent;" text="Score" textFill="WHITE">
+                              <Button layoutX="2.0" layoutY="109.0" mnemonicParsing="false" onAction="#Scorebtn" prefHeight="42.0" prefWidth="198.0" style="-fx-background-color: transparent;" text="Score" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -282,7 +110,7 @@
                                  </font>
                               </Button>
                               <Line endX="108.60000610351562" endY="-1.52587890625E-5" layoutX="101.0" layoutY="159.0" startX="-100.0" stroke="WHITE" />
-                              <Button fx:id="btnexercise" layoutX="14.0" layoutY="173.0" mnemonicParsing="false" onAction="#ExerciseButton" prefHeight="42.0" prefWidth="189.0" style="-fx-background-color: transparent;" text="Exercises" textFill="WHITE">
+                              <Button layoutX="14.0" layoutY="173.0" mnemonicParsing="false" onAction="#Exercisebtn" prefHeight="42.0" prefWidth="189.0" style="-fx-background-color: transparent;" text="Exercises" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -295,7 +123,7 @@
                                  </font>
                               </Button>
                               <Line endX="100.0" layoutX="108.0" layoutY="215.0" startX="-107.99999237060547" startY="0.5999908447265625" stroke="WHITE" />
-                              <Button fx:id="btnWord" layoutX="-2.0" layoutY="230.0" mnemonicParsing="false" onAction="#Wordbutton" prefHeight="42.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
+                              <Button layoutX="-2.0" layoutY="230.0" mnemonicParsing="false" onAction="#Worldbtn" prefHeight="42.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -308,7 +136,7 @@
                                  </font>
                               </Button>
                               <Line endX="100.0" layoutX="113.0" layoutY="273.0" startX="-107.99999237060547" startY="0.5999908447265625" stroke="WHITE" />
-                              <Button fx:id="btncalender" layoutX="-3.0" layoutY="284.0" mnemonicParsing="false" onAction="#SubmitCalender" prefHeight="42.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Schedule" textFill="WHITE">
+                              <Button layoutX="-3.0" layoutY="284.0" mnemonicParsing="false" onAction="#buttonSchedule" prefHeight="42.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Schedule" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -321,18 +149,6 @@
                                  </font>
                               </Button>
                               <Line endX="100.0" layoutX="110.0" layoutY="326.0" startX="-107.99999237060547" startY="0.5999908447265625" stroke="WHITE" />
-                              <Button layoutX="-2.0" layoutY="327.0" mnemonicParsing="false" onAction="#classbtn" prefHeight="42.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Class" textFill="WHITE">
-                                 <graphic>
-                                    <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@asset/videoconference.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Button>
                            </children>
                         </AnchorPane>
                      </children>
@@ -356,5 +172,6 @@
             </BorderPane>
          </children>
       </AnchorPane>
+      
    </children>
 </StackPane>

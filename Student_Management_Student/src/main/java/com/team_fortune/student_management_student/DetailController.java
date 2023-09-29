@@ -154,7 +154,7 @@ public class DetailController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       displayrecord(ExerciseviewController.assignmentId);
+   
     
     }
 }
