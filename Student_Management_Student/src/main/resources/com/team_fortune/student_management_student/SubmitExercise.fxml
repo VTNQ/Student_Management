@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.team_fortune.student_management_student.SubmitExerciseController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_student.SubmitExerciseController">
    <children>
       <AnchorPane prefHeight="67.0" prefWidth="600.0" styleClass="card1" stylesheets="@css/primary.css">
          <children>
@@ -25,42 +24,32 @@
             </Label>
          </children>
       </AnchorPane>
-      <Label alignment="CENTER" layoutX="14.0" layoutY="96.0" prefHeight="36.0" prefWidth="178.0" text="Name">
+      <Label alignment="CENTER" layoutX="14.0" layoutY="105.0" prefHeight="36.0" prefWidth="178.0" text="Subject">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="150.0" layoutY="96.0" prefHeight="36.0" prefWidth="178.0">
+      <Label fx:id="name_subject" alignment="CENTER" layoutX="158.0" layoutY="105.0" prefHeight="36.0" prefWidth="178.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="14.0" layoutY="148.0" prefHeight="36.0" prefWidth="178.0" text="Subject">
+      <Label alignment="CENTER" layoutX="27.0" layoutY="146.0" prefHeight="36.0" prefWidth="178.0" text="Class">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="158.0" layoutY="148.0" prefHeight="36.0" prefWidth="178.0">
+      <Label fx:id="name_class" alignment="CENTER" layoutX="158.0" layoutY="146.0" prefHeight="36.0" prefWidth="178.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="20.0" layoutY="182.0" prefHeight="36.0" prefWidth="178.0" text="Class">
+      <Label alignment="CENTER" layoutX="27.0" layoutY="194.0" prefHeight="36.0" prefWidth="178.0" text="Assignment">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="158.0" layoutY="182.0" prefHeight="36.0" prefWidth="178.0">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="27.0" layoutY="237.0" prefHeight="36.0" prefWidth="178.0" text="Assignment">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField layoutX="193.0" layoutY="243.0" />
-      <Button layoutX="193.0" layoutY="296.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="84.0" styleClass="button-design" stylesheets="@css/primary.css" text="Button" />
+      <TextField fx:id="txtAssignment" layoutX="186.0" layoutY="199.0" />
+      <Button layoutX="192.0" layoutY="274.0" mnemonicParsing="false" onAction="#SubmitAssignment" prefHeight="36.0" prefWidth="84.0" styleClass="button-design" stylesheets="@css/primary.css" text="Submit" />
    </children>
 </AnchorPane>

@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.team_fortune.student_management_student;
+package com.team_fortune.student_management_student.models;
 
 /**
  *
  * @author tranp
  */
 public class modelExample {
-private int index;
+
 private String nameSubject;
 private int id;
 
@@ -32,8 +32,7 @@ private boolean button;
     public void setButton(boolean button) {
         this.button = button;
     }
-    public modelExample(int index, String nameSubject,String Home, String Examp, String classmy,int id) {
-        this.index = index;
+    public modelExample( String nameSubject,String Home, String Examp, String classmy,int id) {
         this.nameSubject = nameSubject;
         this.Examp = Examp;
         this.Home=Home;
@@ -42,10 +41,7 @@ private boolean button;
         this.id=id;
     }
 
-    public int getIndex() {
-        return index;
-    }
-
+   
     public String getHome() {
         return Home;
     }
@@ -54,9 +50,6 @@ private boolean button;
         this.Home = Home;
     }
   
-    public void setIndex(int index) {
-        this.index = index;
-    }
 
     public String getNameSubject() {
         return nameSubject;

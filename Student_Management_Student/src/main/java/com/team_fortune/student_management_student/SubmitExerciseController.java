@@ -5,8 +5,14 @@
 package com.team_fortune.student_management_student;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -18,6 +24,31 @@ public class SubmitExerciseController implements Initializable {
     /**
      * Initializes the controller class.
      */
+     @FXML
+    private Label name_class;
+ @FXML
+    private TextField txtAssignment;
+    @FXML
+    private Label name_subject;
+    private Connection conn;
+    @FXML
+    public void init(String name_subject,String name_class){
+        this.name_class.setText(name_class);
+        this.name_subject.setText(name_subject);
+    }
+        @FXML
+    void SubmitAssignment(ActionEvent event) {
+     conn=PrimaryController.connectDB();
+            try {
+                String query="Insert into transcript(id_exam,link) values(?,?)";
+                PreparedStatement stmt=conn.prepareStatement(query);
+                stmt.setString(2, txtAssignment.getText());
+                stmt.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

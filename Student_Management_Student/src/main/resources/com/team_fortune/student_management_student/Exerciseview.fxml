@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.team_fortune.student_management_student.ExerciseviewController">
+   <children>
+      <AnchorPane prefHeight="122.0" prefWidth="603.0" styleClass="card1" stylesheets="@css/primary.css">
+         <children>
+            <ImageView fitHeight="122.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@asset/homework%20(1).png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="122.0" layoutY="23.0" prefHeight="63.0" prefWidth="194.0" text="Exercise Student" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tblexample" layoutX="50.0" layoutY="141.0" prefHeight="200.0" prefWidth="462.0">
+         <columns>
+            <TableColumn fx:id="columnsubject" prefWidth="73.60003662109375" text="Subject" />
+            <TableColumn fx:id="columnteacher" prefWidth="80.7999267578125" text="Teacher" />
+            <TableColumn fx:id="colExam" maxWidth="202.39999389648438" prefWidth="90.39993286132812" text="Exam" />
+            <TableColumn fx:id="Columnclass" maxWidth="202.39999389648438" prefWidth="77.5999755859375" text="Class" />
+            <TableColumn fx:id="Columnassignment" maxWidth="202.39999389648438" prefWidth="136.79999389648435" text="Submits Assigntment" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
