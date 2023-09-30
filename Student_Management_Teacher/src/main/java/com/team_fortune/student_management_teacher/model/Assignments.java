@@ -57,7 +57,6 @@ public class Assignments {
     private String name_class;
     private String Assignment;
     private boolean Status;
-    private boolean seeAssignment;
     private boolean Cancel;
 
     public boolean isCancel() {

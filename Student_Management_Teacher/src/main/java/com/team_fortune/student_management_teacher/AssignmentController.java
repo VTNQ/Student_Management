@@ -39,10 +39,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -676,20 +679,34 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
     private int getidass(){
         return id_ass;
     }
+
+    private void setidass(int id_Ass) {
+        id_ass = id_Ass;
+    }
+
+    private int getidass() {
+        return id_ass;
+    }
+
+    private void settext(String name_class, String name_subject) {
+        this.set_name_class.setText(name_class);
+        this.set_name_subject.setText(name_subject);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+  
+        WatchAssign();
         deleteview();
         searchdisplay();
-      
-             txtsearch.textProperty().addListener((observable, oldvalue, newValue) -> {
-                 
-                     
-                    searchfield(newValue);
-                
-                 
-    });
-                     
+
+        txtsearch.textProperty().addListener((observable, oldvalue, newValue) -> {
+
+            searchfield(newValue);
+
+        });
+
         name_class.getItems().addAll(getClassName());
         name_subject.getItems().addAll(getClassSubject());
         displayrecord();

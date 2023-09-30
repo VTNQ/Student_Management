@@ -1,9 +1,8 @@
-package com.team_fortune.student_management_teacher.model;
+package com.team_fortune.student_management_admin.model;
 
 import java.sql.Date;
 
-
-public class Teacher {
+public class Student {
     private int id;
     private String name;
     private String username;
@@ -11,11 +10,20 @@ public class Teacher {
     private Date since;
     private String password;
     private boolean status;
+    private boolean isActive;
 
-    public Teacher() {
+    public boolean getIsActive() {
+        return isActive;
     }
 
-    public Teacher(int id, String name, String username, String phone, Date since, String password, boolean status) {
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public Student() {
+    }
+
+    public Student(int id, String name, String username, String phone, Date since, String password, boolean status) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -23,6 +31,7 @@ public class Teacher {
         this.since = since;
         this.password = password;
         this.status = status;
+        this.isActive=true;
     }
 
     public int getId() {
@@ -64,7 +73,7 @@ public class Teacher {
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     public void setPhone(String phone) {
         this.phone = phone;
     }
@@ -80,5 +89,6 @@ public class Teacher {
     public void setStatus(boolean status) {
         this.status = status;
     }
+    
     
 }

@@ -1,4 +1,4 @@
-package com.team_fortune.student_management_teacher.model;
+package com.team_fortune.student_management_admin.model;
 
 import java.sql.Date;
 
@@ -11,7 +11,7 @@ public class Teacher {
     private Date since;
     private String password;
     private boolean status;
-
+    private boolean Isactive;
     public Teacher() {
     }
 
@@ -23,6 +23,15 @@ public class Teacher {
         this.since = since;
         this.password = password;
         this.status = status;
+        this.Isactive=true;
+    }
+
+    public boolean isIsactive() {
+        return Isactive;
+    }
+
+    public void setIsactive(boolean Isactive) {
+        this.Isactive = Isactive;
     }
 
     public int getId() {

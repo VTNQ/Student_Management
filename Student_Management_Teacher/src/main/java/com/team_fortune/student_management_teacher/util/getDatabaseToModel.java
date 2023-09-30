@@ -9,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class getDatabaseToModel {
     
@@ -40,7 +38,7 @@ public class getDatabaseToModel {
             }
             return classes;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
        
@@ -66,7 +64,7 @@ public class getDatabaseToModel {
             return subjects;
        
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         
         return null;
@@ -93,7 +91,7 @@ public class getDatabaseToModel {
             DBConnection.closeConnection(conn);
             return subjects;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
     }
@@ -120,7 +118,7 @@ public class getDatabaseToModel {
             DBConnection.closeConnection(conn);
             return classs_subjects;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         
         return null;
@@ -165,7 +163,7 @@ public class getDatabaseToModel {
             DBConnection.closeConnection(conn);
             return classes;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
     }
@@ -203,28 +201,7 @@ public class getDatabaseToModel {
 
     return AssignmentList;
 }
-    public List<com.team_fortune.student_management_teacher.model.Subject> getAllDataFromDataBaseSubject(){
-        try {
-            String searchQuery="Select * From Subject";
-            Connection conn=DBConnection.getConnection();
-            PreparedStatement stmt=conn.prepareStatement(searchQuery);
-            ResultSet rs=stmt.executeQuery();
-            List<com.team_fortune.student_management_teacher.model.Subject> Subject=new ArrayList<>();
-            while(rs.next()){
-                com.team_fortune.student_management_teacher.model.Subject sub=new com.team_fortune.student_management_teacher.model.Subject();
-                sub.setId(rs.getInt("id"));
-                sub.setName(rs.getString("name"));
-                sub.setSession(rs.getString("session"));
-                sub.setLession_link(rs.getString("lession_link"));
-                Subject.add(sub);
-            }
-            DBConnection.closeConnection(conn);
-            return Subject;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    
     public List<com.team_fortune.student_management_teacher.model.Student>getDataFromDatabaseStudent(){
         try {
             String searchQuery="select s.id,s.name,s.phone,s.since,s.status from student s inner join class_subject cs on cs.id_student=s.id inner join teacher t on cs.id_teacher=t.id where t.id=? group by s.name";
@@ -245,27 +222,28 @@ public class getDatabaseToModel {
             DBConnection.closeConnection(conn);
             return students;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return null;
     }
-   public static List<com.team_fortune.student_management_teacher.model.Assignments>WatchAssStudent(String name_class,int id_Assignment,String name_subject){
+   public static List<com.team_fortune.student_management_teacher.model.Assignments>WatchAssStudent(){
        List<com.team_fortune.student_management_teacher.model.Assignments>ExAssign=new ArrayList<>();
-       String query="Select a.name as name_student,b.link as link,b.status as status  From student a Join class_subject c ON a.id=c.id_student "
+       String query="Select b.id_assignments,d.name as name_subject,a.name as name_student,b.link as link,b.status as status,e.name as name_class  From student a Join class_subject c ON a.id=c.id_student "
                + "Join subject d ON d.id=c.id_subject JOIN class e ON e.id=c.id_class JOIN assignments f ON f.id=c.id_assignments "
-               + "Join solution b ON f.id=b.id_assignments Where b.id_assignments=? And e.name=? And d.name=?";
+               + "Join solution b ON f.id=b.id_assignments "+"Join teacher t1 ON t1.id=c.id_teacher "+"Where t1.username=?";
        try {
            Connection conn=DBConnection.getConnection();
            PreparedStatement stmt=conn.prepareStatement(query);
-           stmt.setInt(1, id_Assignment);
-           stmt.setString(2, name_class);
-           stmt.setString(3, name_subject);
+           stmt.setString(1, MD5.Md5(HomeController.username));
            ResultSet result=stmt.executeQuery();
            while(result.next()){
                String name_student=result.getString("name_student");
+               int id=result.getInt("id_assignments");
                String Link=result.getString("link");
-               String Status=result.getString("status");
-               ExAssign.add(new Assignments(name_student, Link, Status));
+               int Status=result.getInt("status");
+               String name_subject=result.getString("name_subject");
+               String name_class=result.getString("name_class");
+               ExAssign.add(new Assignments(id,name_student, Link, Status,name_class,name_subject));
            }
            DBConnection.closeConnection(conn);
        } catch (Exception e) {
@@ -294,7 +272,31 @@ public class getDatabaseToModel {
             DBConnection.closeConnection(conn);
             return students;
         } catch (SQLException ex) {
-            Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    public List<com.team_fortune.student_management_teacher.model.Teacher>getDataFromDatabaseTeacher(){
+        try {
+            String searchQuery="select t.id,t.name,t.phone,t.since,t.status from teacher t inner join class_subject cs on cs.id_teacher=t.id inner where t.id=? group by t.name";
+            Connection conn=DBConnection.getConnection();
+            PreparedStatement preparedStatement=conn.prepareStatement(searchQuery);
+            preparedStatement.setInt(1, id_teacher);
+            ResultSet rs =preparedStatement.executeQuery();
+            List<com.team_fortune.student_management_teacher.model.Teacher> Teachers=new ArrayList<>();
+            while(rs.next()){
+                com.team_fortune.student_management_teacher.model.Teacher Tea = new com.team_fortune.student_management_teacher.model.Teacher();
+                Tea.setId(rs.getInt("t.id"));
+                Tea.setName(rs.getString("t.name"));
+                Tea.setPhone(rs.getString("t.phone"));
+                Tea.setSince(rs.getDate("t.since"));
+                Tea.setStatus(rs.getBoolean("t.status"));
+                Teachers.add(Tea);
+            }
+            return Teachers;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return null;
     }

@@ -190,7 +190,7 @@
                <children>
                   <ImageView fitHeight="112.0" fitWidth="128.0" layoutX="139.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@asset/lock.png" />
+                        <Image url="@asset/human-manager.png" />
                      </image>
                   </ImageView>
                   <Label alignment="CENTER" layoutX="66.0" layoutY="109.0" prefHeight="105.0" prefWidth="288.0" text="Reset Password" textFill="WHITE">
@@ -218,6 +218,7 @@
                         <Font size="14.0" />
                      </font>
                   </PasswordField>
+
                   <Button fx:id="back" layoutX="74.0" layoutY="451.0" mnemonicParsing="false" onAction="#changeForm" prefHeight="40.0" prefWidth="270.0" style="-fx-background-color: green; -fx-text-fill: white;" text="Back">
                      <font>
                         <Font name="System Bold" size="12.0" />

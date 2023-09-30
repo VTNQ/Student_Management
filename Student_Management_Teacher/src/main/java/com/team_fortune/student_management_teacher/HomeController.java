@@ -1,6 +1,10 @@
 package com.team_fortune.student_management_teacher;
 
+import com.team_fortune.student_management_teacher.dao.SearchTeacher;
 import com.team_fortune.student_management_teacher.util.DBConnection;
+import com.team_fortune.student_management_teacher.util.MD5;
+import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
+import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;
@@ -15,6 +19,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
@@ -24,6 +29,8 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
     
@@ -47,6 +54,28 @@ public class HomeController implements Initializable {
 
     @FXML
     private MenuButton btnSubject;
+    
+    @FXML
+    private MFXPasswordField RePassword;
+
+    @FXML
+    private MFXPasswordField newPassword;
+
+    @FXML
+    void ChangePassword(MouseEvent event) {
+        if(newPassword==RePassword){
+            try {
+            Connection conn=DBConnection.getConnection();
+            PreparedStatement ps=conn.prepareStatement("update teacher set password=? and status=1 where id=?");
+            ps.setString(1, MD5.Md5(newPassword.getText()));
+            ps.setInt(2, getDatabaseToModel.id_teacher);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        
+    }
 
     public void chartClass() throws SQLException {
         String searchClassStudent = "select c.name, count(cs.id_student) as total from class_subject cs join class c on c.id=cs.id_class join teacher t on cs.id_teacher=t.id where t.username=? group by c.name order by c.id ASC";
@@ -307,6 +336,17 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+   @FXML
+    void Solutionbtn(ActionEvent event) {
+        FXMLLoader loader=new FXMLLoader(App.class.getResource("view/watchassign.fxml"));
+        try {
+           AnchorPane InformationPage=loader.load();
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(InformationPage);
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+    }
 
     @FXML
     void showInformationUser(ActionEvent event) {
@@ -344,10 +384,28 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
             }
         });
     }
+    
+    void openPopupChangePassword() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("changePassword.fxml"));
+            AnchorPane newPopup = fxmlLoader.load();
+            Forgot_PasswordController forgot_password = fxmlLoader.getController();
+            forgot_password.init();
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setScene(new Scene(newPopup, 400, 300));
+            popupStage.showAndWait();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            if(SearchTeacher.searchTeacherWithStatus()==false){
+                openPopupChangePassword();
+            }
             btnHome.getStyleClass().add("bg-active");
             chartClass();
         } catch (SQLException ex) {

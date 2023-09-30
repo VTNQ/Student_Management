@@ -9,14 +9,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class LoginController {
 
@@ -27,20 +21,6 @@ public class LoginController {
     @FXML
     private MFXButton btn_Login;
     @FXML
-    void openPopupForgetgPassword(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("forgot_password.fxml"));
-            AnchorPane newPopup = fxmlLoader.load();
-            Forgot_PasswordController forgot_password = fxmlLoader.getController();
-            forgot_password.init();
-            Stage popupStage = new Stage();
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.setScene(new Scene(newPopup, 300, 200));
-            popupStage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
 
     public void CheckLogin(MouseEvent event) throws IOException {
         String username = username_field.getText();
