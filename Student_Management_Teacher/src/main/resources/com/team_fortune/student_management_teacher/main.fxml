@@ -264,7 +264,7 @@
                <graphic>
                   <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@asset/assignment.png" />
+                        <Image url="@asset/student.png" />
                      </image>
                   </ImageView>
                </graphic>

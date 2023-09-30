@@ -14,8 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,9 +31,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class HomeController implements Initializable {
-    
+
     public static String username;
-    
+
     @FXML
     private Pane main_display;
     @FXML
@@ -54,7 +52,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private MenuButton btnSubject;
-    
+
     @FXML
     private MFXPasswordField RePassword;
 
@@ -63,18 +61,18 @@ public class HomeController implements Initializable {
 
     @FXML
     void ChangePassword(MouseEvent event) {
-        if(newPassword==RePassword){
+        if (newPassword == RePassword) {
             try {
-            Connection conn=DBConnection.getConnection();
-            PreparedStatement ps=conn.prepareStatement("update teacher set password=? and status=1 where id=?");
-            ps.setString(1, MD5.Md5(newPassword.getText()));
-            ps.setInt(2, getDatabaseToModel.id_teacher);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement("update teacher set password=? and status=1 where username=?");
+                ps.setString(1, MD5.Md5(newPassword.getText()));
+                ps.setString(2, MD5.Md5(username));
+                ps.executeUpdate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
-        }
-        
+
     }
 
     public void chartClass() throws SQLException {
@@ -84,7 +82,7 @@ public class HomeController implements Initializable {
             Char_Class.setTitle("Student Of Class");
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             PreparedStatement ps = conn.prepareStatement(searchClassStudent);
-            ps.setString(1,username);
+            ps.setString(1, MD5.Md5(username));
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String nameClass = rs.getString("name");
@@ -123,7 +121,7 @@ public class HomeController implements Initializable {
             main_display.getChildren().clear();
             main_display.getChildren().setAll(classPane);
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -141,7 +139,7 @@ public class HomeController implements Initializable {
             main_display.getChildren().clear();
             main_display.getChildren().setAll(classPane);
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -159,7 +157,7 @@ public class HomeController implements Initializable {
             main_display.getChildren().clear();
             main_display.getChildren().setAll(classPane);
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -177,7 +175,7 @@ public class HomeController implements Initializable {
             main_display.getChildren().clear();
             main_display.getChildren().setAll(classPane);
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -195,7 +193,7 @@ public class HomeController implements Initializable {
             main_display.getChildren().clear();
             main_display.getChildren().setAll(subjectPane);
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -213,7 +211,7 @@ public class HomeController implements Initializable {
             main_display.getChildren().clear();
             main_display.getChildren().setAll(subjectPane);
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -231,19 +229,20 @@ public class HomeController implements Initializable {
             main_display.getChildren().clear();
             main_display.getChildren().setAll(subjectPane);
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
+
     @FXML
     void update_Assignment(ActionEvent event) {
-FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
-         btnSubject.getStyleClass().add("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
         btnClass.getStyleClass().remove("bg-active");
         try {
-            TabPane AssignmentPanel=loader.load();
+            TabPane AssignmentPanel = loader.load();
             AssignmentPanel.getSelectionModel().select(1);
             main_display.getChildren().clear();
             main_display.getChildren().setAll(AssignmentPanel);
@@ -251,16 +250,17 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
             e.printStackTrace();
         }
     }
+
     @FXML
-    void ListAssignment(ActionEvent event){
-        FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
+    void ListAssignment(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
-         btnSubject.getStyleClass().add("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
         btnClass.getStyleClass().remove("bg-active");
         try {
-            TabPane AssignmentPanel=loader.load();
+            TabPane AssignmentPanel = loader.load();
             AssignmentPanel.getSelectionModel().select(2);
             main_display.getChildren().clear();
             main_display.getChildren().setAll(AssignmentPanel);
@@ -268,16 +268,17 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
             e.printStackTrace();
         }
     }
+
     @FXML
-    void DeleteAssign(ActionEvent event){
-        FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
+    void DeleteAssign(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
-         btnSubject.getStyleClass().add("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
         btnClass.getStyleClass().remove("bg-active");
         try {
-            TabPane AssignmentPanel=loader.load();
+            TabPane AssignmentPanel = loader.load();
             AssignmentPanel.getSelectionModel().select(3);
             main_display.getChildren().clear();
             main_display.getChildren().setAll(AssignmentPanel);
@@ -285,40 +286,43 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
             e.printStackTrace();
         }
     }
+
     @FXML
-    void Add_Examp(ActionEvent event){
-         FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Exampleview.fxml"));
+    void Add_Examp(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Exampleview.fxml"));
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
-         btnSubject.getStyleClass().add("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
         btnClass.getStyleClass().remove("bg-active");
         try {
-        TabPane AssignmentPanel=loader.load();
-        AssignmentPanel.getSelectionModel().select(0);
-         main_display.getChildren().clear();
+            TabPane AssignmentPanel = loader.load();
+            AssignmentPanel.getSelectionModel().select(0);
+            main_display.getChildren().clear();
             main_display.getChildren().setAll(AssignmentPanel);
-    } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
-@FXML
+
+    @FXML
     void Add_assignment(ActionEvent event) {
-        FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Assignment.fxml"));
         btnHome.getStyleClass().remove("bg-active");
         btnExam.getStyleClass().remove("bg-active");
         btnAssignment.getStyleClass().remove("bg-active");
-         btnSubject.getStyleClass().add("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
         btnClass.getStyleClass().remove("bg-active");
         try {
-        TabPane AssignmentPanel=loader.load();
-        AssignmentPanel.getSelectionModel().select(0);
-         main_display.getChildren().clear();
+            TabPane AssignmentPanel = loader.load();
+            AssignmentPanel.getSelectionModel().select(0);
+            main_display.getChildren().clear();
             main_display.getChildren().setAll(AssignmentPanel);
-    } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
+
     @FXML
     void delete_subject(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainSubject.fxml"));
@@ -333,19 +337,20 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
             main_display.getChildren().clear();
             main_display.getChildren().setAll(subjectPane);
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
-   @FXML
+
+    @FXML
     void Solutionbtn(ActionEvent event) {
-        FXMLLoader loader=new FXMLLoader(App.class.getResource("view/watchassign.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("view/watchassign.fxml"));
         try {
-           AnchorPane InformationPage=loader.load();
+            AnchorPane InformationPage = loader.load();
             main_display.getChildren().clear();
             main_display.getChildren().setAll(InformationPage);
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -360,7 +365,7 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
             main_display.getChildren().clear();
             main_display.getChildren().setAll(InformationPage);
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
@@ -379,18 +384,16 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
                     username = "";
                     App.setRoot("login");
                 } catch (IOException ex) {
-                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
                 }
             }
         });
     }
-    
+
     void openPopupChangePassword() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("changePassword.fxml"));
             AnchorPane newPopup = fxmlLoader.load();
-            Forgot_PasswordController forgot_password = fxmlLoader.getController();
-            forgot_password.init();
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(newPopup, 400, 300));
@@ -403,13 +406,14 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            if(SearchTeacher.searchTeacherWithStatus()==false){
+           
                 openPopupChangePassword();
-            }
+                
+            
             btnHome.getStyleClass().add("bg-active");
             chartClass();
         } catch (SQLException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 }
