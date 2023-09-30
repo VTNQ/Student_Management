@@ -1,6 +1,7 @@
 package com.team_fortune.student_management_teacher.util;
 
 import com.team_fortune.student_management_teacher.HomeController;
+import com.team_fortune.student_management_teacher.MainSubjectController;
 import com.team_fortune.student_management_teacher.model.Assignments;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -242,7 +243,7 @@ public class getDatabaseToModel {
                int Status=result.getInt("status");
                String name_subject=result.getString("name_subject");
                String name_class=result.getString("name_class");
-               ExAssign.add(new Assignments(id,name_student, Link, Status,name_class,name_subject));
+               ExAssign.add(new Assignments(name_student, name_student, Status, name_subject, name_class, Link));
            }
            DBConnection.closeConnection(conn);
        } catch (Exception e) {

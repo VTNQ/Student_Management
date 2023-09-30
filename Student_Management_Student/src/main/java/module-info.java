@@ -9,6 +9,6 @@ module com.team_fortune.student_management_student {
 
     
     opens com.team_fortune.student_management_student to javafx.fxml;
-
+ opens com.team_fortune.student_management_student.models to javafx.base;
     exports com.team_fortune.student_management_student;
 }

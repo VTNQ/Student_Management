@@ -2,33 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.team_fortune.student_management_student;
+package com.team_fortune.student_management_student.models;
 
 /**
  *
  * @author tranp
  */
 public class modelWord {
-private int index;
 private String name_subject;
 private String name_teacher;
 private String World;
 private String name_class;
 
-    public modelWord(int index, String name_subject, String name_teacher, String World, String name_class) {
-        this.index = index;
+    public modelWord( String name_subject, String name_teacher, String World, String name_class) {
         this.name_subject = name_subject;
         this.name_teacher = name_teacher;
         this.World = World;
         this.name_class = name_class;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     public String getName_subject() {

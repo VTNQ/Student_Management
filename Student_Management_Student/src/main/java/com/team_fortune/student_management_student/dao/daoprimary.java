@@ -29,13 +29,14 @@ public  class daoprimary {
            Connection conn;
            Class.forName("com.mysql.cj.jdbc.Driver");
            conn=DriverManager.getConnection(urlConnect,username,password);
-           PreparedStatement ps=conn.prepareStatement("insert into student(name,username,phone,since,password,status) values (?,?,?,?,?,?)",PreparedStatement.RETURN_GENERATED_KEYS);
+           PreparedStatement ps=conn.prepareStatement("insert into student(name,username,email,phone,since,password,status) values (?,?,?,?,?,?,?)",PreparedStatement.RETURN_GENERATED_KEYS);
            ps.setString(1, models.getName());
            ps.setString(2, models.getUsername());
-           ps.setInt(3, models.getPhone());
-           ps.setDate(4, models.getSince());
-           ps.setString(5, models.getPassword());
-           ps.setBoolean(6, models.getStatus());
+           ps.setString(3, models.getEmail());
+           ps.setInt(4, models.getPhone());
+           ps.setDate(5, models.getSince());
+           ps.setString(6, models.getPassword());
+           ps.setBoolean(7, models.getStatus());
            statusExcute=ps.execute();
            ResultSet rs=ps.getGeneratedKeys();
            while(rs.next()){
@@ -45,7 +46,7 @@ public  class daoprimary {
 
             ps.close(); 
        } catch (Exception e) {
-          
+          e.printStackTrace();
        }
        return statusExcute;
    }

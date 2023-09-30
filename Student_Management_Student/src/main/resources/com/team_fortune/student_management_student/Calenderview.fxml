@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_student.CalenderviewController">
+   <children>
+      <AnchorPane prefHeight="122.0" prefWidth="603.0" styleClass="card1" stylesheets="@css/primary.css">
+         <children>
+            <ImageView fitHeight="122.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@asset/schedule.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="136.0" layoutY="23.0" prefHeight="63.0" prefWidth="194.0" text="Calender of Class" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tblview" layoutX="91.0" layoutY="155.0" prefHeight="190.0" prefWidth="464.0">
+         <columns>
+            <TableColumn fx:id="colsubject" prefWidth="65.60004425048828" text="Subject" />
+            <TableColumn fx:id="colclass" maxWidth="202.39999389648438" prefWidth="76.800048828125" text="Class" />
+            <TableColumn fx:id="Time" maxWidth="202.39999389648438" prefWidth="98.39996337890625" text="Start time" />
+            <TableColumn fx:id="Endtime" maxWidth="202.39999389648438" prefWidth="96.0" text="End time" />
+            <TableColumn fx:id="colCountdown" maxWidth="202.39999389648438" minWidth="0.0" prefWidth="125.60000610351562" text="Join" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/primary.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.team_fortune.student_management_student.ScoreviewController">
+   <children>
+      <AnchorPane prefHeight="147.0" prefWidth="606.0" styleClass="card1" stylesheets="@css/primary.css">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@asset/checklist.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="150.0" layoutY="33.0" prefHeight="81.0" prefWidth="242.0" text="Score Student" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tblscore" layoutX="79.0" layoutY="161.0" prefHeight="200.0" prefWidth="464.0">
+         <columns>
+            <TableColumn fx:id="colsubject" prefWidth="115.20004272460938" text="Subject" />
+            <TableColumn fx:id="colScore" prefWidth="176.80001831054688" text="Score" />
+            <TableColumn fx:id="colclass" maxWidth="87.19998168945312" prefWidth="87.19998168945312" text="Class" />
+            <TableColumn fx:id="Status" maxWidth="87.19998168945312" prefWidth="87.19998168945312" text="Status" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

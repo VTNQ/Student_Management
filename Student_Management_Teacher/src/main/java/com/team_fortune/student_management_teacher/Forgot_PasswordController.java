@@ -20,7 +20,7 @@ public class Forgot_PasswordController{
      }
          @FXML
     void ChangePassword(ActionEvent event) {
-             System.out.println(HomeController.username);
+         
     }
     
 }

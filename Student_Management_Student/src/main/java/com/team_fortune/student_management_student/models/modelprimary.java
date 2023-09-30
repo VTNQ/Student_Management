@@ -12,7 +12,15 @@ public class modelprimary {
     private String name_teacher;
     private String name_subject;
     private String name_class;
+    private String Email;
 
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
     public String getName_teacher() {
         return name_teacher;
     }

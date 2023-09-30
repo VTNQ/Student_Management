@@ -36,18 +36,20 @@ public class SubmitassignmentController implements Initializable {
                  private int assignmentId;
             @FXML
     void submit(ActionEvent event) {
+
         conn=PrimaryController.connectDB();
         String checkQuery="Select * From solution WHERE id_assignments = ?";
         String updateQuery="UPDATE solution SET link=? WHERE id_assignments = ?";
         String query="INSERT INTO solution(id_assignments,link,status) values (?,?,?)";
                 try {
                     PreparedStatement ps=conn.prepareStatement(checkQuery);
-                 ps.setInt(1, SecondaryController.assignmentId);
+                 ps.setInt(1, ExerciseviewController.assignmentId);
                     ResultSet resultSet=ps.executeQuery();
                   if(resultSet.next()){
                       PreparedStatement updatestmt=conn.prepareStatement(updateQuery);
                       updatestmt.setString(1,linkfield.getText());
-                      updatestmt.setInt(2, SecondaryController.assignmentId);
+                      updatestmt.setInt(2, ExerciseviewController.assignmentId);
+                      
                       updatestmt.executeUpdate();
                       displaysuccessfully("Update Successfully");
                   }else{

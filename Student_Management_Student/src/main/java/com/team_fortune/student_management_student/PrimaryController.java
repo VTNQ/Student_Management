@@ -110,15 +110,13 @@ private static boolean isaccoutphone(String phone){
     conn = connectDB();
    
     try {
-        String sql = "SELECT * FROM student WHERE username=? And password=?  AND status=?";
+        String sql = "SELECT * FROM student WHERE username=? And password=?";
         statement = conn.prepareStatement(sql);
  String usernamtxt=encryptPasswordMD5(username.getText());
       String passtxt=encryptPasswordMD5(password.getText());
 
         statement.setString(1, usernamtxt);
         statement.setString(2,passtxt);
-        
-        statement.setString(3, "1");
 
         result = statement.executeQuery();
         if (result.next()) {
@@ -146,7 +144,7 @@ private void displayErrorMessage(String message) {
     alert.showAndWait();
 }
 
-private void displaysuccessfully(String message){
+public static void displaysuccessfully(String message){
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle("success");
     alert.setHeaderText(null);

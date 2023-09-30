@@ -51,10 +51,10 @@ public class LoginController {
                         DialogAlert.DialogSuccess("Account not exist!");
                     } else switch (isFound) {
                         case 1:
-                            System.out.println(HomeController.username);
+                         
                             DialogAlert.DialogSuccess("Login Successfully");
                             App.setRoot("main");
-                            System.out.println(username_field.getText());
+                            
                             break;  
                         case 2:
                             DialogAlert.DialogError("Username or Password Incorrect!");
