@@ -18,6 +18,7 @@ public class LoginController {
     private MFXTextField username_field;
     @FXML
     private MFXButton btn_Login;
+    public static String username;
     @FXML
 
     public void CheckLogin(MouseEvent event) throws IOException {

@@ -392,8 +392,9 @@ public class HomeController implements Initializable {
 
     void openPopupChangePassword() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("changePassword.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/changePassword.fxml"));
             AnchorPane newPopup = fxmlLoader.load();
+             HomeController change_password = fxmlLoader.getController();
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(newPopup, 400, 300));
@@ -402,17 +403,30 @@ public class HomeController implements Initializable {
             ex.printStackTrace();
         }
     }
+    public static void closePopupChangePassword() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("changePassword.fxml"));
+            AnchorPane newPopup = fxmlLoader.load();
+            HomeController change_password = fxmlLoader.getController();
+          
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setScene(new Scene(newPopup, 400, 300));
+            popupStage.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-           
-                openPopupChangePassword();
-                
-            
-            btnHome.getStyleClass().add("bg-active");
-            chartClass();
-        } catch (SQLException ex) {
+            boolean status=SearchTeacher.searchTeacherWithStatus();
+            if(!status){
+               openPopupChangePassword();
+                System.out.println(HomeController.username);
+            }
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
