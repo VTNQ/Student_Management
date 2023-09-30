@@ -10,7 +10,7 @@ package com.team_fortune.student_management_teacher.model;
  */
 public class Assignments {
     private int id;
-    private int statussolution;
+    private String statussolution;
 
     public int getId() {
         return id;
@@ -20,21 +20,19 @@ public class Assignments {
         this.id = id;
     }
 
-    public Assignments(int id,String name_student, String link_student,int status,String name_class,String name_subject) {
+    public Assignments(String name_student, String link_student,String status) {
         this.name_student = name_student;
         this.link_student = link_student;
         this.statussolution=status;
-        this.id=id;
-        this.name_class=name_class;
-        this.name_Subject=name_subject;
+        
         
     }
 
-    public int getStatussolution() {
+    public String getStatussolution() {
         return statussolution;
     }
 
-    public void setStatussolution(int statussolution) {
+    public void setStatussolution(String statussolution) {
         this.statussolution = statussolution;
     }
     private String name_student;
@@ -73,7 +71,15 @@ public class Assignments {
 public Assignments(){
      
  }
+ public boolean isSeeAssignment() {
+        return seeAssignment;
+    }
 
+    public void setSeeAssignment(boolean seeAssignment) {
+        this.seeAssignment = seeAssignment;
+    }
+    
+ 
     public void setAssignment(String Assignment) {
         this.Assignment = Assignment;
     }
@@ -114,7 +120,7 @@ public Assignments(){
         this.Assignment= Assignment;
         this.Status = Status;
         this.id=id;
-       
+        this.seeAssignment=true;
     }
 
 }

@@ -16,11 +16,11 @@
             <version>20.0.2</version>
         </dependency>
        
-    <dependency>
-        <groupId>org.controlsfx</groupId>
-        <artifactId>controlsfx</artifactId>
-        <version>11.1.0</version> <!-- Hoặc phiên bản mới nhất -->
-    </dependency>
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>11.1.0</version> <!-- Hoặc phiên bản mới nhất -->
+        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
@@ -36,6 +36,12 @@
             <artifactId>materialfx</artifactId>
             <version>11.16.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.jfxtras</groupId>
+            <artifactId>jfxtras-controls</artifactId>
+            <version>17-r1</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

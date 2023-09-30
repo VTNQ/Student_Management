@@ -2,7 +2,7 @@
                  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
                  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
                  */
-                package com.team_fortune.student_management_student;
+                package com.team_fortune.student_management_student.models;
 
                 import java.sql.Timestamp;
                 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@
                  * @author tranp
                  */
                 public class modelcalender {
-                private int index;
+              
                 private String name_Subject;
                 
                 private String name_class;
@@ -34,15 +34,14 @@
         this.link = link;
     }
 
-                    public modelcalender(int index, String name_Subject, String name_class,String StartTime,String link,String endtime ) {
-                        this.index = index;
+                    public modelcalender( String name_Subject, String name_class,String StartTime,String link,String endtime ) {
                         this.name_Subject = name_Subject;
                        
                         this.name_class = name_class;
                         this.StartTime=StartTime;
                        
                         this.link=link;
-                        this.buttonVisible=false;
+                        this.buttonVisible=true;
                         this.Endtime=endtime;
 
                     }
@@ -57,13 +56,7 @@
 
 
 
-                    public int getIndex() {
-                        return index;
-                    }
-
-                    public void setIndex(int index) {
-                        this.index = index;
-                    }
+                
 
                     public String getName_Subject() {
                         return name_Subject;

@@ -4,6 +4,7 @@
  */
 package com.team_fortune.student_management_student;
 
+import com.team_fortune.student_management_student.models.modelsolution;
 import java.awt.Desktop;
 import java.lang.module.FindException;
 import java.net.URI;
@@ -116,7 +117,7 @@ public class DetailController implements Initializable {
     alert.setContentText(message);
     alert.showAndWait();
 }
-    void displayrecord(){
+    void displayrecord(int Asssignmentid){
         conn=PrimaryController.connectDB();
         model.clear();
         String query="Select t1.name as name_subject,t2.name as name_class,t3.link,t3.status,t3.reason From subject t1 "
@@ -130,8 +131,8 @@ public class DetailController implements Initializable {
             PreparedStatement stmt=conn.prepareStatement(query);
             stmt.setInt(1, PrimaryController.loggedInStudentId);
             System.out.println(PrimaryController.loggedInStudentId);
-            stmt.setInt(2, SecondaryController.assignmentId);
-             System.out.println(SecondaryController.assignmentId);
+            stmt.setInt(2, ExerciseviewController.assignmentId);
+             System.out.println(ExerciseviewController.assignmentId);
              ResultSet rs=stmt.executeQuery();
              while(rs.next()){
                  int index=1;
@@ -153,7 +154,7 @@ public class DetailController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       displayrecord();
+
     
     }
 }
