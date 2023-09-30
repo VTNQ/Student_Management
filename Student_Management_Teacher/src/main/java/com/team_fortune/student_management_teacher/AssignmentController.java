@@ -600,24 +600,7 @@ public class AssignmentController implements Initializable {
             }
 
         });
-              int itemsPerPage = 4; 
-int totalItems = observableList.size(); // Total number of records
-int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage); //tong so trang can hien thi
-
-pagination.setPageCount(totalPages); // Thiết lập tổng số trang
-
-pagination.setPageFactory(pageIndex -> {
-    if (pageIndex >= totalItems) {
-        return null;
-    }
-
-    int fromIndex = pageIndex*itemsPerPage;
-    int toIndex = Math.min(fromIndex+itemsPerPage,totalItems);
-
-   tblexstudent.setItems(FXCollections.observableArrayList(observableList.subList(fromIndex, toIndex)));
-
-    return tblexstudent;
-});
+         
     }
 
     public void searchdisplay() {
@@ -677,7 +660,24 @@ pagination.setPageFactory(pageIndex -> {
             }
 
         });
+     int itemsPerPage = 4; 
+int totalItems = observableList.size(); // Total number of records
+int totalPages = (int) Math.ceil((double) totalItems / itemsPerPage); //tong so trang can hien thi
 
+pagination.setPageCount(totalPages); // Thiết lập tổng số trang
+
+pagination.setPageFactory(pageIndex -> {
+    if (pageIndex >= totalItems) {
+        return null;
+    }
+
+    int fromIndex = pageIndex*itemsPerPage;
+    int toIndex = Math.min(fromIndex+itemsPerPage,totalItems);
+
+  
+
+    return tblexstudent;
+});
     }
 
     private void showpopup(Assignments assign) {

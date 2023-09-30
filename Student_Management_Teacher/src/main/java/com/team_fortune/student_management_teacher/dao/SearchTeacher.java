@@ -30,16 +30,14 @@ public class SearchTeacher{
     }
     
     public static boolean searchTeacherWithStatus() throws SQLException{
-        String searchQuery="select*from teacher where status=1 and id=?";
-        Connection conn=DBConnection.getConnection();
-        PreparedStatement ps=conn.prepareStatement(searchQuery);
-        ps.setInt(1, getDatabaseToModel.id_teacher);
-        ResultSet rs=ps.executeQuery(searchQuery);
-        boolean isFound=false;
-        while(rs.next()){
-            isFound=true;
-        }
-        DBConnection.closeConnection(conn);
-        return isFound;
+        String searchQuery = "SELECT * FROM teacher WHERE status=? AND id=?";
+    Connection conn = DBConnection.getConnection();
+    PreparedStatement ps = conn.prepareStatement(searchQuery);
+    ps.setBoolean(1, true);
+    ps.setInt(2, getDatabaseToModel.id_teacher);
+    ResultSet rs = ps.executeQuery();
+    boolean isFound = rs.next(); // Check if there is at least one result
+    DBConnection.closeConnection(conn);
+    return isFound;
     }
 }
