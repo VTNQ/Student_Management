@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -30,15 +29,14 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Pagination fx:id="pagination" layoutX="114.0" layoutY="165.0" prefHeight="200.0" prefWidth="317.0" />
       <TableView fx:id="tblexstudent" layoutX="31.0" layoutY="114.0" prefHeight="200.0" prefWidth="466.0">
         <columns>
           <TableColumn fx:id="colStudent" prefWidth="83.20000457763672" text="Student" />
           <TableColumn fx:id="solutionsubject" prefWidth="64.79991912841797" text="Subject" />
-            <TableColumn fx:id="solutionclass" prefWidth="40.79998779296875" text="class" />
-            <TableColumn fx:id="colSolution" minWidth="0.0" prefWidth="68.800048828125" text="Solution" />
-            <TableColumn fx:id="colRequest" minWidth="0.0" prefWidth="79.20001220703125" text="Approve" />
-            <TableColumn fx:id="colCancel" minWidth="0.0" prefWidth="143.20004272460938" text="Cancel" />
+            <TableColumn fx:id="solutionclass" prefWidth="62.39996337890625" text="class" />
+            <TableColumn fx:id="colSolution" minWidth="0.0" prefWidth="85.60003662109375" text="Solution" />
+            <TableColumn fx:id="colRequest" minWidth="0.0" prefWidth="88.79998779296875" text="Approve" />
+            <TableColumn fx:id="colCancel" minWidth="0.0" text="Cancel" />
         </columns>
       </TableView>
    </children>

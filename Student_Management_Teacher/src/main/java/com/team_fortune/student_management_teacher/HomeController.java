@@ -387,10 +387,9 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
     
     void openPopupChangePassword() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("changePassword.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/changePassword.fxml"));
             AnchorPane newPopup = fxmlLoader.load();
-            Forgot_PasswordController forgot_password = fxmlLoader.getController();
-            forgot_password.init();
+             HomeController change_password = fxmlLoader.getController();
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(newPopup, 400, 300));
@@ -403,8 +402,8 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("changePassword.fxml"));
             AnchorPane newPopup = fxmlLoader.load();
-            Forgot_PasswordController forgot_password = fxmlLoader.getController();
-            forgot_password.init();
+            HomeController change_password = fxmlLoader.getController();
+          
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(newPopup, 400, 300));
@@ -417,14 +416,12 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            if(SearchTeacher.searchTeacherWithStatus()==false){
-               
-                closePopupChangePassword();
-                 openPopupChangePassword();
+            boolean status=SearchTeacher.searchTeacherWithStatus();
+            if(!status){
+               openPopupChangePassword();
+                System.out.println(HomeController.username);
             }
-            btnHome.getStyleClass().add("bg-active");
-            chartClass();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

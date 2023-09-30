@@ -25,6 +25,7 @@ public class LoginController {
 
     public void CheckLogin(MouseEvent event) throws IOException {
         String username = username_field.getText();
+        HomeController.username=username_field.getText();
         String password = password_field.getText();
         if (username.isEmpty() && password.isEmpty()) {
             username_field.getStyleClass().add("text_field_error");
@@ -51,7 +52,7 @@ public class LoginController {
                         DialogAlert.DialogSuccess("Account not exist!");
                     } else switch (isFound) {
                         case 1:
-                         
+                           
                             DialogAlert.DialogSuccess("Login Successfully");
                             App.setRoot("main");
                             

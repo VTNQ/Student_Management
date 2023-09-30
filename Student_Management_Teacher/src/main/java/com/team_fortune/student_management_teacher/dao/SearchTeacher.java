@@ -1,5 +1,6 @@
 package com.team_fortune.student_management_teacher.dao;
 
+import com.team_fortune.student_management_teacher.HomeController;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.MD5;
 import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
@@ -30,11 +31,12 @@ public class SearchTeacher{
     }
     
     public static boolean searchTeacherWithStatus() throws SQLException{
-        String searchQuery = "SELECT * FROM teacher WHERE status=? AND id=?";
+        String searchQuery = "SELECT * FROM teacher WHERE status=? AND username=?";
     Connection conn = DBConnection.getConnection();
     PreparedStatement ps = conn.prepareStatement(searchQuery);
     ps.setBoolean(1, true);
-    ps.setInt(2, getDatabaseToModel.id_teacher);
+    ps.setString(2, MD5.Md5(HomeController.username));
+   
     ResultSet rs = ps.executeQuery();
     boolean isFound = rs.next(); // Check if there is at least one result
     DBConnection.closeConnection(conn);

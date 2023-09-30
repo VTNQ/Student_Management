@@ -68,9 +68,17 @@ public class AssignmentController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    private TableView<com.team_fortune.student_management_teacher.model.Assignments>ListAssignment=new TableView<>();
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>solutionsubject;
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Boolean>colCancel=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>solutionclass;
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colSolution;
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Integer>colRequest;
+    @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Integer>colCancel;
+    @FXML
+    private TableView<com.team_fortune.student_management_teacher.model.Assignments>ListAssignment=new TableView<>();
 @FXML
 private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>name_Subject=new TableColumn<>();
 @FXML
@@ -94,14 +102,11 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
     private MFXComboBox<String> name_student=new MFXComboBox<>();
         @FXML
     private MFXComboBox<String> name_subject=new MFXComboBox<>();
-          @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, Boolean> colRequest;
-
     @FXML
     private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> colStudent;
 
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> colStudentAssignment;
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> colStudentAssignment=new TableColumn<>();
 
     @FXML
     private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, Boolean> colSubmit;
@@ -438,72 +443,13 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
         ObservableList<com.team_fortune.student_management_teacher.model.Assignments>observableList=FXCollections.observableArrayList(resullist);
         tblexstudent.setItems(observableList);
         colStudent.setCellValueFactory(new PropertyValueFactory<>("name_student"));
-        colStudentAssignment.setCellValueFactory(new PropertyValueFactory<>("link_student"));
-        colStudentAssignment.setCellFactory(column -> {
-            
-    return new TableCell<com.team_fortune.student_management_teacher.model.Assignments, String>() {
-        private final Hyperlink hyperlink=new Hyperlink();
-       
-        @Override
-        protected void updateItem(String linkStudent, boolean empty) {
-            
-            super.updateItem(linkStudent, empty);
-             {
-        hyperlink.setOnAction(event->{
-            try {
-                  Desktop.getDesktop().browse(new URI(linkStudent));
-            } catch (Exception e) {
-                DialogAlert.DialogError("URL is not found");
-            }
-              
-        });
-        }
-            if (!empty && getTableRow() != null && getTableRow().getItem() != null) {
-                
-                com.team_fortune.student_management_teacher.model.Assignments assignment = getTableRow().getItem();
-                if (assignment.getName_student()!= null && !assignment.getName_student().isEmpty()
-          ||assignment.getLink_student()!=null && !assignment.getLink_student().isEmpty()) {
-                    
-                   
-                    if (linkStudent != null && !linkStudent.isEmpty()) {
-                        hyperlink.setText(linkStudent);
-                        setGraphic(hyperlink);
-                    } else {
-                        setText("The student has not submitted the assignment yet");
-                    }
-                } else {
-                    setText("");
-                }
-            } else {
-                setText("");
-            }
-        }
-    };
-});
+        solutionsubject.setCellValueFactory(new PropertyValueFactory<>("name_Subject"));
+        solutionclass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
+        colSolution.setCellValueFactory(new PropertyValueFactory<>("link_student"));
         colRequest.setCellValueFactory(new PropertyValueFactory<>("statussolution"));
+        colCancel.setCellValueFactory(new PropertyValueFactory<>("statussolution"));
       
-          colRequest.setCellFactory(column->new TableCell<com.team_fortune.student_management_teacher.model.Assignments,Boolean>(){
-              
-        private final MFXButton Button=new MFXButton("Approve");
-       
- 
-            @Override
-            protected void updateItem(Boolean Item, boolean empty) {
-                super.updateItem(Item, empty);
-               
-               
-                Button.getStyleClass().add("button-design");
-                com.team_fortune.student_management_teacher.model.Assignments assignment = getTableRow().getItem();
-                
-               if (Item == null || empty) {
-                   setGraphic(Button);
-            
-        } else {
-            setGraphic(null);
-        }
-            }
-        
-        });
+          
     }
     public void searchdisplay(){
        List<com.team_fortune.student_management_teacher.model.Assignments>resultList=getDatabaseToModel.getAssignments();
