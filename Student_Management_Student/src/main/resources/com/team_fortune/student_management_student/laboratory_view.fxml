@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -8,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_student.Laboratory_viewController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_student.CalenderviewController">
    <children>
       <AnchorPane prefHeight="98.0" prefWidth="600.0" styleClass="card1" stylesheets="@css/primary.css">
          <children>
@@ -17,18 +19,18 @@
                   <Image url="@asset/exam.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="144.0" layoutY="14.0" prefHeight="77.0" prefWidth="206.0" text="End-of-course exam">
+            <Label alignment="CENTER" layoutX="144.0" layoutY="14.0" prefHeight="78.0" prefWidth="178.0" text="Examp Subject OF">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="Subject" alignment="CENTER" layoutX="312.0" layoutY="11.0" prefHeight="78.0" prefWidth="58.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="133.0" layoutY="109.0" prefHeight="57.0" prefWidth="86.0" style="-fx-text-fill: #3490dc;" text="Subject">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
       <Label layoutX="205.0" layoutY="109.0" prefHeight="57.0" prefWidth="86.0" style="]: #3490dc;">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -45,12 +47,12 @@
             <Image url="@asset/clock.png" />
          </image>
       </ImageView>
-      <Label fx:id="clock" alignment="CENTER" layoutX="57.0" layoutY="156.0" prefHeight="34.0" prefWidth="106.0">
+      <Label fx:id="clock" alignment="CENTER" layoutX="57.0" layoutY="156.0" prefHeight="35.0" prefWidth="167.0">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="113.0" layoutY="220.0" prefHeight="50.0" prefWidth="125.0" text="Exanp Topic">
+      <Label layoutX="113.0" layoutY="220.0" prefHeight="50.0" prefWidth="125.0" text="Examp Topic">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -65,5 +67,17 @@
             <Font size="18.0" />
          </font>
       </Hyperlink>
+      <ImageView fitHeight="78.0" fitWidth="70.0" layoutX="44.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@asset/submit%20(1).png" />
+         </image>
+      </ImageView>
+      <Label layoutX="113.0" layoutY="295.0" prefHeight="50.0" prefWidth="142.0" text="Examp Submit">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <MFXTextField fx:id="linkExamp" layoutX="267.0" layoutY="302.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="158.0" />
+      <MFXButton layoutX="239.0" layoutY="356.0" onAction="#submit" prefHeight="42.0" prefWidth="86.0" styleClass="btn-design" stylesheets="@css/primary.css" />
    </children>
 </AnchorPane>

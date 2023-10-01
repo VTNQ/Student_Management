@@ -76,6 +76,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.util.Duration;
@@ -111,7 +112,7 @@ public class SecondaryController implements Initializable {
 
     private String coutdown;
     private String endfor;
-
+    
     private void displayErrorMessage(String message) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error");
@@ -255,6 +256,11 @@ public class SecondaryController implements Initializable {
             e.printStackTrace();
         }
         return id;
+    }
+    @FXML 
+   void btn_home(MouseEvent event) throws IOException {
+        App.setRoot("admin");
+       
     }
     @FXML
     void Scorebtn(){

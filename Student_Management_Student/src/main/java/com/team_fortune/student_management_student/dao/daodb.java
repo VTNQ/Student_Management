@@ -90,21 +90,22 @@ public class daodb {
     public static List<com.team_fortune.student_management_student.models.modelcalender>SelectCalender(){
          List<com.team_fortune.student_management_student.models.modelcalender>resultList=new ArrayList<>();
          Connection conn=DBconnect.connectDB();
-          String query = "SELECT t1.name as name_subject, t3.name as name_class, t4.start,t4.link_exam,t4.end " +
-                      "FROM subject t1 " +
-                      "JOIN class_subject t5 ON t1.id = t5.id_subject " +
-                      "JOIN class t3 ON t5.id_class = t3.id " +
-                      "JOIN student t6 ON t5.id_student = t6.id " +
-                      "JOIN exam_schedule t4 ON t5.id_exam = t4.id " +
-                      "JOIN teacher t2 ON t2.id = t5.id_teacher " +
-                      "WHERE t6.id = ? ";
+         String query = "SELECT t4.id as id, t1.name as name_subject, t3.name as name_class, t4.start, t4.link_exam, t4.end " +
+               "FROM subject t1 " +
+               "JOIN class_subject t5 ON t1.id = t5.id_subject " +
+               "JOIN class t3 ON t5.id_class = t3.id " +
+               "JOIN student t6 ON t5.id_student = t6.id " +
+               "JOIN exam_schedule t4 ON t5.id_exam = t4.id " +
+               "JOIN teacher t2 ON t2.id = t5.id_teacher " +
+               "LEFT JOIN transcript a ON t4.id = a.id_exam " +
+               "WHERE t6.id = ? AND (a.link IS NULL OR a.link = '') AND t4.end > NOW()";
           try {
             PreparedStatement stmt=conn.prepareStatement(query);
             stmt.setInt(1, PrimaryController.loggedInStudentId);
             ResultSet result=stmt.executeQuery();
             while(result.next()){
                 String subject = result.getString("name_subject");
-
+                int id=result.getInt("id");
                String className = result.getString("name_class");
                  link_examp=result.getString("link_exam");
                 starTime = result.getTimestamp("start").toLocalDateTime();
@@ -115,7 +116,7 @@ public class daodb {
                DateTimeFormatter endformat=DateTimeFormatter.ofPattern("dd/MM/YYYY HH:mm",new Locale("vi","VN"));
                   endfor=endtime.format(endformat);
                   linkDisplay =result.getString("link_exam");
-                  resultList.add(new modelcalender( subject, className, formatdate, linkDisplay, endfor));
+                  resultList.add(new modelcalender( id,subject, className, formatdate, linkDisplay, endfor));
             }
             DBconnect.closeConnection(conn);
         } catch (Exception e) {

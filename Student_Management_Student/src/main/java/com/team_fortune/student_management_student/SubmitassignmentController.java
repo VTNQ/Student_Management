@@ -8,7 +8,10 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,60 +31,61 @@ public class SubmitassignmentController implements Initializable {
     /**
      * Initializes the controller class.
      */
-        @FXML
+    @FXML
     private TextField linkfield;
-            @FXML
+    @FXML
     private Label subject;
-        private Connection conn;
-                 private int assignmentId;
-            @FXML
+    private Connection conn;
+    private int assignmentId;
+
+    @FXML
     void submit(ActionEvent event) {
 
-        conn=PrimaryController.connectDB();
-        String checkQuery="Select * From solution WHERE id_assignments = ?";
-        String updateQuery="UPDATE solution SET link=? WHERE id_assignments = ?";
-        String query="INSERT INTO solution(id_assignments,link,status) values (?,?,?)";
-                try {
-                    PreparedStatement ps=conn.prepareStatement(checkQuery);
-                 ps.setInt(1, ExerciseviewController.assignmentId);
-                    ResultSet resultSet=ps.executeQuery();
-                  if(resultSet.next()){
-                      PreparedStatement updatestmt=conn.prepareStatement(updateQuery);
-                      updatestmt.setString(1,linkfield.getText());
-                      updatestmt.setInt(2, ExerciseviewController.assignmentId);
-                      
-                      updatestmt.executeUpdate();
-                      displaysuccessfully("Update Successfully");
-                  }else{
-                      PreparedStatement insertstmt=conn.prepareStatement(query);
-                      insertstmt.setInt(1, SecondaryController.assignmentId);
-                      insertstmt.setString(2, linkfield.getText());
-                      insertstmt.setBoolean(3, true);
-                      insertstmt.executeUpdate();
-                      displaysuccessfully("insert successfully");
-                  }
-               
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+        conn = PrimaryController.connectDB();
+        String checkQuery = "Select * From assignments a JOIN solution b ON a.id=b.id_assignments JOIN class_subject c ON a.id=c.id_assignments JOIN student d ON d.id=c.id_student Where b.id_assignments=? And d.id=?";
+            String query="INSERT INTO solution(id_assignments,link,status) values (?,?,?)";
+            String updateQuery="UPDATE solution SET link=? WHERE id_assignments = ?";
+        PreparedStatement stmt;
+        try {
+            stmt = conn.prepareStatement(checkQuery);
+            stmt.setInt(1, ExerciseviewController.assignmentId);
+           
+            stmt.setInt(2, PrimaryController.loggedInStudentId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+               PreparedStatement updatestmt=conn.prepareStatement(updateQuery);
+               updatestmt.setString(1, linkfield.getText());
+               updatestmt.setInt(2, ExerciseviewController.assignmentId);
+               updatestmt.executeUpdate();
+            }else{
+                PreparedStatement smt=conn.prepareStatement(query);
+                smt.setInt(1, ExerciseviewController.assignmentId);
+                smt.setString(2, linkfield.getText());
+                smt.setInt(3, 0);
+                smt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubmitassignmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
-    private void displaysuccessfully(String message){
-        Alert alert=new Alert(AlertType.INFORMATION);
+
+    private void displaysuccessfully(String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("success");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-       
-    }    
-    
-     @FXML
+
+    }
+
+    @FXML
     public void init(String subject) {
-       this.subject.setText(subject);
+        this.subject.setText(subject);
     }
 }
