@@ -4,6 +4,7 @@
  */
 package com.team_fortune.student_management_student;
 
+import com.teach_fortune.student_management_student.dialog.dialog;
 import com.teach_fortune.student_management_student.util.DBconnect;
 import static com.team_fortune.student_management_student.SecondaryController.assignmentId;
 import com.team_fortune.student_management_student.dao.daodb;
@@ -79,7 +80,20 @@ public class ExerciseviewController implements Initializable {
         }
         return id;
     }
-
+    private boolean tableEmpty(int id_Assignment){
+        String query="Select * From solution Where id_assignments=?";
+        try {
+            Connection conn=DBconnect.connectDB();
+            PreparedStatement stmt=conn.prepareStatement(query);
+            stmt.setInt(1, id_Assignment);
+            ResultSet rs=stmt.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
     private void DisplayExercise() {
         List<com.team_fortune.student_management_student.models.modelExample> resultList = daodb.ListExample();
   observableList = FXCollections.observableArrayList(resultList);
@@ -143,7 +157,8 @@ public class ExerciseviewController implements Initializable {
                     modelExample example = getTableView().getItems().get(getIndex());
                     String subject = example.getNameSubject();
                     assignmentId = idassignment(subject);
-                    try{
+                    if(tableEmpty(assignmentId)){
+                         try{
                         FXMLLoader fxmlLoader=new FXMLLoader(App.class.getResource("detail.fxml"));
             AnchorPane newPopup;
                 newPopup=fxmlLoader.load();
@@ -159,6 +174,10 @@ public class ExerciseviewController implements Initializable {
                     }catch(Exception ex){
                         ex.printStackTrace();
                     }
+                    }else{
+                        dialog.displayErrorMessage("Student is submit");
+                    }
+                   
                 });
                 buttonsContainer.getChildren().addAll(submit, home);
             }

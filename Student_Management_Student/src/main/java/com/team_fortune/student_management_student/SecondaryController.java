@@ -103,7 +103,7 @@ public class SecondaryController implements Initializable {
 
     @FXML
     private AnchorPane updateprofile;
- 
+
     private Button btnWord;
 
     private static int id;
@@ -112,7 +112,7 @@ public class SecondaryController implements Initializable {
 
     private String coutdown;
     private String endfor;
-    
+
     private void displayErrorMessage(String message) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error");
@@ -225,7 +225,8 @@ public class SecondaryController implements Initializable {
         }
         biechart.setData(piechartData);
     }
-@FXML
+
+    @FXML
     void logout(ActionEvent event) {
 
         try {
@@ -257,13 +258,16 @@ public class SecondaryController implements Initializable {
         }
         return id;
     }
-    @FXML 
-   void btn_home(MouseEvent event) throws IOException {
-        App.setRoot("admin");
-       
-    }
+
     @FXML
-    void Scorebtn(){
+    void btn_home(MouseEvent event) throws IOException {
+        App.setRoot("admin");
+
+    }
+
+   
+    @FXML
+    void Scorebtn() {
         FXMLLoader loader = new FXMLLoader(App.class
                 .getResource("/com/team_fortune/student_management_student/Scoreview.fxml"));
         try {
@@ -275,6 +279,7 @@ public class SecondaryController implements Initializable {
             e.printStackTrace();
         }
     }
+
     @FXML
     void Worldbtn(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(App.class
@@ -288,6 +293,7 @@ public class SecondaryController implements Initializable {
             e.printStackTrace();
         }
     }
+
     @FXML
 
     void Exercisebtn(ActionEvent event) {

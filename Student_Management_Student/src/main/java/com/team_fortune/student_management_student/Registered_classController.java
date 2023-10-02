@@ -11,10 +11,15 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -53,7 +58,8 @@ public class Registered_classController implements Initializable {
     private TableView<com.team_fortune.student_management_student.models.classmodel> tbldetail=new TableView<>();
       @FXML
     private TableColumn<com.team_fortune.student_management_student.models.classmodel, String> ColMyJoin=new TableColumn<>();
-
+      @FXML
+      private TableColumn<com.team_fortune.student_management_student.models.classmodel,Boolean>colDetail=new TableColumn<>();
     @FXML
     private TableColumn<com.team_fortune.student_management_student.models.classmodel, Boolean> colregisterDetail=new TableColumn<>();
 
@@ -61,12 +67,36 @@ public class Registered_classController implements Initializable {
     private TableView<com.team_fortune.student_management_student.models.classmodel> tblclass=new TableView<>();
     @FXML
     private TableColumn<com.team_fortune.student_management_student.models.classmodel, String> colclass=new TableColumn<>();
-
+    @FXML
+    private TableView<com.team_fortune.student_management_student.models.classmodel>tblRegister=new TableView<>();
+    
     @FXML
     private TableColumn<com.team_fortune.student_management_student.models.classmodel, Boolean> colJoin=new TableColumn<>();
     @FXML
     private TableColumn<com.team_fortune.student_management_student.models.classmodel, Boolean> colDe=new TableColumn<>();
     ObservableList<com.team_fortune.student_management_student.models.classmodel> model = FXCollections.observableArrayList();
+    private void Joinedclass(){
+        List<com.team_fortune.student_management_student.models.classmodel>arraylist=daodb.joined_class();
+        ObservableList<com.team_fortune.student_management_student.models.classmodel>observable=FXCollections.observableArrayList(arraylist);
+        tblRegister.setItems(observable);
+        ColMyJoin.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colDetail.setCellValueFactory(new PropertyValueFactory<>("isActive"));
+        colDetail.setCellFactory(column->new TableCell<com.team_fortune.student_management_student.models.classmodel,Boolean>(){
+        private final MFXButton button=new MFXButton("Detail");
+
+            @Override
+            protected void updateItem(Boolean Item, boolean empty) {
+                super.updateItem(Item, empty);
+                button.getStyleClass().add("btn-design");
+                if(Item!=null || !empty){
+                    setGraphic(button);
+                }else{
+                    setGraphic(null);
+                }
+            }
+        
+        });
+    }
 private void displayrecord() {
         String query = "Select a.id,a.name From class a JOIN class_subject b ON a.id=b.id_class Where b.id_student!=? OR b.id_student IS  NULL Group by a.id,a.name";
         try {
@@ -98,6 +128,7 @@ private void displayrecord() {
                             stmt.setInt(2, cl.getId());
                             stmt.executeUpdate();
                             PrimaryController.displaysuccessfully("Join successfully");
+                            displayrecord();
                         }catch(Exception ex){
                             ex.printStackTrace();
                         }
@@ -126,7 +157,7 @@ private void displayrecord() {
                     button.setOnAction(event -> {
                         com.team_fortune.student_management_student.models.classmodel cl = getTableView().getItems().get(getIndex());
                         try {
-                            FXMLLoader fxloader=new FXMLLoader(App.class.getResource("Detalclass.fxml"));
+                            FXMLLoader fxloader=new FXMLLoader(App.class.getResource("Detailclass.fxml"));
                             AnchorPane newPopup;
                             newPopup=fxloader.load();
                             Registered_classController exercise=fxloader.getController();
@@ -163,6 +194,12 @@ private void displayrecord() {
             e.printStackTrace();
         }
     }
+    private void startUpdating(){
+         ScheduledExecutorService executor=Executors.newSingleThreadScheduledExecutor();
+         executor.scheduleAtFixedRate(()->{
+             Platform.runLater(this::displayrecord);
+         }, 0, 1, TimeUnit.SECONDS);
+    }
     private void detailclass(int id_class){
           List<com.team_fortune.student_management_student.models.classmodel> resultList = daodb.Detailclass(id_class);
   ObservableList<com.team_fortune.student_management_student.models.classmodel> observableList = FXCollections.observableArrayList(resultList);
@@ -177,7 +214,7 @@ private void displayrecord() {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         displayrecord();
-        
+         Joinedclass();
     }
 
     
