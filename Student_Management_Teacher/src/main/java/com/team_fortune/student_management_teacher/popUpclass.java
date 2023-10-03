@@ -63,12 +63,11 @@ public class popUpclass implements Initializable {
             }
 
             tblSubkect.setItems(popup);
-            System.out.println(tblSubkect);
             ClassSubject.setCellValueFactory(new PropertyValueFactory<>("name"));
             classStudent.setCellValueFactory(new PropertyValueFactory<>("name_student"));
 
         } catch (SQLException ex) {
-            Logger.getLogger(MainClassController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
     private void closepopup(){
@@ -84,11 +83,10 @@ public class popUpclass implements Initializable {
                 PreparedStatement ps = conn.prepareStatement("update teacher set password=?,status=1 where username=?");
                 ps.setString(1, MD5.Md5(newPassword.getText()));
                 ps.setString(2, MD5.Md5(HomeController.username));
-                System.out.println(getDatabaseToModel.id_teacher);
                 ps.executeUpdate();
                 closepopup();
             } catch (SQLException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }else{
            DialogAlert.DialogError("password is not valid");
