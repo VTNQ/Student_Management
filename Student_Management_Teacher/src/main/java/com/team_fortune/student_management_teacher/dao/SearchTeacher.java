@@ -38,7 +38,7 @@ public class SearchTeacher{
     ps.setString(2, MD5.Md5(HomeController.username));
    
     ResultSet rs = ps.executeQuery();
-    boolean isFound = rs.next(); // Check if there is at least one result
+    boolean isFound = rs.next(); 
     DBConnection.closeConnection(conn);
     return isFound;
     }

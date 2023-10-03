@@ -325,7 +325,7 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Class,Bool
             String query1="Select id From teacher Where username=?";
             String latest_Query="Select id From class ORDER BY id DESC LIMIT 1";
             String query = "Insert into class(name) values(?)";
-            String query_class_subject="Insert into class_subject(id_class,id_teacher) values (?,?)";
+            String query_class_subject="Insert into class_subject(id_class,id_teacher,Active) values (?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(query1);
             stmt.setString(1, MD5.Md5(HomeController.username));
             ResultSet result=stmt.executeQuery();
@@ -343,6 +343,7 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Class,Bool
             PreparedStatement stmt2=conn.prepareStatement(query_class_subject);
             stmt2.setInt(1, id_class);
             stmt2.setInt(2, id);
+            stmt2.setBoolean(3, true);
             stmt2.executeUpdate();
             DialogAlert.DialogSuccess("Add class successfully");
             name_class.setText("");

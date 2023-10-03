@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.team_fortune.student_management_teacher.Request_classController">
+   <children>
+      <AnchorPane prefHeight="126.0" prefWidth="600.0" styleClass="card1" stylesheets="@../css/application.css">
+         <children>
+            <ImageView fitHeight="126.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asset/request.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="132.0" layoutY="32.0" prefHeight="62.0" prefWidth="350.0" text="Request Class" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="39.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <TableView layoutX="118.0" layoutY="151.0" prefHeight="200.0" prefWidth="379.0">
+        <columns>
+          <TableColumn prefWidth="97.60003662109375" text="Student" />
+          <TableColumn prefWidth="96.79998779296875" text="Class" />
+            <TableColumn prefWidth="96.79998779296875" text="Approve" />
+            <TableColumn prefWidth="96.79998779296875" text="Cancle" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

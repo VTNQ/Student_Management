@@ -83,13 +83,12 @@
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="ListAssignment" layoutX="81.0" layoutY="86.0" prefHeight="200.0" prefWidth="426.0">
+                  <TableView fx:id="ListAssignment" layoutX="127.0" layoutY="86.0" prefHeight="200.0" prefWidth="331.0">
                      <columns>
                         <TableColumn fx:id="name_Subject" prefWidth="75.0" text="Subject" />
                         <TableColumn fx:id="Class_ass" prefWidth="75.0" text="Class" />
                         <TableColumn fx:id="colAssignment" prefWidth="97.60003662109375" text="Assignment" />
                         <TableColumn fx:id="colStatus" prefWidth="80.79998779296875" text="Status" />
-                        <TableColumn fx:id="colassign" prefWidth="96.0000061035156" text="See submission" />
                      </columns>
                   </TableView>
                </children>

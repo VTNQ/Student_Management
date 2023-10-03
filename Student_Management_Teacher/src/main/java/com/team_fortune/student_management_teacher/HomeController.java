@@ -1,4 +1,4 @@
-package com.team_fortune.student_management_teacher;
+    package com.team_fortune.student_management_teacher;
 
 import com.team_fortune.student_management_teacher.dao.SearchTeacher;
 import com.team_fortune.student_management_teacher.util.DBConnection;
@@ -55,27 +55,9 @@ public class HomeController implements Initializable {
     @FXML
     private MenuButton btnSubject;
     
-    @FXML
-    private MFXPasswordField RePassword;
 
-    @FXML
-    private MFXPasswordField newPassword;
 
-    @FXML
-    void ChangePassword(MouseEvent event) {
-        if(newPassword==RePassword){
-            try {
-            Connection conn=DBConnection.getConnection();
-            PreparedStatement ps=conn.prepareStatement("update teacher set password=? and status=1 where id=?");
-            ps.setString(1, MD5.Md5(newPassword.getText()));
-            ps.setInt(2, getDatabaseToModel.id_teacher);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
-        
-    }
+   
 
     public void chartClass() throws SQLException {
         String searchClassStudent = "select c.name, count(cs.id_student) as total from class_subject cs join class c on c.id=cs.id_class join teacher t on cs.id_teacher=t.id where t.username=? group by c.name order by c.id ASC";
@@ -347,7 +329,17 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
            e.printStackTrace();
        }
     }
-
+@FXML
+    void Request_class(ActionEvent event) {
+        FXMLLoader loader=new FXMLLoader(App.class.getResource("view/Request_class.fxml"));
+        try {
+        AnchorPane Information=loader.load();
+        main_display.getChildren().clear();
+        main_display.getChildren().setAll(Information);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    }
     @FXML
     void showInformationUser(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("view/Information.fxml"));
@@ -385,14 +377,25 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
         });
     }
     
-    void openPopupChangePassword() {
+   public static void openPopupChangePassword() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/changePassword.fxml"));
             AnchorPane newPopup = fxmlLoader.load();
-             HomeController change_password = fxmlLoader.getController();
+             popUpclass change_password = fxmlLoader.getController();
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(newPopup, 400, 300));
+            popupStage.setOnCloseRequest(event->{
+                try {
+                    String query="Update teacher set status=1 Where username=?";
+                    Connection conn=DBConnection.getConnection();
+                    PreparedStatement stmt=conn.prepareStatement(query);
+                    stmt.setString(1, MD5.Md5(HomeController.username));
+                    stmt.executeUpdate();
+                } catch (SQLException ex) {
+                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
             popupStage.showAndWait();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -402,7 +405,7 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("changePassword.fxml"));
             AnchorPane newPopup = fxmlLoader.load();
-            HomeController change_password = fxmlLoader.getController();
+            popUpclass change_password = fxmlLoader.getController();
           
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -415,14 +418,6 @@ FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/studen
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            boolean status=SearchTeacher.searchTeacherWithStatus();
-            if(!status){
-               openPopupChangePassword();
-                System.out.println(HomeController.username);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
     }
 }

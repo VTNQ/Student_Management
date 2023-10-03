@@ -272,7 +272,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
                <items>
-                  <MenuItem mnemonicParsing="false" text="Request Class" />
+                  <MenuItem mnemonicParsing="false" onAction="#Request_class" text="Request Class" />
                   <MenuItem mnemonicParsing="false" onAction="#Solutionbtn" text="Solution" />
                   <MenuItem mnemonicParsing="false" text="Transcript" />
                </items>

@@ -95,7 +95,7 @@ public class getDatabaseToModel {
         }
         return null;
     }
-   
+ 
     public List<com.team_fortune.student_management_teacher.model.Class_Subject>getDataFromDatabaseClassSubject(){
         try {
             String searchQuery="select cs.id_class,cs.id_subject,cs.id_teacher,cs.id_student,cs.id_assignments,cs.id_exam from class_subject cs where cs.id_teacher=?";

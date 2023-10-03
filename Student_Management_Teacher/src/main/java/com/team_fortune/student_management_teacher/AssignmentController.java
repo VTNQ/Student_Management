@@ -68,15 +68,15 @@ public class AssignmentController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>solutionsubject;
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>solutionsubject=new TableColumn<>();
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>solutionclass;
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>solutionclass=new TableColumn<>();
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colSolution;
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,String>colSolution=new TableColumn<>();
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Integer>colRequest;
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Integer>colRequest=new TableColumn<>();
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Integer>colCancel;
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Integer>colCancel=new TableColumn<>();
     @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Assignments>ListAssignment=new TableView<>();
 @FXML
@@ -103,16 +103,16 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
         @FXML
     private MFXComboBox<String> name_subject=new MFXComboBox<>();
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> colStudent;
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> colStudent=new TableColumn<>();
 
     @FXML
     private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, String> colStudentAssignment=new TableColumn<>();
 
     @FXML
-    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, Boolean> colSubmit;
+    private TableColumn<com.team_fortune.student_management_teacher.model.Assignments, Boolean> colSubmit=new TableColumn<>();
 
     @FXML
-    private TableView<com.team_fortune.student_management_teacher.model.Assignments> tblexstudent;
+    private TableView<com.team_fortune.student_management_teacher.model.Assignments> tblexstudent=new TableView<>();
         @FXML
         private Label labelClass;
         @FXML
@@ -133,7 +133,6 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
     private MFXTextField txtsearch=new MFXTextField();
     @FXML
     private MFXComboBox<String> name_class=new MFXComboBox<>();
-    @FXML
     private TableColumn<com.team_fortune.student_management_teacher.model.Assignments,Boolean>colassign=new TableColumn<>();
     private int id_ass;
     private int id_assignment;
@@ -316,44 +315,6 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
                }
                 
                 });
-               colassign.setCellValueFactory(new PropertyValueFactory<>("seeAssignment"));
-               colassign.setCellFactory(column->new TableCell<>(){
-               private final MFXButton button=new MFXButton("Watch");
-               {
-               button.setOnAction(event->{
-                   com.team_fortune.student_management_teacher.model.Assignments Ass=getTableView().getItems().get(getIndex());
-              try{
-                    FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/watchassign.fxml"));
-            AnchorPane  newpopup=loader.load();
-           AssignmentController assignment=loader.getController();
-                  System.out.println(Ass.getId());
-           assignment.WatchAssign();
-            Stage popupStage=new Stage();
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.setScene(new Scene(newpopup));
-            popupStage.setResizable(false);
-            popupStage.showAndWait(); 
-              }catch(Exception ex){
-                  ex.printStackTrace();
-              }
-               });
-               }
-
-              @Override
-              protected void updateItem(Boolean Item, boolean empty) {
-                  super.updateItem(Item, empty);
-                  button.getStyleClass().add("button-design");
-                  if(empty || Item==null){
-                      setGraphic(null);
-                  }else{
-                      setGraphic(button);
-                  }
-              }
-               
-               
-               });
-       
-      
     }
     private void updateAssignment(Boolean status,int id_Assignment){
         try {
@@ -447,6 +408,7 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Assignment
         solutionclass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
         colSolution.setCellValueFactory(new PropertyValueFactory<>("link_student"));
         colRequest.setCellValueFactory(new PropertyValueFactory<>("statussolution"));
+        
         colCancel.setCellValueFactory(new PropertyValueFactory<>("statussolution"));
       
           
