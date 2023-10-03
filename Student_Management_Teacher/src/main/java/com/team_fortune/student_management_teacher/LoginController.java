@@ -7,8 +7,6 @@ import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
@@ -25,6 +23,7 @@ public class LoginController {
     @FXML
 
     public void CheckLogin(MouseEvent event) throws IOException {
+        
         String username = username_field.getText();
 
         String password = password_field.getText();
