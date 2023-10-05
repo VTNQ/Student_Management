@@ -274,7 +274,7 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#Request_class" text="Request Class" />
                   <MenuItem mnemonicParsing="false" onAction="#Solutionbtn" text="Solution" />
-                  <MenuItem mnemonicParsing="false" text="Transcript" />
+                  <MenuItem mnemonicParsing="false" onAction="#btnTranscript" text="Transcript" />
                </items>
             </MenuButton>
             <Line endX="125.19998168945312" layoutX="18.0" layoutY="380.0" startX="-17.9999942779541" startY="0.199981689453125" stroke="WHITE" />

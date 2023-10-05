@@ -3,6 +3,7 @@ package com.team_fortune.student_management_teacher.util;
 import com.team_fortune.student_management_teacher.HomeController;
 import com.team_fortune.student_management_teacher.MainSubjectController;
 import com.team_fortune.student_management_teacher.model.Assignments;
+import com.team_fortune.student_management_teacher.model.Student;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +16,36 @@ public class getDatabaseToModel {
     public static int id_teacher = 0;
     public static int id_class = 0;
     public static int id_subject = 0;
-    
+    public static List<com.team_fortune.student_management_teacher.model.Student>GetTranscriptByClass(String selectedClass,String selectedSubject){
+        List<com.team_fortune.student_management_teacher.model.Student>resulList=new ArrayList<>();
+            String query="Select a.id,a.name,c.link,c.score,c.status From student a "
+                +"Join class_subject b ON a.id=b.id_student "
+                +"Join exam_schedule d ON d.id=b.id_exam "
+                +"Join transcript c ON c.id_exam=d.id " 
+                +"Join teacher e ON e.id=b.id_teacher "
+                +"Join class h ON h.id=b.id_class "
+                +"Join subject t1 ON t1.id=b.id_subject "
+                + "Where e.username=? And h.name=? OR t1.name=? "+"Group by a.id,a.name,c.link,c.score,c.status";
+            try {
+            Connection conn=DBConnection.getConnection();
+            PreparedStatement stmt=conn.prepareStatement(query);
+            stmt.setString(1, MD5.Md5(HomeController.username));
+            stmt.setString(2, selectedClass);
+            stmt.setString(3, selectedSubject);
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                   int id=rs.getInt("id");
+                String name_Student=rs.getString("name");
+                String link=rs.getString("link");
+                Float Score=rs.getFloat("score");
+                int status=rs.getInt("status");
+                resulList.add(new Student(id, status, link, Score, name_Student));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            return resulList;
+    }
     public List<com.team_fortune.student_management_teacher.model.Class> getDataFromDatabaseClass() {
         try {
             String SearchQuery = "select c.id,c.name from class c inner join class_subject cs on cs.id_class=c.id where cs.id_teacher=? group by c.id";
@@ -43,7 +73,35 @@ public class getDatabaseToModel {
         return null;
        
     }
-
+    public static List<com.team_fortune.student_management_teacher.model.Student>GetTranscript(){
+        String query="Select c.id,a.name,c.link,c.score,c.status From student a "
+                +"Join class_subject b ON a.id=b.id_student "
+                +"Join transcript c ON b.id_transcipt=c.id "
+                +"Join teacher h ON h.id=b.id_teacher "
+                +"Join class p ON p.id=b.id_class "
+                +"Join subject L ON L.id=b.id_subject "
+                +"Where h.username=?";
+                
+                
+        List<com.team_fortune.student_management_teacher.model.Student>arraylist=new ArrayList<>();
+        try {
+            Connection conn=DBConnection.getConnection();
+            PreparedStatement stmt=conn.prepareStatement(query);
+            stmt.setString(1,MD5.Md5(HomeController.username));
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                int id=rs.getInt("id");
+                String name_Student=rs.getString("name");
+                String link=rs.getString("link");
+                Float Score=rs.getFloat("score");
+                int status=rs.getInt("status");
+                arraylist.add(new Student(id, status, link, Score, name_Student));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arraylist;
+    }
     public List<com.team_fortune.student_management_teacher.model.Subject> getDataFromDatabaseSubject() {
         try {
             String SearchQuery = "select s.id,s.name,s.session,s.lession_link from subject s inner join class_subject cs on cs.id_subject=s.id where cs.id_teacher=? group by s.id";
@@ -95,7 +153,30 @@ public class getDatabaseToModel {
         }
         return null;
     }
- 
+   public static List<com.team_fortune.student_management_teacher.model.Student>Request_Class(){
+         List<com.team_fortune.student_management_teacher.model.Student>Arraylist=new ArrayList<>();
+       try {
+         
+           String query="Select a.id as id_student,c.id as id_class,a.name as name_Student,c.name as name_class,b.Active From student a Join class_subject b ON a.id=b.id_student Join class c ON b.id_class=c.id Join teacher d ON b.id_teacher=d.id Where d.username=? ";
+           Connection conn=DBConnection.getConnection();
+           PreparedStatement stmt=conn.prepareStatement(query);
+           stmt.setString(1, MD5.Md5(HomeController.username));
+           ResultSet rs=stmt.executeQuery();
+           while(rs.next()){
+               String name_student=rs.getString("name_Student");
+               String name_class=rs.getString("name_class");
+               int id_Student=rs.getInt("id_student");
+               int Active=rs.getInt("Active");
+               int id_class=rs.getInt("id_class");
+               Arraylist.add(new Student(id_Student, id_class, name_student, name_class, Active));
+              
+           }
+           DBConnection.closeConnection(conn);
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return Arraylist;
+   }
     public List<com.team_fortune.student_management_teacher.model.Class_Subject>getDataFromDatabaseClassSubject(){
         try {
             String searchQuery="select cs.id_class,cs.id_subject,cs.id_teacher,cs.id_student,cs.id_assignments,cs.id_exam from class_subject cs where cs.id_teacher=?";
@@ -230,11 +311,12 @@ public class getDatabaseToModel {
        List<com.team_fortune.student_management_teacher.model.Assignments>ExAssign=new ArrayList<>();
        String query="Select b.id_assignments,d.name as name_subject,a.name as name_student,b.link as link,b.status as status,e.name as name_class  From student a Join class_subject c ON a.id=c.id_student "
                + "Join subject d ON d.id=c.id_subject JOIN class e ON e.id=c.id_class JOIN assignments f ON f.id=c.id_assignments "
-               + "Join solution b ON f.id=b.id_assignments "+"Join teacher t1 ON t1.id=c.id_teacher "+"Where t1.username=?";
+               + "Join solution b ON f.id=b.id_assignments "+"Join teacher t1 ON t1.id=c.id_teacher "+"Where t1.username=? And c.id_assignments IS NOT NULL";
        try {
            Connection conn=DBConnection.getConnection();
            PreparedStatement stmt=conn.prepareStatement(query);
            stmt.setString(1, MD5.Md5(HomeController.username));
+          
            ResultSet result=stmt.executeQuery();
            while(result.next()){
                String name_student=result.getString("name_student");
@@ -243,7 +325,7 @@ public class getDatabaseToModel {
                int Status=result.getInt("status");
                String name_subject=result.getString("name_subject");
                String name_class=result.getString("name_class");
-               ExAssign.add(new Assignments(name_student, name_student, Status, name_subject, name_class, Link));
+               ExAssign.add(new Assignments(id, name_student, Link, Status, name_subject, name_class));
            }
            DBConnection.closeConnection(conn);
        } catch (Exception e) {

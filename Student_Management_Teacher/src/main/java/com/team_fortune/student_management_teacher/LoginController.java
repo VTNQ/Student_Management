@@ -7,6 +7,7 @@ import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
@@ -66,7 +67,7 @@ public class LoginController {
                     }
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+              ex.printStackTrace();
             }
         }
     }

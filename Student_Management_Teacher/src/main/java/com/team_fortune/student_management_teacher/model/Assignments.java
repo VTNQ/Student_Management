@@ -21,14 +21,14 @@ public class Assignments {
         this.id = id;
     }
 
-    public Assignments(String name_student, String link_student,int status,String name_Subject,String name_class,String Assignment) {
+    public Assignments(int id,String name_student, String link_student,int status,String name_Subject,String name_class) {
         this.name_student = name_student;
         this.link_student = link_student;
         this.statussolution=status;
          this.name_Subject = name_Subject;
         this.name_class = name_class;
-        this.Assignment= Assignment;
-        
+      
+        this.id=id;
     }
 
     public int getStatussolution() {
