@@ -1,19 +1,20 @@
 package com.team_fortune.student_management_teacher;
 
+import com.team_fortune.student_management_teacher.dialog.DialogAlert;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.MD5;
+import com.team_fortune.student_management_teacher.util.Regax;
+import io.github.palexdev.materialfx.controls.MFXPasswordField;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
@@ -27,9 +28,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class HomeController implements Initializable {
+public class HomeController {
 
     public static String username;
+    private static String password;
 
     @FXML
     private Pane main_display;
@@ -49,6 +51,15 @@ public class HomeController implements Initializable {
 
     @FXML
     private MenuButton btnSubject;
+
+    @FXML
+    private MFXPasswordField newPassword;
+
+    @FXML
+    private MFXTextField oldPassword;
+
+    @FXML
+    private MFXPasswordField rePasssword;
 
     public void chartClass() throws SQLException {
         String searchClassStudent = "select c.name, count(cs.id_student) as total from class_subject cs join class c on c.id=cs.id_class join teacher t on cs.id_teacher=t.id where t.username=? group by c.name order by c.id ASC";
@@ -353,6 +364,66 @@ public class HomeController implements Initializable {
     }
 
     @FXML
+    void ChangePassword(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("view/ChangePassword.fxml"));
+        try {
+            AnchorPane changePassword = loader.load();
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(changePassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void changePassword(ActionEvent event) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement("select password from teacher where username=?");
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                password = resultSet.getString("password");
+            }
+            DBConnection.closeConnection(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (!newPassword.getText().equals(rePasssword.getText()) && !MD5.Md5(oldPassword.getText()).equals(password)) {
+            newPassword.getStyleClass().add("text_field_error");
+            newPassword.applyCss();
+            rePasssword.getStyleClass().add("text_field_error");
+            rePasssword.applyCss();
+            oldPassword.getStyleClass().add("text_field_error");
+            oldPassword.applyCss();
+            DialogAlert.DialogError("New password and Re-enterd password not same!.\nOld Password not incorrect!");
+        } else if (!newPassword.getText().equals(rePasssword.getText()) && MD5.Md5(oldPassword.getText()).equals(password)) {
+            newPassword.getStyleClass().add("text_field_error");
+            newPassword.applyCss();
+            rePasssword.getStyleClass().add("text_field_error");
+            rePasssword.applyCss();
+            DialogAlert.DialogError("new password and re-enterd password not same!.");
+        } else if (newPassword.getText().equals(rePasssword.getText()) && !MD5.Md5(oldPassword.getText()).equals(password)) {
+            oldPassword.getStyleClass().add("text_field_error");
+            oldPassword.applyCss();
+            DialogAlert.DialogError("Old Password not incorrect!");
+        } else if (newPassword.getText().equals(rePasssword.getText()) && MD5.Md5(oldPassword.getText()).equals(password)) {
+            if (Regax.isValidPassword(newPassword.getText())) {
+                String updateString = "update teacher set password=? where username=?";
+                try {
+                    Connection conn = DBConnection.getConnection();
+                    PreparedStatement ps = conn.prepareStatement(updateString);
+                    ps.setString(1, newPassword.getText());
+                    ps.setString(2, username);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @FXML
     void showInformationUser(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("view/Information.fxml"));
         btnHome.getStyleClass().remove("bg-active");
@@ -427,10 +498,5 @@ public class HomeController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
     }
 }

@@ -1,7 +1,6 @@
 package com.team_fortune.student_management_teacher;
 
 import com.team_fortune.student_management_teacher.dialog.DialogAlert;
-import com.team_fortune.student_management_teacher.model.Student;
 import com.team_fortune.student_management_teacher.model.Subject;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
@@ -320,6 +319,7 @@ public class MainSubjectController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Class.addAll(new getDatabaseToModel().getDataFromDatabaseClass());
         Class_Subject.addAll(new getDatabaseToModel().getDataFromDatabaseClassSubject());
+        Subject.addAll(new getDatabaseToModel().getDataFromDatabaseSubject());
         name_class.getItems().addAll(getClassNames());
        
         showSuject();

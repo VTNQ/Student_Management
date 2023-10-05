@@ -7,7 +7,6 @@ import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
@@ -55,7 +54,7 @@ public class LoginController {
                     switch (isFound) {
                         case 1:               
                             DialogAlert.DialogSuccess("Login Successfully");
-                            HomeController.username = username_field.getText();
+                            HomeController.username = username;
                             App.setRoot("main");
                             if (!SearchTeacher.searchTeacherWithStatus()) {
                                 HomeController.openPopupChangePassword();
