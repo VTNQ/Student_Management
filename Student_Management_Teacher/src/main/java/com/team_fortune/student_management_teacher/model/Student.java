@@ -93,12 +93,12 @@ public class Student {
     public Student() {
     }
 
-    public Student(int id, String name, String username, String phone, Date since, String password, boolean status) {
+    public Student(int id, String name, String username, String phone, String password, boolean status) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.phone = phone;
-        this.since = since;
+       
         this.password = password;
         this.status = status;
         this.isActive = true;

@@ -3,12 +3,14 @@ package com.team_fortune.student_management_teacher.util;
 import com.team_fortune.student_management_teacher.HomeController;
 import com.team_fortune.student_management_teacher.model.Assignments;
 import com.team_fortune.student_management_teacher.model.Student;
+import com.team_fortune.student_management_teacher.model.Subject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
 
 public class getDatabaseToModel {
     
@@ -17,14 +19,14 @@ public class getDatabaseToModel {
     public static int id_subject = 0;
     public static List<com.team_fortune.student_management_teacher.model.Student>GetTranscriptByClass(String selectedClass,String selectedSubject){
         List<com.team_fortune.student_management_teacher.model.Student>resulList=new ArrayList<>();
-            String query="Select a.id,a.name,c.link,c.score,c.status From student a "
+          String query="Select c.id,a.name,c.link,c.score,c.status From student a "
                 +"Join class_subject b ON a.id=b.id_student "
-                +"Join exam_schedule d ON d.id=b.id_exam "
-                +"Join transcript c ON c.id_exam=d.id " 
-                +"Join teacher e ON e.id=b.id_teacher "
-                +"Join class h ON h.id=b.id_class "
-                +"Join subject t1 ON t1.id=b.id_subject "
-                + "Where e.username=? And h.name=? OR t1.name=? "+"Group by a.id,a.name,c.link,c.score,c.status";
+                +"Join transcript c ON b.id_transcipt=c.id "
+                +"Join teacher h ON h.id=b.id_teacher "
+                +"Join class p ON p.id=b.id_class "
+                +"Join subject L ON L.id=b.id_subject "
+                +"Where h.username=? And p.name=? And L.name=?";
+         
             try {
             Connection conn=DBConnection.getConnection();
             PreparedStatement stmt=conn.prepareStatement(query);
@@ -45,7 +47,7 @@ public class getDatabaseToModel {
         }
             return resulList;
     }
-    public List<com.team_fortune.student_management_teacher.model.Class> getDataFromDatabaseClass() {
+    public static List<com.team_fortune.student_management_teacher.model.Class> getDataFromDatabaseClass() {
         try {
             String SearchQuery = "select c.id,c.name from class c inner join class_subject cs on cs.id_class=c.id where cs.id_teacher=? group by c.id";
             Connection conn = DBConnection.getConnection();
@@ -126,7 +128,26 @@ public class getDatabaseToModel {
         
         return null;
     }
-    
+    public static List<com.team_fortune.student_management_teacher.model.Subject>getFromsubject(){
+        List<com.team_fortune.student_management_teacher.model.Subject>arraylist=new ArrayList<>();
+        String query="Select a.id,a.name,a.session,a.lession_link from subject a JOIN class_subject b On a.id=b.id_subject Join teacher c ON c.id=b.id_teacher Where c.username=? Group by  a.id,a.name,a.session,a.lession_link";
+        try {
+            Connection conn=DBConnection.getConnection();
+            PreparedStatement stmt=conn.prepareStatement(query);
+            stmt.setString(1, MD5.Md5(HomeController.username));
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                int id=rs.getInt("id");
+                String name=rs.getString("name");
+                String session=rs.getString("session");
+                String lession_link=rs.getString("lession_link");
+                arraylist.add(new Subject(id, name, session, lession_link));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return arraylist;
+    }
     public List<com.team_fortune.student_management_teacher.model.Subject> getDataFromDatabaseSubjectWithKey(String key) {
         try {
             String SearchQuery = "select s.id,s.name,s.session,s.lession_link from subject s inner join class_subject cs on cs.id_subject=s.id where cs.id_teacher=? and s.name like ? group by s.id";
@@ -176,6 +197,7 @@ public class getDatabaseToModel {
        }
        return Arraylist;
    }
+ 
     public List<com.team_fortune.student_management_teacher.model.Class_Subject>getDataFromDatabaseClassSubject(){
         try {
             String searchQuery="select cs.id_class,cs.id_subject,cs.id_teacher,cs.id_student,cs.id_assignments,cs.id_exam from class_subject cs where cs.id_teacher=?";
@@ -225,7 +247,7 @@ public class getDatabaseToModel {
         return null;
     }
     
-    public List<com.team_fortune.student_management_teacher.model.Class> getDataFromDatabaseClassWithSubject(String selectSubject) {
+    public static List<com.team_fortune.student_management_teacher.model.Class> getDataFromDatabaseClassWithSubject(String selectSubject) {
         try {
             String SearchQuery = "select c.id,c.name from class c inner join class_subject cs on cs.id_class=c.id inner join teacher t on t.id=cs.id_teacher inner join subject s on s.id=cs.id_subject where t.id=? and s.name=? group by c.id";
             Connection conn = DBConnection.getConnection();
@@ -332,30 +354,33 @@ public class getDatabaseToModel {
        }
        return ExAssign;
    }
-    public List<com.team_fortune.student_management_teacher.model.Student>getDataFromDatabaseStudentWithSubject(String selectSubject){
+    public static List<com.team_fortune.student_management_teacher.model.Student>getDataFromDatabaseStudentWithSubject(String selectSubject){
+         List<com.team_fortune.student_management_teacher.model.Student> students=new ArrayList<>();
         try {
-            String searchQuery="select s.id,s.name,s.phone,s.since,s.status from student s inner join class_subject cs on cs.id_student=s.id inner join subject sub on sub.id=cs.id_subject where t.id=? and sub.name=? group by s.name";
+            String searchQuery="select s.id,s.name,s.username,s.password,s.phone,s.since,s.status from student s  join class_subject cs on cs.id_student=s.id  join subject sub on sub.id=cs.id_subject JOIN teacher t ON t.id=cs.id_teacher where t.id=? and sub.name=? group by s.name";
             Connection conn=DBConnection.getConnection();
             PreparedStatement preparedStatement=conn.prepareStatement(searchQuery);
+            System.out.println(id_teacher);
             preparedStatement.setInt(1, id_teacher);
             preparedStatement.setString(2, selectSubject);
             ResultSet rs =preparedStatement.executeQuery();
-            List<com.team_fortune.student_management_teacher.model.Student> students=new ArrayList<>();
+           
             while(rs.next()){
                 com.team_fortune.student_management_teacher.model.Student Stu = new com.team_fortune.student_management_teacher.model.Student();
-                Stu.setId(rs.getInt("s.id"));
-                Stu.setName(rs.getString("s.name"));
-                Stu.setPhone(rs.getString("s.phone"));
-                Stu.setSince(rs.getDate("s.since"));
-                Stu.setStatus(rs.getBoolean("s.status"));
-                students.add(Stu);
+                int id=rs.getInt("s.id");
+                String name_student=rs.getString("s.name");
+              String phone=rs.getString("s.phone");
+               String username=MD5.Md5(rs.getString("username"));
+               String password=MD5.Md5(rs.getString("password"));
+               Boolean status=rs.getBoolean("s.status");
+                students.add(new Student(id, name_student, username, phone, password, status));
             }
             DBConnection.closeConnection(conn);
-            return students;
+           
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return null;
+        return students;
     }
     
     public List<com.team_fortune.student_management_teacher.model.Teacher>getDataFromDatabaseTeacher(){

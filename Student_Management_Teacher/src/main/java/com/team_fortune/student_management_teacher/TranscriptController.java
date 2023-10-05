@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -170,7 +173,115 @@ public ToggleGroup getAchieveToggleGroup() {
             }
         });
 
+      colObtain.setCellValueFactory(new PropertyValueFactory<>("Active"));
+      colObtain.setCellFactory(column->new TableCell<com.team_fortune.student_management_teacher.model.Student,Integer>(){
+      private final MFXButton button=new MFXButton("Approve");
+      {
+       button.setOnAction(event -> {
+                     com.team_fortune.student_management_teacher.model.Student cls = getTableView().getItems().get(getIndex());
+                  
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("CONFIRMATION");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you Approve");
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.CANCEL) {
+                            alert.close();
+                        }
+                        if (response == ButtonType.OK) {
+                           String querycheck="Select status From transcript Where id=? And status=0 ";
+                            String query = "Update transcript set status=1 Where id=?  ";
+                            try {
+                                Connection conn = DBConnection.getConnection();
+                                PreparedStatement stmtcheck=conn.prepareStatement(querycheck);
+                                stmtcheck.setInt(1, cls.getId());
+                                ResultSet rs=stmtcheck.executeQuery();
+                                if(rs.next()){
+                                      PreparedStatement stmt = conn.prepareStatement(query);
+                                stmt.setInt(1, cls.getId());
+                                stmt.executeUpdate();
+
+                                displayrecord();
+                                }else{
+                                    DialogAlert.DialogError("Approved");
+                                }
+                              
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    });
+
+                });
+      }
+            @Override
+            protected void updateItem(Integer Item, boolean empty) {
+                super.updateItem(Item,empty);
+                 button.getStyleClass().add("button-success");
+                if(Item!=null || !empty){
+                    setGraphic(button);
+                    if(Item==2){
+                        button.setDisable(true);
+                    }
+                }else{
+                    setGraphic(null);
+                }
+            }
       
+      });
+      colachieved.setCellValueFactory(new PropertyValueFactory<>("Active"));
+      colachieved.setCellFactory(column->new TableCell<com.team_fortune.student_management_teacher.model.Student,Integer>(){
+      private final MFXButton button=new MFXButton("Cance");
+      {
+       button.setOnAction(event->{
+                    Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("ConFirmation");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Are you cancel");
+                    alert.showAndWait().ifPresent(response->{
+                    if(response==ButtonType.CANCEL){
+                       alert.close();
+                    }
+                    if(response==ButtonType.OK){
+                        com.team_fortune.student_management_teacher.model.Student cls = getTableView().getItems().get(getIndex());
+                          String querycheck="Select status From transcript Where id=? And status=0 ";
+                            String query = "Update transcript set status=2 Where id=? ";
+                            try{
+                                Connection conn=DBConnection.getConnection();
+                                PreparedStatement checkstmt=conn.prepareStatement(querycheck);
+                                checkstmt.setInt(1, cls.getId());
+                                ResultSet rs=checkstmt.executeQuery();
+                                if(rs.next()){
+                                    PreparedStatement stmt=conn.prepareStatement(query);
+                                stmt.setInt(1, cls.getId());
+                                stmt.executeUpdate();
+                                displayrecord();
+                                }else{
+                                     DialogAlert.DialogError("Canceled");
+                                }
+                                
+                            }catch(Exception ex){
+                                ex.printStackTrace();
+                            }
+                    }
+                    });
+                });
+      }
+            @Override
+            protected void updateItem(Integer Item, boolean empty) {
+                super.updateItem(Item, empty);
+                 button.getStyleClass().add("button-error");
+                if(Item!=null || !empty){
+                    setGraphic(button);
+                    if(Item==1){
+                        button.setDisable(true);
+                    }
+                }else{
+                    setGraphic(null);
+                }
+            }
+      
+      });
     }
 
     private List<String> getClassNames() {

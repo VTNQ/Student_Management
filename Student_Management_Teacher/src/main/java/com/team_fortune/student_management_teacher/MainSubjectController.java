@@ -43,6 +43,14 @@ import javafx.stage.Stage;
 public class MainSubjectController implements Initializable {
 
     @FXML
+    private TableView<com.team_fortune.student_management_teacher.model.Subject> tblDelete=new TableView<>();
+        @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, String> colDeleteSession=new TableColumn<>();
+            @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, String> colNamedelete=new TableColumn<>();
+                @FXML
+    private TableColumn<com.team_fortune.student_management_teacher.model.Subject, String> coldlLession=new TableColumn<>();
+    @FXML
     private MFXComboBox<String> name_class=new MFXComboBox<>();
 
     @FXML
@@ -109,7 +117,7 @@ public class MainSubjectController implements Initializable {
     private TableColumn<com.team_fortune.student_management_teacher.model.Subject, Boolean> colStudent=new TableColumn<>();
     
     @FXML
-    private TableColumn<?, ?> col_class=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_teacher.model.Class, ?> col_class=new TableColumn<>();
 
     @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Class> list_class=new TableView<>();
@@ -118,7 +126,7 @@ public class MainSubjectController implements Initializable {
     private TableView<com.team_fortune.student_management_teacher.model.Subject> TableListSubject=new TableView<>();
     
     @FXML
-    private TableColumn<?, ?> col_student=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_teacher.model.Student, ?> col_student=new TableColumn<>();
 
     @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Student> list_student=new TableView<>();
@@ -128,7 +136,14 @@ public class MainSubjectController implements Initializable {
  private ObservableList<com.team_fortune.student_management_teacher.model.Subject> model = FXCollections.observableArrayList();
     private ObservableList<com.team_fortune.student_management_teacher.model.Class_Subject> Class_Subject = FXCollections.observableArrayList();
     private ObservableList<com.team_fortune.student_management_teacher.model.Student> Student = FXCollections.observableArrayList();
-
+    private void deletedisplay(){
+        List<com.team_fortune.student_management_teacher.model.Subject>result=getDatabaseToModel.getFromsubject();
+        ObservableList<com.team_fortune.student_management_teacher.model.Subject>obserable=FXCollections.observableArrayList(result);
+       tblDelete.setItems(obserable);
+       colNamedelete.setCellValueFactory(new PropertyValueFactory<>("name"));
+       colDeleteSession.setCellValueFactory(new PropertyValueFactory<>("session"));
+     coldlLession.setCellValueFactory(new PropertyValueFactory<>("lession_link"));
+    }
     private List<String> getClassNames() {
         List<com.team_fortune.student_management_teacher.model.Class> classes = new getDatabaseToModel().getDataFromDatabaseClass();
         List<String> classNames = new ArrayList<>();
@@ -137,7 +152,19 @@ public class MainSubjectController implements Initializable {
         }
         return classNames;
     }
-
+    private void liststudent(String name_Subject){
+        List<com.team_fortune.student_management_teacher.model.Student>Arraylist=getDatabaseToModel.getDataFromDatabaseStudentWithSubject(name_Subject);
+        ObservableList<com.team_fortune.student_management_teacher.model.Student>obserable=FXCollections.observableArrayList(Arraylist);
+        list_student.setItems(obserable);
+                        col_student.setCellValueFactory(new PropertyValueFactory<>("name"));
+    }
+    private void listClass(String name_subject){
+        List<com.team_fortune.student_management_teacher.model.Class>ArrayList=getDatabaseToModel.getDataFromDatabaseClassWithSubject(name_subject);
+        ObservableList<com.team_fortune.student_management_teacher.model.Class>obserable=FXCollections.observableArrayList(ArrayList);
+        list_class.setItems(obserable);
+        col_class.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+    }
     @FXML
     void AddSubject(ActionEvent event) {
         try {
@@ -232,7 +259,9 @@ public class MainSubjectController implements Initializable {
     }
 
     void showListSubject() {
-        TableListSubject.setItems(Subject);
+        List<com.team_fortune.student_management_teacher.model.Subject>result=getDatabaseToModel.getFromsubject();
+        ObservableList<com.team_fortune.student_management_teacher.model.Subject>obserable=FXCollections.observableArrayList(result);
+        TableListSubject.setItems(obserable);
         colName_Subject.setCellValueFactory(new PropertyValueFactory<>("name"));
         colSession_Subject.setCellValueFactory(new PropertyValueFactory<>("session"));
         colLession_Subject.setCellValueFactory(new PropertyValueFactory<>("lession_link"));
@@ -245,9 +274,9 @@ public class MainSubjectController implements Initializable {
                     try{
                         FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/ListClass.fxml"));
                         AnchorPane listClass=loader.load();
-                        Class.addAll(new getDatabaseToModel().getDataFromDatabaseClassWithSubject(selectSubject.getName()));
-                        list_class.setItems(Class);
-                        col_class.setCellValueFactory(new PropertyValueFactory<>("name"));
+                        MainSubjectController cls=loader.getController();
+                        cls.listClass(selectSubject.getName());
+                       
                         Stage list= new Stage();
                         list.initModality(Modality.APPLICATION_MODAL);
                         list.setScene(new Scene(listClass));
@@ -260,6 +289,7 @@ public class MainSubjectController implements Initializable {
             @Override
                 protected void updateItem(Boolean item, boolean empty) {
                     super.updateItem(item, empty);
+                    button.getStyleClass().add("button-design");
                     if (item == null || empty) {
                         setGraphic(null);
                     } else {
@@ -276,9 +306,11 @@ public class MainSubjectController implements Initializable {
                     try{
                         FXMLLoader loader=new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/ListStudent.fxml"));
                         AnchorPane listStudent=loader.load();
-                        Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudentWithSubject(selectSubject.getName()));
-                        list_student.setItems(Student);
-                        col_student.setCellValueFactory(new PropertyValueFactory<>("name"));
+                        System.out.println(selectSubject.getName());
+                        
+                        
+                        MainSubjectController cl=loader.getController();
+                        cl.liststudent(selectSubject.getName());
                         Stage list= new Stage();
                         list.initModality(Modality.APPLICATION_MODAL);
                         list.setScene(new Scene(listStudent));
@@ -291,6 +323,7 @@ public class MainSubjectController implements Initializable {
             @Override
                 protected void updateItem(Boolean item, boolean empty) {
                     super.updateItem(item, empty);
+                    button.getStyleClass().add("button-design");
                     if (item == null || isEmpty()) {
                         setGraphic(null);
                     } else {
@@ -321,7 +354,7 @@ public class MainSubjectController implements Initializable {
         Class.addAll(new getDatabaseToModel().getDataFromDatabaseClass());
         Class_Subject.addAll(new getDatabaseToModel().getDataFromDatabaseClassSubject());
         name_class.getItems().addAll(getClassNames());
-       
+       Subject.addAll(new getDatabaseToModel().getDataFromDatabaseSubject());
         showSuject();
         showListSubject();
         key_search.textProperty().addListener((observable, oldvalue, newValue) -> {
@@ -336,6 +369,8 @@ public class MainSubjectController implements Initializable {
                 TableSubject.refresh();
             }
         });
+        deletedisplay();
+        
         TableSubject.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

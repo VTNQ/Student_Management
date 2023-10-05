@@ -1,41 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1">
-  <tabs>
-    <Tab text="Untitled Tab 1">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <TableView fx:id="tblSubkect" layoutX="108.0" layoutY="77.0" prefHeight="200.0" prefWidth="317.0">
-                     <columns>
-                        <TableColumn fx:id="ClassSubject" prefWidth="148.00000762939453" text="Class" />
-                        <TableColumn fx:id="classStudent" prefWidth="167.9999938964844" text="Student" />
-                     </columns>
-                  </TableView>
-                  <Label layoutX="166.0" layoutY="14.0" prefHeight="37.0" prefWidth="186.0" text="Total class student" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Untitled Tab 2">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Label layoutX="227.0" layoutY="21.0" prefHeight="70.0" prefWidth="198.0" text="Students have not approved yet" />
-                  <TableView layoutX="179.0" layoutY="91.0" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="Students" />
-                      <TableColumn prefWidth="122.4000244140625" text="approve" />
-                    </columns>
-                  </TableView>
-               </children></AnchorPane>
-      </content>
-    </Tab>
-  </tabs>
-</TabPane>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.popUpclass">
+   <children>
+      <TableView fx:id="tblSubkect" layoutX="134.0" layoutY="122.0" prefHeight="200.0" prefWidth="317.0">
+         <columns>
+            <TableColumn fx:id="ClassSubject" prefWidth="148.00000762939453" text="Class" />
+            <TableColumn fx:id="classStudent" prefWidth="167.9999938964844" text="Student" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

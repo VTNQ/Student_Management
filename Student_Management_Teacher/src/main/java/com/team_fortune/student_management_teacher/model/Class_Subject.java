@@ -7,6 +7,7 @@ public class Class_Subject {
     private int id_student;
     private int id_assignments;
     private int id_exam;
+    
 
     public Class_Subject() {
     }

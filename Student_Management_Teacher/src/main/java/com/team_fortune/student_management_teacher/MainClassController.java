@@ -46,9 +46,7 @@ import javafx.stage.Stage;
 
 public class MainClassController implements Initializable {
 
-    @FXML
-    private TabPane mainClass;
-
+   
     @FXML
     private TextField name_class;
     public static String class_name;
@@ -242,7 +240,7 @@ private TableColumn<com.team_fortune.student_management_teacher.model.Class,Bool
                        com.team_fortune.student_management_teacher.popUpclass popup=new com.team_fortune.student_management_teacher.popUpclass();
                   if(popup.infoclass(cl.getName())==true){
                       FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/popclass.fxml"));
-            AnchorPane newpopup = fxmlLoader.load();
+          AnchorPane newpopup = fxmlLoader.load();
             popUpclass mainclass = fxmlLoader.getController();
            
                        mainclass.Informationclass(cl.getName());
