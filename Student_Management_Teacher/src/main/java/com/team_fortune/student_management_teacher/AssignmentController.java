@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package com.team_fortune.student_management_teacher;
 
 import com.team_fortune.student_management_teacher.dialog.DialogAlert;
@@ -10,10 +6,8 @@ import com.team_fortune.student_management_teacher.model.Assignments;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.MD5;
 import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import java.awt.Desktop;
 import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;

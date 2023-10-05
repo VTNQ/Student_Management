@@ -1,10 +1,7 @@
 package com.team_fortune.student_management_teacher;
 
-import com.team_fortune.student_management_teacher.dao.SearchTeacher;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.MD5;
-import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
-import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;

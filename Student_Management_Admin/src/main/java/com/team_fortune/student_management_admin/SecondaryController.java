@@ -16,8 +16,6 @@ import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -98,75 +96,75 @@ public class SecondaryController implements Initializable {
 
     @FXML
     void addStudent(MouseEvent event) {
-        String username = MD5.Md5(usernameStudent.getText());
-        try {
-            String insertQuery = "insert into student(name,username,phone,email,since,password,status) values(?,?,?,?,?,?,?)";
-            DateTimeFormatter local = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String since = SinceStudent.getValue().format(local);
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(insertQuery);
-            ps.setString(1, nameStudent.getText());
-            ps.setString(2, username);
-            ps.setString(3, phoneStudent.getText());
-            ps.setString(4, emailStudent.getText());
-            ps.setString(5, since);
-            ps.setString(6, username);
-            ps.setInt(7, 0);
+        if (!usernameStudent.getText().isEmpty() && !nameStudent.getText().isEmpty() && !emailStudent.getText().isEmpty() && !phoneStudent.getText().isEmpty() && !SinceStudent.getText().isEmpty()) {
+            String username = MD5.Md5(usernameStudent.getText());
+            try {
+                String insertQuery = "insert into student(name,username,phone,email,since,password,status) values(?,?,?,?,?,?,?)";
+                DateTimeFormatter local = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String since = SinceStudent.getValue().format(local);
+                Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(insertQuery);
+                ps.setString(1, nameStudent.getText());
+                ps.setString(2, username);
+                ps.setString(3, phoneStudent.getText());
+                ps.setString(4, emailStudent.getText());
+                ps.setString(5, since);
+                ps.setString(6, username);
+                ps.setInt(7, 0);
 
-            sendConfirmationEmailStudent(emailStudent.getText());
-            DialogAlert.DialogSuccess("Add Student Success!");
+                sendConfirmationEmailStudent(emailStudent.getText());
+                DialogAlert.DialogSuccess("Add Student Success!");
 
-            ps.executeUpdate();
-            usernameStudent.clear();
-            nameStudent.clear();
-            phoneStudent.clear();
-            SinceStudent.clear();
-            emailStudent.clear();
+                ps.executeUpdate();
+                usernameStudent.clear();
+                nameStudent.clear();
+                phoneStudent.clear();
+                SinceStudent.clear();
+                emailStudent.clear();
 
-            Student.clear();
-            Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudent());
-            showStudent();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+                Student.clear();
+                Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudent());
+                showStudent();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
     @FXML
     void addTeacher(MouseEvent event) {
-        String username = MD5.Md5(usernameTeacher.getText());
-        try {
-            String insertQuery = "insert into teacher(name,username,phone,email,since,password,status) values(?,?,?,?,?,?,?)";
-            DateTimeFormatter local = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String since = SinceTeacher.getValue().format(local);
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(insertQuery);
-            ps.setString(1, nameTeacher.getText());
-            ps.setString(2, username);
-            if (phoneTeacher.getText().isEmpty()) {
-                ps.setString(3, null);
-            } else {
+        if (!usernameTeacher.getText().isEmpty() && !nameTeacher.getText().isEmpty() && !emailTeacher.getText().isEmpty() && !phoneTeacher.getText().isEmpty() && !SinceTeacher.getText().isEmpty()) {
+            String username = MD5.Md5(usernameTeacher.getText());
+            try {
+                String insertQuery = "insert into teacher(name,username,phone,email,since,password,status) values(?,?,?,?,?,?,?)";
+                DateTimeFormatter local = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String since = SinceTeacher.getValue().format(local);
+                Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(insertQuery);
+                ps.setString(1, nameTeacher.getText());
+                ps.setString(2, username);
                 ps.setString(3, phoneTeacher.getText());
+                ps.setString(4, emailTeacher.getText());
+                ps.setString(5, since);
+                ps.setString(6, username);
+                ps.setInt(7, 0);
+
+                sendConfirmationEmailTeacher(emailTeacher.getText());
+                DialogAlert.DialogSuccess("Add Teacher Success!");
+
+                ps.executeUpdate();
+                usernameTeacher.clear();
+                nameTeacher.clear();
+                phoneTeacher.clear();
+                SinceTeacher.clear();
+                emailTeacher.clear();
+
+                Teacher.clear();
+                Teacher.addAll(new getDatabaseToModel().getDataFromDatabaseTeacher());
+                showTeacher();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-            ps.setString(4, emailTeacher.getText());
-            ps.setString(5, since);
-            ps.setString(6, username);
-            ps.setInt(7, 0);
-
-            sendConfirmationEmailTeacher(emailTeacher.getText());
-            DialogAlert.DialogSuccess("Add Teacher Success!");
-
-            ps.executeUpdate();
-            usernameTeacher.clear();
-            nameTeacher.clear();
-            phoneTeacher.clear();
-            SinceTeacher.clear();
-            emailTeacher.clear();
-
-            Teacher.clear();
-            Teacher.addAll(new getDatabaseToModel().getDataFromDatabaseTeacher());
-            showTeacher();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
     }
 
@@ -181,15 +179,15 @@ public class SecondaryController implements Initializable {
                 button.setOnAction(event -> {
                     Student students = getTableView().getItems().get(getIndex());
                     try {
-                        String username_student="";
-                        Connection conn=DBConnection.getConnection();
-                        PreparedStatement ps=conn.prepareStatement("selecct username from student where name=?");
+                        String username_student = "";
+                        Connection conn = DBConnection.getConnection();
+                        PreparedStatement ps = conn.prepareStatement("selecct username from student where name=?");
                         ps.setString(1, students.getName());
-                        ResultSet rs=ps.executeQuery();
-                        while(rs.next()){
-                            username_student=rs.getString("username");
+                        ResultSet rs = ps.executeQuery();
+                        while (rs.next()) {
+                            username_student = rs.getString("username");
                         }
-                        PreparedStatement preparedStatement =conn.prepareStatement("update student set password=? where name=?");
+                        PreparedStatement preparedStatement = conn.prepareStatement("update student set password=? where name=?");
                         preparedStatement.setString(1, username_student);
                         preparedStatement.setString(2, students.getName());
                         preparedStatement.executeUpdate();
@@ -227,17 +225,17 @@ public class SecondaryController implements Initializable {
 
             {
                 button.setOnAction(event -> {
-                    Teacher teachers =getTableView().getItems().get(getIndex());
+                    Teacher teachers = getTableView().getItems().get(getIndex());
                     try {
-                        String username_teacher="";
-                        Connection conn=DBConnection.getConnection();
-                        PreparedStatement ps=conn.prepareStatement("select username from teacher where name=?");
+                        String username_teacher = "";
+                        Connection conn = DBConnection.getConnection();
+                        PreparedStatement ps = conn.prepareStatement("select username from teacher where name=?");
                         ps.setString(1, teachers.getName());
-                        ResultSet rs=ps.executeQuery();
-                        while(rs.next()){
-                            username_teacher=rs.getString("username");
+                        ResultSet rs = ps.executeQuery();
+                        while (rs.next()) {
+                            username_teacher = rs.getString("username");
                         }
-                        PreparedStatement preparedStatement=conn.prepareStatement("update teacher set password=? where name=?");
+                        PreparedStatement preparedStatement = conn.prepareStatement("update teacher set password=? where name=?");
                         preparedStatement.setString(1, username_teacher);
                         preparedStatement.setString(2, teachers.getName());
                         preparedStatement.executeUpdate();

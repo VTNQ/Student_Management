@@ -3,7 +3,6 @@ package com.team_fortune.student_management_teacher.dao;
 import com.team_fortune.student_management_teacher.HomeController;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.MD5;
-import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -67,7 +67,7 @@ public class LoginController {
                     }
                 }
             } catch (SQLException ex) {
-              ex.printStackTrace();
+                ex.printStackTrace();
             }
         }
     }
