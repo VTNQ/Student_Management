@@ -3,6 +3,7 @@ package com.team_fortune.student_management_teacher;
 import com.team_fortune.student_management_teacher.dialog.DialogAlert;
 import com.team_fortune.student_management_teacher.util.DBConnection;
 import com.team_fortune.student_management_teacher.util.MD5;
+import com.team_fortune.student_management_teacher.util.Regax;
 import com.team_fortune.student_management_teacher.util.getDatabaseToModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
@@ -23,7 +24,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class popUpclass implements Initializable {
@@ -70,31 +70,50 @@ public class popUpclass implements Initializable {
             ex.printStackTrace();
         }
     }
-    private void closepopup(){
-        Stage stage=(Stage) change.getScene().getWindow();
+
+    private void closepopup() {
+        Stage stage = (Stage) change.getScene().getWindow();
         stage.close();
     }
+
     @FXML
     void ChangePassword(ActionEvent event) {
-        if(!newPassword.getText().isEmpty()&& !RePassword.getText().isEmpty()){
-              if (newPassword.getText().equals(RePassword.getText())) {
-            try {
-                Connection conn = DBConnection.getConnection();
-                PreparedStatement ps = conn.prepareStatement("update teacher set password=?,status=1 where username=?");
-                ps.setString(1, MD5.Md5(newPassword.getText()));
-                ps.setString(2, MD5.Md5(HomeController.username));
-                ps.executeUpdate();
-                closepopup();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+        if (!newPassword.getText().isEmpty() && !RePassword.getText().isEmpty()) {
+            if (newPassword.getText().equals(RePassword.getText())) {
+                if (Regax.isValidPassword(newPassword.getText())) {
+                    try {
+                        Connection conn = DBConnection.getConnection();
+                        PreparedStatement ps = conn.prepareStatement("update teacher set password=?,status=1 where username=?");
+                        ps.setString(1, MD5.Md5(newPassword.getText()));
+                        ps.setString(2, MD5.Md5(HomeController.username));
+                        ps.executeUpdate();
+                        closepopup();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                } else {
+                    newPassword.getStyleClass().add("text_field_error");
+                    newPassword.applyCss();
+                    RePassword.getStyleClass().add("text_field_error");
+                    RePassword.applyCss();
+                    DialogAlert.DialogError("Password must be more than 8 characters\n" + "Password must have at least 1 capital ");
+                }
+            } else {
+                newPassword.getStyleClass().add("text_field_error");
+                newPassword.applyCss();
+                RePassword.getStyleClass().add("text_field_error");
+                RePassword.applyCss();
+                DialogAlert.DialogError("New Password and Re-enterd Password not same!");
             }
-        }else{
-           DialogAlert.DialogError("password is not valid");
+        } else if (newPassword.getText().isEmpty()) {
+            newPassword.getStyleClass().add("text_field_error");
+            newPassword.applyCss();
+            DialogAlert.DialogError("New Password is Empty");
+        } else if (RePassword.getText().isEmpty()) {
+            RePassword.getStyleClass().add("text_field_error");
+            RePassword.applyCss();
+            DialogAlert.DialogError("Re-enterd Password is Empty");
         }
-        }else{
-            DialogAlert.DialogError("Filed is Empty");
-        }
-      
 
     }
 

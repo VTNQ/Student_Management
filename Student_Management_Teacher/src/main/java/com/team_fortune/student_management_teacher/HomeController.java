@@ -59,7 +59,7 @@ public class HomeController {
     private MFXTextField oldPassword;
 
     @FXML
-    private MFXPasswordField rePasssword;
+    private MFXPasswordField rePassword;
 
     public void chartClass() throws SQLException {
         String searchClassStudent = "select c.name, count(cs.id_student) as total from class_subject cs join class c on c.id=cs.id_class join teacher t on cs.id_teacher=t.id where t.username=? group by c.name order by c.id ASC";
@@ -390,25 +390,25 @@ public class HomeController {
             e.printStackTrace();
         }
 
-        if (!newPassword.getText().equals(rePasssword.getText()) && !MD5.Md5(oldPassword.getText()).equals(password)) {
+        if (!newPassword.getText().equals(rePassword.getText()) && !MD5.Md5(oldPassword.getText()).equals(password)) {
             newPassword.getStyleClass().add("text_field_error");
             newPassword.applyCss();
-            rePasssword.getStyleClass().add("text_field_error");
-            rePasssword.applyCss();
+            rePassword.getStyleClass().add("text_field_error");
+            rePassword.applyCss();
             oldPassword.getStyleClass().add("text_field_error");
             oldPassword.applyCss();
-            DialogAlert.DialogError("New password and Re-enterd password not same!.\nOld Password not incorrect!");
-        } else if (!newPassword.getText().equals(rePasssword.getText()) && MD5.Md5(oldPassword.getText()).equals(password)) {
+            DialogAlert.DialogError("New password and Re-enterd password not same!.\n"+"Old Password not incorrect!");
+        } else if (!newPassword.getText().equals(rePassword.getText()) && MD5.Md5(oldPassword.getText()).equals(password)) {
             newPassword.getStyleClass().add("text_field_error");
             newPassword.applyCss();
-            rePasssword.getStyleClass().add("text_field_error");
-            rePasssword.applyCss();
+            rePassword.getStyleClass().add("text_field_error");
+            rePassword.applyCss();
             DialogAlert.DialogError("new password and re-enterd password not same!.");
-        } else if (newPassword.getText().equals(rePasssword.getText()) && !MD5.Md5(oldPassword.getText()).equals(password)) {
+        } else if (newPassword.getText().equals(rePassword.getText()) && !MD5.Md5(oldPassword.getText()).equals(password)) {
             oldPassword.getStyleClass().add("text_field_error");
             oldPassword.applyCss();
             DialogAlert.DialogError("Old Password not incorrect!");
-        } else if (newPassword.getText().equals(rePasssword.getText()) && MD5.Md5(oldPassword.getText()).equals(password)) {
+        } else if (newPassword.getText().equals(rePassword.getText()) && MD5.Md5(oldPassword.getText()).equals(password)) {
             if (Regax.isValidPassword(newPassword.getText())) {
                 String updateString = "update teacher set password=? where username=?";
                 try {
