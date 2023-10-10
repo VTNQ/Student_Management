@@ -6,7 +6,9 @@ public class Subject {
     private String session;
     private String lession_link;
     private Boolean isActive;
+    
 
+  
     public Boolean getIsActive() {
         return isActive;
     }
@@ -25,6 +27,7 @@ public class Subject {
         this.lession_link = lession_link;
 
         this.isActive=true;
+
 
     }
 

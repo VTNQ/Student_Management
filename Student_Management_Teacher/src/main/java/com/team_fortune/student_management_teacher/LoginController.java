@@ -54,7 +54,7 @@ public class LoginController {
                     switch (isFound) {
                         case 1:               
                             DialogAlert.DialogSuccess("Login Successfully");
-                            HomeController.username = username_field.getText();
+                            HomeController.username = username;
                             App.setRoot("main");
                             if (!SearchTeacher.searchTeacherWithStatus()) {
                                 HomeController.openPopupChangePassword();

@@ -168,7 +168,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Update">
+                  <MenuItem mnemonicParsing="false" onAction="#Update_Examp" text="Update">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -177,7 +177,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="List">
+                  <MenuItem mnemonicParsing="false" onAction="#ListExam" text="List">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -186,7 +186,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Delete">
+                  <MenuItem mnemonicParsing="false" onAction="#DeleteExam" text="Delete">
                      <graphic>
                         <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -274,11 +274,11 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#Request_class" text="Request Class" />
                   <MenuItem mnemonicParsing="false" onAction="#Solutionbtn" text="Solution" />
-                  <MenuItem mnemonicParsing="false" text="Transcript" />
+                  <MenuItem mnemonicParsing="false" onAction="#btnTranscript" text="Transcript" />
                </items>
             </MenuButton>
             <Line endX="125.19998168945312" layoutX="18.0" layoutY="380.0" startX="-17.9999942779541" startY="0.199981689453125" stroke="WHITE" />
-            <MFXButton layoutX="1.0" layoutY="381.0" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Change Password">
+            <MFXButton layoutX="1.0" layoutY="381.0" onAction="#ChangePassword" prefHeight="63.0" prefWidth="143.0" styleClass="bg_tranparent" stylesheets="@css/application.css" text="Change Password">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

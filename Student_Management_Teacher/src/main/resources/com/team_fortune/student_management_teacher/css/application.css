@@ -1,6 +1,10 @@
 .bg_tranparent{
     -fx-background-color: transparent !important;
 }
+.small-text-field {
+    -fx-pref-width: 50px;
+    -fx-pref-height: 30px;
+}
 .bg-active{
     -fx-background-color: #fcd036 !important;
 }

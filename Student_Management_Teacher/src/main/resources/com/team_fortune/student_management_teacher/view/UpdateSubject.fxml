@@ -31,7 +31,7 @@
       <MFXTextField fx:id="nameSubject" layoutX="233.0" layoutY="58.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
       <MFXTextField fx:id="sessionSubject" layoutX="233.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
       <MFXTextField fx:id="lessionSubject" layoutX="233.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
-      <MFXButton layoutX="185.0" layoutY="222.0" styleClass="mfx-button" stylesheets="@../css/application.css" text="Update" textFill="#910000">
+      <MFXButton layoutX="185.0" layoutY="222.0" onAction="#Updatesubject" styleClass="mfx-button" stylesheets="@../css/application.css" text="Update" textFill="#910000">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

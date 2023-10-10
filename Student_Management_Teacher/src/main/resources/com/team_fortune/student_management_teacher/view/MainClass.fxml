@@ -3,13 +3,13 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import jfxtras.scene.control.LocalDateTimeTextField?>
 
 <TabPane fx:id="mainClass" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.MainClassController">
     <tabs>
@@ -33,7 +33,6 @@
                                 <Font name="System Bold" size="13.0" />
                             </font>
                         </MFXButton>
-                  <LocalDateTimeTextField layoutX="73.0" layoutY="80.0" />
                     </children>
                 </AnchorPane>
             </content>
@@ -42,9 +41,10 @@
             <content>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="Classtbl" layoutX="187.0" layoutY="102.0" prefHeight="103.0" prefWidth="226.0">
+                  <TableView fx:id="Classtbl" layoutX="157.0" layoutY="87.0" prefHeight="210.0" prefWidth="285.0">
                     <columns>
-                        <TableColumn fx:id="colClass" prefWidth="225.60001220703126" text="Class" />
+                        <TableColumn fx:id="colClass" prefWidth="140.00006103515625" text="Class" />
+                        <TableColumn fx:id="updateview" prefWidth="144.7999267578125" text="View" />
                     </columns>
                   </TableView>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="172.0" text="UPDATE CLASS" textFill="RED">
@@ -58,6 +58,7 @@
                      </font>
                   </Label>
                   <MFXTextField fx:id="txtsearch" layoutX="279.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+                  <Pagination fx:id="pagination1" layoutX="223.0" layoutY="304.0" prefHeight="45.0" prefWidth="154.0" />
                </children></AnchorPane>
             </content>
         </Tab>
@@ -76,6 +77,7 @@
                       <TableColumn fx:id="View" prefWidth="138.39998779296874" text="View" />
                     </columns>
                   </TableView>
+                  <Pagination fx:id="pagination" layoutX="174.0" layoutY="288.0" prefHeight="47.0" prefWidth="195.0" />
                </children></AnchorPane>
             </content>
         </Tab>
@@ -83,7 +85,7 @@
             <content>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="137.0" layoutY="27.0" prefHeight="54.0" prefWidth="290.0" text="Remove CLASS" textFill="RED">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="137.0" prefHeight="54.0" prefWidth="290.0" text="Remove CLASS" textFill="RED">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
@@ -94,6 +96,13 @@
                         <TableColumn fx:id="colView" prefWidth="155.199951171875" text="View" />
                     </columns>
                   </TableView>
+                  <Pagination fx:id="pagination2" layoutX="189.0" layoutY="302.0" prefHeight="46.0" prefWidth="187.0" />
+                  <Label layoutX="185.0" layoutY="62.0" text="Search">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <MFXTextField fx:id="txtsearchremove" layoutX="233.0" layoutY="58.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
                </children></AnchorPane>
             </content>
         </Tab>

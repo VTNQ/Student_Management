@@ -5,12 +5,15 @@
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.ExampleviewController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="617.0" stylesheets="@../css/application.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.ExampleviewController">
   <tabs>
     <Tab text="Add Examp">
       <content>
@@ -23,49 +26,132 @@
                   </Label>
                   <Label alignment="CENTER" layoutX="107.0" layoutY="75.0" prefHeight="37.0" prefWidth="73.0" text="Start">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="107.0" layoutY="125.0" prefHeight="37.0" prefWidth="73.0" text="End">
+                  <Label alignment="CENTER" layoutX="115.0" layoutY="144.0" prefHeight="37.0" prefWidth="73.0" text="End">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="49.0" layoutY="166.0" prefHeight="38.0" prefWidth="149.0" text="Link_Examp">
+                  <Label alignment="CENTER" layoutX="69.0" layoutY="250.0" prefHeight="21.0" prefWidth="133.0" text="Link_Examp">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <MFXTextField fx:id="Link_Examp" layoutX="204.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="162.0" />
-                  <Label alignment="CENTER" layoutX="49.0" layoutY="204.0" prefHeight="38.0" prefWidth="149.0" text="Subject">
+                  <MFXTextField fx:id="Link_Examp" layoutX="203.0" layoutY="248.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="148.0" />
+                  <Label alignment="CENTER" layoutX="69.0" layoutY="208.0" prefHeight="38.0" prefWidth="149.0" text="Subject">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <MFXComboBox fx:id="name_subject" layoutX="218.0" layoutY="210.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
+                  <MFXComboBox fx:id="Subject_name" layoutX="207.0" layoutY="214.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Select Subject" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
+                  <MFXButton layoutX="239.0" layoutY="345.0" onAction="#Add_Examp" prefHeight="42.0" prefWidth="74.0" styleClass="button-design" stylesheets="@../css/application.css" text="Add" />
+                  <Label alignment="CENTER" layoutX="61.0" layoutY="293.0" prefHeight="38.0" prefWidth="149.0" text="Class">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <MFXComboBox fx:id="name_class" layoutX="210.0" layoutY="299.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Select Class" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
                   <DatePicker fx:id="Start" layoutX="189.0" layoutY="81.0" />
-                  <DatePicker fx:id="End" layoutX="189.0" layoutY="131.0" />
-                  <MFXButton layoutX="199.0" layoutY="300.0" onAction="#Add_Examp" prefHeight="42.0" prefWidth="74.0" styleClass="button-design" stylesheets="@../css/application.css" text="Add" />
-                  <Label alignment="CENTER" layoutX="61.0" layoutY="242.0" prefHeight="38.0" prefWidth="149.0" text="Class">
+                  <DatePicker fx:id="End" layoutX="206.0" layoutY="153.0" />
+                  <Label alignment="CENTER" layoutX="107.0" layoutY="113.0" prefHeight="38.0" prefWidth="90.0" text="Time start">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <MFXComboBox fx:id="name_subject1" layoutX="218.0" layoutY="248.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
+                  <MFXComboBox fx:id="TimeStartpicker" layoutX="206.0" layoutY="118.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="136.0" promptText="Select Time " styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
+                  <Label alignment="CENTER" layoutX="115.0" layoutY="178.0" prefHeight="37.0" prefWidth="73.0" text="Time End">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <MFXComboBox fx:id="TimeEndpicker" layoutX="209.0" layoutY="183.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="136.0" promptText="Select Time " styleClass="mfx-combo-box" stylesheets="@../css/application.css" />
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Update Assignment">
+    <Tab text="Update Exam">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="14.0" prefHeight="54.0" prefWidth="260.0" text="Update Examp" textFill="RED">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="14.0" prefHeight="54.0" prefWidth="260.0" text="Update Exam" textFill="RED">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
+                  <TableView fx:id="tblExam" layoutX="106.0" layoutY="120.0" prefHeight="200.0" prefWidth="458.0">
+                    <columns>
+                      <TableColumn fx:id="colclass" prefWidth="75.0" text="class" />
+                      <TableColumn fx:id="colSubject" prefWidth="75.0" text="subject" />
+                        <TableColumn fx:id="colstart" prefWidth="64.79991149902344" text="Start" />
+                        <TableColumn fx:id="colEnd" prefWidth="76.79998779296875" text="End" />
+                        <TableColumn fx:id="colExam" prefWidth="86.4000244140625" text="Link_Exam" />
+                        <TableColumn fx:id="colUpdate" prefWidth="80.00003662109373" text="Update" />
+                    </columns>
+                  </TableView>
+                  <MFXTextField fx:id="txtsearch" layoutX="218.0" layoutY="76.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Search" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+                  <Label layoutX="159.0" layoutY="79.0" text="Search">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Pagination fx:id="pagination2" layoutX="216.0" layoutY="333.0" prefHeight="62.0" prefWidth="142.0" />
                </children></AnchorPane>
       </content>
     </Tab>
+      <Tab text="List Exam">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="14.0" prefHeight="54.0" prefWidth="260.0" text="List Exam" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="tbllist" layoutX="106.0" layoutY="120.0" prefHeight="200.0" prefWidth="458.0">
+                     <columns>
+                        <TableColumn fx:id="collistclass" prefWidth="75.0" text="class" />
+                        <TableColumn fx:id="collistsubject" prefWidth="75.0" text="subject" />
+                        <TableColumn fx:id="colliststart" prefWidth="64.79991149902344" text="Start" />
+                        <TableColumn fx:id="colistEnd" prefWidth="76.79998779296875" text="End" />
+                        <TableColumn fx:id="collistExam" prefWidth="86.4000244140625" text="Link_Exam" />
+                        <TableColumn fx:id="coldetail" prefWidth="80.00003662109373" text="Detail" />
+                     </columns>
+                  </TableView>
+                  <Pagination fx:id="pagination" layoutX="245.0" layoutY="325.0" prefHeight="62.0" prefWidth="142.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Delete Exam">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="14.0" prefHeight="54.0" prefWidth="260.0" text="Delete Exam" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="tbldelete" layoutX="79.0" layoutY="101.0" prefHeight="200.0" prefWidth="458.0">
+                     <columns>
+                        <TableColumn fx:id="colDtclass" prefWidth="75.0" text="class" />
+                        <TableColumn fx:id="coldlsubject" prefWidth="87.19998168945312" text="subject" />
+                        <TableColumn fx:id="coldlStart" prefWidth="80.79998779296875" text="Start" />
+                        <TableColumn fx:id="colDlEnd" prefWidth="76.0" text="End" />
+                        <TableColumn fx:id="coldlExam" prefWidth="136.79998779296875" text="Link_Exam" />
+                     </columns>
+                  </TableView>
+                  <MFXButton layoutX="263.0" layoutY="300.0" onAction="#deleteExam" prefHeight="39.0" prefWidth="73.0" styleClass="button-design" stylesheets="@../css/application.css" text="Delete" />
+                  <Pagination fx:id="pagination1" layoutX="210.0" layoutY="340.0" prefHeight="47.0" prefWidth="180.0" />
+                  <MFXTextField fx:id="txtdelete" layoutX="255.0" layoutY="71.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Search" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
+                  <Label layoutX="203.0" layoutY="74.0" text="Search">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
   </tabs>
 </TabPane>

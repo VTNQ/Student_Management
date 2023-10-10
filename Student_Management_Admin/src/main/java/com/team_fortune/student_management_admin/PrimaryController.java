@@ -45,7 +45,7 @@ public class PrimaryController {
                 DialogAlert.DialogError("Username or Password is incorrect");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(PrimaryController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 
