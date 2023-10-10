@@ -280,7 +280,18 @@ public class MainSubjectController implements Initializable {
                 }
             }
             if (isFound == false) {
-                if (!name_subject.getText().isEmpty() && !session.getText().isEmpty() && name_class.getSelectedItem() != null) {
+                if (name_subject.getText().isEmpty()) {
+                    name_subject.getStyleClass().add("text_field_error");
+                    name_subject.applyCss();
+                }
+                if (session.getText().isEmpty()) {
+                    session.getStyleClass().add("text_field_error");
+                    session.applyCss();
+                }
+                if (name_class.getSelectedItem() == null) {
+                    name_class.getStyleClass().add("text_field_error");
+                    name_class.applyCss();
+                }if (!name_subject.getText().isEmpty() && !session.getText().isEmpty() && name_class.getSelectedItem() != null) {
 
                     String insertQuery1 = "insert into subject(name,session,lession_link) values(?,?,?)";
                     String insertQuery2 = "insert into class_subject (id_class,id_subject,id_teacher,Active) values(?,?,?,?)";
@@ -336,18 +347,6 @@ public class MainSubjectController implements Initializable {
                     } catch (SQLException ex) {
                         Logger.getLogger(MainSubjectController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
-                if (name_subject.getText().isEmpty()) {
-                    name_subject.getStyleClass().add("text_field_error");
-                    name_subject.applyCss();
-                }
-                if (session.getText().isEmpty()) {
-                    session.getStyleClass().add("text_field_error");
-                    session.applyCss();
-                }
-                if (name_class.getSelectedItem() == null) {
-                    name_class.getStyleClass().add("text_field_error");
-                    name_class.applyCss();
                 }
             } else {
                 DialogAlert.DialogError("Subject Exist");
