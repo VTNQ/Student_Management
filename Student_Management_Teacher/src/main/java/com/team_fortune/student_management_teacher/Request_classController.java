@@ -14,12 +14,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,6 +41,11 @@ public class Request_classController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
+    private Pagination pagination = new Pagination();
+    private int itemsperPage = 5;
+    private int totalItems;
+    private int currentPageIndex = 0;
+    @FXML
     private TableColumn<com.team_fortune.student_management_teacher.model.Student, Integer> colApprove = new TableColumn<>();
 
     @FXML
@@ -49,11 +59,23 @@ public class Request_classController implements Initializable {
 
     @FXML
     private TableView<com.team_fortune.student_management_teacher.model.Student> tblRequest = new TableView<>();
-   
+
     private void displayrecord() {
         List<com.team_fortune.student_management_teacher.model.Student> resultlist = getDatabaseToModel.Request_Class();
         ObservableList<com.team_fortune.student_management_teacher.model.Student> observable = FXCollections.observableArrayList(resultlist);
-        tblRequest.setItems(observable);
+        totalItems = observable.size();
+        int Pagecout = (totalItems / itemsperPage) + 1;
+        pagination.setPageCount(Pagecout);
+
+        if (currentPageIndex >= Pagecout) {
+            currentPageIndex = Pagecout - 1;
+        }
+
+        int startIndex = currentPageIndex * itemsperPage;
+        int endIndex = Math.min(startIndex + itemsperPage, totalItems);
+        endIndex = Math.min(endIndex, totalItems);
+        List<com.team_fortune.student_management_teacher.model.Student> St = observable.subList(startIndex, endIndex);
+        tblRequest.setItems(FXCollections.observableArrayList(St));
         colStudent.setCellValueFactory(new PropertyValueFactory<>("name_student"));
         colClass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
         colApprove.setCellValueFactory(new PropertyValueFactory<>("Active"));
@@ -62,9 +84,10 @@ public class Request_classController implements Initializable {
 
             {
                 button.setOnAction(event -> {
-                     com.team_fortune.student_management_teacher.model.Student cls = getTableView().getItems().get(getIndex());
-                  
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    com.team_fortune.student_management_teacher.model.Student cls = getTableView().getItems().get(getIndex());
+                    boolean active=Activeboolean(cls.getId(),cls.getId_Class());
+                    if(active){
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("CONFIRMATION");
                     alert.setHeaderText(null);
                     alert.setContentText("Are you Approve");
@@ -73,30 +96,25 @@ public class Request_classController implements Initializable {
                             alert.close();
                         }
                         if (response == ButtonType.OK) {
-                           String querycheck="Select Active From class_subject Where id_student=? And id_class=? And Active=0 ";
                             String query = "Update class_subject set Active=1 Where id_student=? And id_class=? ";
                             try {
                                 Connection conn = DBConnection.getConnection();
-                                PreparedStatement stmtcheck=conn.prepareStatement(querycheck);
-                                stmtcheck.setInt(1, cls.getId());
-                                stmtcheck.setInt(2, cls.getId_Class());
-                                ResultSet rs=stmtcheck.executeQuery();
-                                if(rs.next()){
-                                      PreparedStatement stmt = conn.prepareStatement(query);
+                                PreparedStatement stmt = conn.prepareStatement(query);
                                 stmt.setInt(1, cls.getId());
                                 stmt.setInt(2, cls.getId_Class());
                                 stmt.executeUpdate();
 
                                 displayrecord();
-                                }else{
-                                    DialogAlert.DialogError("Approved");
-                                }
-                              
+
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
                         }
                     });
+                    }else{
+                        DialogAlert.DialogError("Approved");
+                    }
+                    
 
                 });
             }
@@ -119,43 +137,43 @@ public class Request_classController implements Initializable {
         colCancle.setCellValueFactory(new PropertyValueFactory<>("Active"));
         colCancle.setCellFactory(column -> new TableCell<com.team_fortune.student_management_teacher.model.Student, Integer>() {
             private final MFXButton button = new MFXButton("cancel");
-                {
-                button.setOnAction(event->{
-                    Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("ConFirmation");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Are you cancel");
-                    alert.showAndWait().ifPresent(response->{
-                    if(response==ButtonType.CANCEL){
-                       alert.close();
-                    }
-                    if(response==ButtonType.OK){
-                        com.team_fortune.student_management_teacher.model.Student cls = getTableView().getItems().get(getIndex());
-                          String querycheck="Select Active From class_subject Where id_student=? And id_class=? And Active=0 ";
-                            String query = "Update class_subject set Active=2 Where id_student=? And id_class=? ";
-                            try{
-                                Connection conn=DBConnection.getConnection();
-                                PreparedStatement checkstmt=conn.prepareStatement(querycheck);
-                                checkstmt.setInt(1, cls.getId());
-                                checkstmt.setInt(2, cls.getId_Class());
-                                ResultSet rs=checkstmt.executeQuery();
-                                if(rs.next()){
-                                    PreparedStatement stmt=conn.prepareStatement(query);
-                                stmt.setInt(1, cls.getId());
-                                stmt.setInt(2, cls.getId_Class());
-                                stmt.executeUpdate();
-                                displayrecord();
-                                }else{
-                                     DialogAlert.DialogError("Canceled");
-                                }
-                                
-                            }catch(Exception ex){
-                                ex.printStackTrace();
+
+            {
+                button.setOnAction(event -> {
+                    com.team_fortune.student_management_teacher.model.Student cls = getTableView().getItems().get(getIndex());
+                    boolean active = Activeboolean(cls.getId(), cls.getId_Class());
+                    if (active) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("ConFirmation");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Are you cancel");
+                        alert.showAndWait().ifPresent(response -> {
+                            if (response == ButtonType.CANCEL) {
+                                alert.close();
                             }
+                            if (response == ButtonType.OK) {
+
+                                String query = "Update class_subject set Active=2 Where id_student=? And id_class=? ";
+                                try {
+                                    Connection conn = DBConnection.getConnection();
+                                    PreparedStatement stmt = conn.prepareStatement(query);
+                                    stmt.setInt(1, cls.getId());
+                                    stmt.setInt(2, cls.getId_Class());
+                                    stmt.executeUpdate();
+                                    displayrecord();
+
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        });
+                    } else {
+                        DialogAlert.DialogError("Canceled");
                     }
-                    });
+
                 });
-                }
+            }
+
             @Override
             protected void updateItem(Integer Item, boolean empty) {
                 super.updateItem(Item, empty);
@@ -173,10 +191,43 @@ public class Request_classController implements Initializable {
         });
     }
 
+    private boolean Activeboolean(int id_Student, int id_class) {
+        String query = "Select Active From class_subject Where id_student=? And id_class=? And Active=0 ";
+        try {
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, id_Student);
+            stmt.setInt(2, id_class);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private void startUpdating() {
+        ScheduledExecutorService Excuter = Executors.newSingleThreadScheduledExecutor();
+        Excuter.scheduleAtFixedRate(() -> {
+            Platform.runLater(() -> {
+
+                displayrecord();
+
+            });
+        }, 0, 1, TimeUnit.SECONDS);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
+            currentPageIndex = newIndex.intValue();
+            displayrecord();
+        });
         displayrecord();
+        startUpdating();
     }
 
 }

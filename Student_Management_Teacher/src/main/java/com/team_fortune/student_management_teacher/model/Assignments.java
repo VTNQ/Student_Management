@@ -12,6 +12,15 @@ public class Assignments {
     private int id;
     private int statussolution;
     private boolean seeAssignment;
+    private String reason;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
     public int getId() {
         return id;
@@ -21,13 +30,13 @@ public class Assignments {
         this.id = id;
     }
 
-    public Assignments(int id,String name_student, String link_student,int status,String name_Subject,String name_class) {
+    public Assignments(int id,String name_student, String link_student,int status,String name_Subject,String name_class,String reason) {
         this.name_student = name_student;
         this.link_student = link_student;
         this.statussolution=status;
          this.name_Subject = name_Subject;
         this.name_class = name_class;
-      
+        this.reason=reason;
         this.id=id;
     }
 
@@ -114,12 +123,12 @@ public Assignments(){
         return Assignment;
     }
 
-    public Assignments( String name_Subject, String name_class, String Assignment, boolean Status,int id) {
+    public Assignments( String name_Subject, String name_class, String Assignment,int id) {
             
         this.name_Subject = name_Subject;
         this.name_class = name_class;
         this.Assignment= Assignment;
-        this.Status = Status;
+     
         this.id=id;
         this.seeAssignment=true;
     }

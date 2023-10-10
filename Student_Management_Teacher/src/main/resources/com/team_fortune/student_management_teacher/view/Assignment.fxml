@@ -4,6 +4,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXComboBox?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -63,14 +64,15 @@
                      </font>
                   </Label>
                   <MFXTextField fx:id="txtsearch" layoutX="197.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
-                  <TableView fx:id="colupdatetable" layoutX="107.0" layoutY="136.0" prefHeight="200.0" prefWidth="385.0">
+                  <TableView fx:id="colupdatetable" layoutX="101.0" layoutY="108.0" prefHeight="200.0" prefWidth="385.0">
                     <columns>
                       <TableColumn fx:id="coluddatesubject" prefWidth="92.0" text="Subject" />
                         <TableColumn fx:id="colUpdateclass" prefWidth="78.4000244140625" text="Class" />
                         <TableColumn fx:id="colupdateAssignment" prefWidth="109.60003662109375" text="Assignment" />
-                        <TableColumn fx:id="colupdateStatus" prefWidth="109.60003662109375" text="Status" />
+                        <TableColumn fx:id="colUpdate" prefWidth="109.60003662109375" text="Update Ass" />
                     </columns>
                   </TableView>
+                  <Pagination fx:id="pagination1" layoutX="189.0" layoutY="311.0" prefHeight="45.0" prefWidth="176.0" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -85,12 +87,12 @@
                   </Label>
                   <TableView fx:id="ListAssignment" layoutX="127.0" layoutY="86.0" prefHeight="200.0" prefWidth="331.0">
                      <columns>
-                        <TableColumn fx:id="name_Subject" prefWidth="75.0" text="Subject" />
-                        <TableColumn fx:id="Class_ass" prefWidth="75.0" text="Class" />
-                        <TableColumn fx:id="colAssignment" prefWidth="97.60003662109375" text="Assignment" />
-                        <TableColumn fx:id="colStatus" prefWidth="80.79998779296875" text="Status" />
+                        <TableColumn fx:id="name_Subject" prefWidth="100.80005645751953" text="Subject" />
+                        <TableColumn fx:id="Class_ass" prefWidth="104.0" text="Class" />
+                        <TableColumn fx:id="colAssignment" prefWidth="125.60003662109375" text="Assignment" />
                      </columns>
                   </TableView>
+                  <Pagination fx:id="pagination" layoutX="193.0" layoutY="295.0" prefHeight="45.0" prefWidth="176.0" />
                </children>
             </AnchorPane>
          </content>
@@ -99,20 +101,26 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="127.0" layoutY="14.0" text="Delete ASSIGNMENT" textFill="RED">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="127.0" text="Delete ASSIGNMENT" textFill="RED">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="tblDelete" layoutX="138.0" layoutY="86.0" prefHeight="200.0" prefWidth="304.0">
+                  <TableView fx:id="tblDelete" layoutX="152.0" layoutY="86.0" prefHeight="200.0" prefWidth="304.0">
                      <columns>
-                        <TableColumn fx:id="colsubject" prefWidth="75.0" text="Subject" />
-                        <TableColumn fx:id="colclass" prefWidth="75.0" text="Class" />
-                        <TableColumn fx:id="Assignmentcl" prefWidth="75.0" text="Assignment" />
-                        <TableColumn fx:id="Status" prefWidth="75.0" text="Status" />
+                        <TableColumn fx:id="colsubject" prefWidth="102.4000244140625" text="Subject" />
+                        <TableColumn fx:id="colclass" prefWidth="96.0" text="Class" />
+                        <TableColumn fx:id="Assignmentcl" prefWidth="103.99996948242188" text="Assignment" />
                      </columns>
                   </TableView>
-                  <MFXButton layoutX="249.0" layoutY="302.0" onAction="#Deletebtn" prefHeight="39.0" prefWidth="73.0" styleClass="button-design" stylesheets="@../css/application.css" text="Delete" />
+                  <MFXButton layoutX="263.0" layoutY="289.0" onAction="#Deletebtn" prefHeight="39.0" prefWidth="73.0" styleClass="button-design" stylesheets="@../css/application.css" text="Delete" />
+                  <Pagination fx:id="pagination2" layoutX="224.0" layoutY="335.0" prefHeight="22.0" prefWidth="151.0" />
+                  <Label layoutX="203.0" layoutY="52.0" text="Search">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <MFXTextField fx:id="searchtxt" layoutX="249.0" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="133.0" promptText="Name Class" styleClass="mfx-text-field" stylesheets="@../css/application.css" />
                </children>
             </AnchorPane>
          </content>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -24,7 +25,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <TableView fx:id="tblRequest" layoutX="118.0" layoutY="151.0" prefHeight="200.0" prefWidth="379.0">
+      <TableView fx:id="tblRequest" layoutX="110.0" layoutY="135.0" prefHeight="200.0" prefWidth="379.0">
         <columns>
           <TableColumn fx:id="colStudent" prefWidth="97.60003662109375" text="Student" />
           <TableColumn fx:id="colClass" prefWidth="96.79998779296875" text="Class" />
@@ -32,5 +33,6 @@
             <TableColumn fx:id="colCancle" prefWidth="96.79998779296875" text="Cancle" />
         </columns>
       </TableView>
+      <Pagination fx:id="pagination" layoutX="214.0" layoutY="339.0" prefHeight="46.0" prefWidth="170.0" />
    </children>
 </AnchorPane>

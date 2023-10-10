@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_teacher.popUpclass">
    <children>
-      <TableView fx:id="tblSubkect" layoutX="134.0" layoutY="122.0" prefHeight="200.0" prefWidth="317.0">
+      <TableView fx:id="tblSubkect" layoutX="151.0" layoutY="141.0" prefHeight="200.0" prefWidth="317.0">
          <columns>
             <TableColumn fx:id="ClassSubject" prefWidth="148.00000762939453" text="Class" />
             <TableColumn fx:id="classStudent" prefWidth="167.9999938964844" text="Student" />
          </columns>
       </TableView>
+      <AnchorPane layoutY="-1.0" prefHeight="102.0" prefWidth="600.0" styleClass="card1" stylesheets="@../css/application.css">
+         <children>
+            <ImageView fitHeight="102.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asset/videoconference.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="136.0" layoutY="16.0" prefHeight="70.0" prefWidth="267.0" text="Detail Class" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Label layoutX="157.0" layoutY="94.0" prefHeight="47.0" prefWidth="169.0" text="Total Student:">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="total" layoutX="317.0" layoutY="94.0" prefHeight="47.0" prefWidth="169.0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Pagination fx:id="pagination" layoutX="215.0" layoutY="341.0" prefHeight="47.0" prefWidth="170.0" />
    </children>
 </AnchorPane>

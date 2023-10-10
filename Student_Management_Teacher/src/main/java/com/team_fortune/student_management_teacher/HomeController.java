@@ -112,6 +112,24 @@ public class HomeController {
     }
 
     @FXML
+    void Update_Examp(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Exampleview.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
+        try {
+            TabPane AssignmentPanel = loader.load();
+            AssignmentPanel.getSelectionModel().select(1);
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(AssignmentPanel);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
     void update_class(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("view/MainClass.fxml"));
         btnHome.getStyleClass().remove("bg-active");
@@ -376,6 +394,42 @@ public class HomeController {
     }
 
     @FXML
+    void ListExam(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Exampleview.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
+        try {
+            TabPane AssignmentPanel = loader.load();
+            AssignmentPanel.getSelectionModel().select(2);
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(AssignmentPanel);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    void DeleteExam(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/team_fortune/student_management_teacher/view/Exampleview.fxml"));
+        btnHome.getStyleClass().remove("bg-active");
+        btnExam.getStyleClass().remove("bg-active");
+        btnAssignment.getStyleClass().remove("bg-active");
+        btnSubject.getStyleClass().add("bg-active");
+        btnClass.getStyleClass().remove("bg-active");
+        try {
+            TabPane AssignmentPanel = loader.load();
+            AssignmentPanel.getSelectionModel().select(3);
+            main_display.getChildren().clear();
+            main_display.getChildren().setAll(AssignmentPanel);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
     void changePassword(ActionEvent event) {
         try {
             Connection conn = DBConnection.getConnection();
@@ -397,7 +451,7 @@ public class HomeController {
             rePassword.applyCss();
             oldPassword.getStyleClass().add("text_field_error");
             oldPassword.applyCss();
-            DialogAlert.DialogError("New password and Re-enterd password not same!.\n"+"Old Password not incorrect!");
+            DialogAlert.DialogError("New password and Re-enterd password not same!.\n" + "Old Password not incorrect!");
         } else if (!newPassword.getText().equals(rePassword.getText()) && MD5.Md5(oldPassword.getText()).equals(password)) {
             newPassword.getStyleClass().add("text_field_error");
             newPassword.applyCss();

@@ -20,8 +20,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +36,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -51,10 +56,13 @@ public class TranscriptController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    private ToggleGroup obtainToggleGroup = new ToggleGroup();
-private ToggleGroup achievedToggleGroup = new ToggleGroup();
+    private int itemsperPage = 5;
+    private int totalItems;
+ private int currentPageIndex = 0;
     private boolean isObtainSelected = false;
     private boolean isAchievesedSelected = false;
+    @FXML
+    private Pagination pagination;
     @FXML
     private TableColumn<com.team_fortune.student_management_teacher.model.Student, String> colExamp;
 
@@ -99,17 +107,23 @@ private ToggleGroup achievedToggleGroup = new ToggleGroup();
         }
         return Subject;
     }
-public ToggleGroup getObtainToggleGroup() {
-    return obtainToggleGroup;
-}
 
-public ToggleGroup getAchieveToggleGroup() {
-    return achievedToggleGroup;
-}
     private void displayrecord() {
         List<com.team_fortune.student_management_teacher.model.Student> resulList = getDatabaseToModel.GetTranscript();
         ObservableList<com.team_fortune.student_management_teacher.model.Student> observale = FXCollections.observableArrayList(resulList);
-        tblTranscript.setItems(observale);
+        totalItems = observale.size();
+            int pageCount = (totalItems / itemsperPage) + 1;
+            pagination.setPageCount(pageCount);
+
+            if (currentPageIndex >= pageCount) {
+                currentPageIndex = pageCount - 1;
+            }
+
+            int startIndex = currentPageIndex * itemsperPage;
+            int endIndex = Math.min(startIndex + itemsperPage, totalItems);
+            endIndex = Math.min(endIndex, totalItems);
+            List<com.team_fortune.student_management_teacher.model.Student>Transcript=observale.subList(startIndex, endIndex);
+        tblTranscript.setItems(FXCollections.observableArrayList(Transcript));
         colName.setCellValueFactory(new PropertyValueFactory<>("name_student"));
         colExamp.setCellValueFactory(new PropertyValueFactory<>("link_Examp"));
         colExamp.setCellFactory(column -> new TableCell<com.team_fortune.student_management_teacher.model.Student, String>() {
@@ -312,11 +326,25 @@ public ToggleGroup getAchieveToggleGroup() {
         }
 
     }
-
+private void startUpdating() {
+        ScheduledExecutorService Excuter = Executors.newSingleThreadScheduledExecutor();
+        Excuter.scheduleAtFixedRate(() -> {
+            Platform.runLater(() -> {
+                
+                displayrecord();
+                
+            });
+        }, 0, 1, TimeUnit.SECONDS);
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        startUpdating();
         displayrecord();
+        pagination.currentPageIndexProperty().addListener((obs,oldIndex,newIndex)->{
+        currentPageIndex=newIndex.intValue();
+        displayrecord();
+        });
         name_class.getItems().addAll(getClassNames());
         name_subject.getItems().addAll(getClassSubject());
     }
