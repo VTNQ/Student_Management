@@ -538,7 +538,7 @@ public class getDatabaseToModel {
         List<com.team_fortune.student_management_teacher.model.Assignments> ExAssign = new ArrayList<>();
         String query = "Select b.id as id_solution,d.name as name_subject,a.name as name_student,b.link as link,b.status as status,e.name as name_class,b.reason  From student a Join class_subject c ON a.id=c.id_student "
                 + "Join subject d ON d.id=c.id_subject JOIN class e ON e.id=c.id_class JOIN assignments f ON f.id=c.id_assignments "
-                + "Join solution b ON b.id=c.id_solution " + "Join teacher t1 ON t1.id=c.id_teacher " + "Where t1.username=? And c.id_assignments IS NOT NULL "+"Group by b.id,d.name,a.name,b.link,e.name";
+                + "Join solution b ON b.id=c.id_solution " + "Join teacher t1 ON t1.id=c.id_teacher " + "Where t1.username=? And c.id_assignments IS NOT NULL And c.id_solution is NOT NULL "+"Group by b.id,d.name,a.name,b.link,e.name";
         try {
             Connection conn = DBConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(query);

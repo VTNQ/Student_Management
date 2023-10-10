@@ -300,7 +300,7 @@ public class AssignmentController implements Initializable {
                 deleteview();
                 displayrecord();
                 searchdisplay();
-                WatchAssign();
+            
                 searchfield(txtsearch.getText());
                 deletesearch(searchtxt.getText());
             });

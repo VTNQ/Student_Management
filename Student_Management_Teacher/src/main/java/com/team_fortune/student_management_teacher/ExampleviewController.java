@@ -60,7 +60,7 @@ public class ExampleviewController implements Initializable {
      */
     int id_ex;
         @FXML
-    private MFXTextField txtdelete;
+    private MFXTextField txtdelete=new MFXTextField();
     String name_subject;
     String name_Class;
     private int id_exam;
