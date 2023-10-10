@@ -461,7 +461,7 @@ public class ExerciseviewController implements Initializable {
                 + "JOIN  assignments t5 ON t4.id_assignments=t5.id "
                 + "JOIN  solution t3 ON t3.id=t4.id_solution "
                 + "JOIN  student t6 ON t6.id=t4.id_student "
-                + "Where t6.id =? And t5.id = ? And t4.id_class=? And t4.id_subject=? Group by t1.name,t2.name,t3.link,t3.status,t3.reason";
+                + "Where t6.id =? And t4.id_assignments = ? And t4.id_class=? And t4.id_subject=?  Group by t1.name,t2.name,t3.link,t3.status,t3.reason";
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, PrimaryController.loggedInStudentId);

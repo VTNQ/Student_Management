@@ -235,7 +235,8 @@ public class daodb {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String name_Subject = rs.getString("Name_subject");
-                float score = rs.getFloat("score");
+                String score = rs.getString("score");
+                
                 String name_class = rs.getString("name_class");
                 int status = rs.getInt("status");
                 

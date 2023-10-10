@@ -411,7 +411,7 @@ public class CalenderviewController implements Initializable {
     void submit(ActionEvent event) {
         if(!linkExamp.getText().isEmpty()){
             int id_traanscript=-1;
-        String query="Insert into transcript(link,status) values(?,?)";
+        String query="Insert into transcript(link,status,score) values(?,?,?)";
         String latestquery="Select id From transcript ORDER BY id DESC LIMIT 1";
         String updatequery="Update class_subject set id_transcipt=? Where id_class=? And id_subject=? And id_exam=? And id_student=?";
         Connection conn=PrimaryController.connectDB();
@@ -421,7 +421,7 @@ public class CalenderviewController implements Initializable {
             
             stmt.setString(1, linkExamp.getText());
             stmt.setInt(2,0);
-          
+            stmt.setString(3, null);
             stmt.executeUpdate();
             PreparedStatement stmt2=conn.prepareStatement(latestquery);
            ResultSet rs=stmt2.executeQuery();

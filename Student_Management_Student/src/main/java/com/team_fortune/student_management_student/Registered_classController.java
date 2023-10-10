@@ -134,14 +134,12 @@ public class Registered_classController implements Initializable {
                     button.setOnAction(event -> {
                         com.team_fortune.student_management_student.models.classmodel cl = getTableView().getItems().get(getIndex());
                         try {
-                            String check_query = "Select count(*) as total From class_subject where id_class=? And id_teacher=? And id_subject=? And id_student IS null";
-                            String update_query="Update class_subject set id_student=?,Active=? where id_class=? And id_teacher=? And id_subject=?";
+                            String check_query = "Select count(*) as total From class_subject where id_class=? And id_teacher=?  And id_student IS null";
+                            String update_query="Update class_subject set id_student=?,Active=0 where id_class=? And id_teacher=? ";
                             Connection conn = PrimaryController.connectDB();
                             PreparedStatement checksmtmt = conn.prepareStatement(check_query);
                             checksmtmt.setInt(1, cl.getId());
-                            checksmtmt.setInt(2, cl.getId_teacher());
-                            checksmtmt.setInt(3, cl.getId_Subject());
-                          
+                            checksmtmt.setInt(2, cl.getId_teacher());                          
                             ResultSet rs = checksmtmt.executeQuery();
                             if (rs.next()) {
                                 int total=rs.getInt("total");
@@ -149,22 +147,17 @@ public class Registered_classController implements Initializable {
                                 if(total>0){
                                    PreparedStatement updatestmt=conn.prepareStatement(update_query);
                                 updatestmt.setInt(1, PrimaryController.loggedInStudentId);
-                                updatestmt.setInt(2, 0);
-                                updatestmt.setInt(3, cl.getId());
-                                updatestmt.setInt(4, cl.getId_teacher());
-                                updatestmt.setInt(5, cl.getId_Subject());
+                                
+                                updatestmt.setInt(2, cl.getId());
+                                updatestmt.setInt(3, cl.getId_teacher());
                                 updatestmt.executeUpdate();
                                  PrimaryController.displaysuccessfully("Join successfully"); 
                                 }else{
-                                        String query = "Insert into class_subject(id_class,id_teacher,id_student,Active,id_subject) values(?,?,?,?,?)";
+                                        String query = "Insert into class_subject(id_student) values(?)";
 
                                 PreparedStatement stmt = conn.prepareStatement(query);
-                                stmt.setInt(1, cl.getId());
-                                stmt.setInt(2, cl.getId_teacher());
-
-                                stmt.setInt(3, PrimaryController.loggedInStudentId);
-                                stmt.setInt(4, 0);
-                                stmt.setInt(5, cl.getId_Subject());
+                                stmt.setInt(1,PrimaryController.loggedInStudentId);
+                               
                                 stmt.executeUpdate();
                                 PrimaryController.displaysuccessfully("Join successfully");
                                 }

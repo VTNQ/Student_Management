@@ -10,7 +10,7 @@ package com.team_fortune.student_management_student.models;
  */
 public class modelsubject {
     private String name_subject;
-    private Float score;
+    private String score;
     private String name_class;
     private int status;
 
@@ -30,7 +30,7 @@ public class modelsubject {
         this.name_class = name_class;
     }
     
-    public modelsubject( String name_subject, Float score,String name_class,int status) {
+    public modelsubject( String name_subject, String score,String name_class,int status) {
         this.name_subject = name_subject;
         this.score = score;
         this.name_class=name_class;
@@ -44,11 +44,11 @@ public class modelsubject {
         this.name_subject = name_subject;
     }
 
-    public Float getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(Float score) {
+    public void setScore(String score) {
         this.score = score;
     }
     
