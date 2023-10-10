@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -42,6 +43,22 @@
                                           </Button>
                                        </graphic>
                                     </MenuItem>
+                                    <MenuItem mnemonicParsing="false">
+                                       <graphic>
+                                          <Button fx:id="btn_profile" mnemonicParsing="false" onAction="#showInformationUser" styleClass="bg_tranparent" stylesheets="@../../../../../../../../New%20folder/Student_Management/Student_Management_Teacher/src/main/resources/com/team_fortune/student_management_teacher/css/application.css" text="Profile">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <graphic>
+                                                <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@asset/profile_1.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </graphic>
+                                    </MenuItem>
                                  </items>
                                  <graphic>
                                     <ImageView fitHeight="41.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
@@ -69,7 +86,7 @@
                <left>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane prefHeight="431.2" prefWidth="200.0" styleClass="dash" stylesheets="@css/primary.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane prefHeight="431.0" prefWidth="214.0" styleClass="dash" stylesheets="@css/primary.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Button alignment="CENTER" layoutY="-2.0" mnemonicParsing="false" onMouseClicked="#btn_home" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Home" textFill="WHITE">
                                  <graphic>
@@ -84,7 +101,12 @@
                                  </font>
                               </Button>
                               <Line endX="111.80001831054688" endY="-3.814697265625E-6" layoutX="101.0" layoutY="48.0" startX="-100.0" stroke="WHITE" />
-                              <Button layoutX="1.0" layoutY="49.0" mnemonicParsing="false" onAction="#Searchbtn" prefHeight="42.0" prefWidth="198.0" style="-fx-background-color: transparent;" text="Search" textFill="WHITE">
+                              <Line endX="110.19998168945312" endY="-1.52587890625E-5" layoutX="101.0" layoutY="99.0" startX="-100.0" stroke="WHITE" />
+                              <Line endX="108.60000610351562" endY="-1.52587890625E-5" layoutX="101.0" layoutY="159.0" startX="-100.0" stroke="WHITE" />
+                              <Line endX="100.0" layoutX="108.0" layoutY="215.0" startX="-107.99999237060547" startY="0.5999908447265625" stroke="WHITE" />
+                              <Line endX="100.0" layoutX="113.0" layoutY="273.0" startX="-107.99999237060547" startY="0.5999908447265625" stroke="WHITE" />
+                              <Line endX="100.0" layoutX="110.0" layoutY="326.0" startX="-107.99999237060547" startY="0.5999908447265625" stroke="WHITE" />
+                              <Button alignment="CENTER" layoutY="49.0" mnemonicParsing="false" onAction="#Searchbtn" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Search Subject" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -96,8 +118,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <Line endX="110.19998168945312" endY="-1.52587890625E-5" layoutX="101.0" layoutY="99.0" startX="-100.0" stroke="WHITE" />
-                              <Button layoutX="2.0" layoutY="109.0" mnemonicParsing="false" onAction="#Scorebtn" prefHeight="42.0" prefWidth="198.0" style="-fx-background-color: transparent;" text="Score" textFill="WHITE">
+                              <Button alignment="CENTER" layoutY="108.0" mnemonicParsing="false" onAction="#Scorebtn" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Score" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -109,12 +130,11 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <Line endX="108.60000610351562" endY="-1.52587890625E-5" layoutX="101.0" layoutY="159.0" startX="-100.0" stroke="WHITE" />
-                              <Button layoutX="14.0" layoutY="173.0" mnemonicParsing="false" onAction="#Exercisebtn" prefHeight="42.0" prefWidth="189.0" style="-fx-background-color: transparent;" text="Exercises" textFill="WHITE">
+                              <Button alignment="CENTER" layoutY="167.0" mnemonicParsing="false" onAction="#Exercisebtn" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Exercise" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@asset/homework.png" />
+                                          <Image url="@asset/checklist.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -122,8 +142,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <Line endX="100.0" layoutX="108.0" layoutY="215.0" startX="-107.99999237060547" startY="0.5999908447265625" stroke="WHITE" />
-                              <Button layoutX="-2.0" layoutY="230.0" mnemonicParsing="false" onAction="#Worldbtn" prefHeight="42.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
+                              <Button alignment="CENTER" layoutY="225.0" mnemonicParsing="false" onAction="#Worldbtn" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Word" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -135,8 +154,7 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <Line endX="100.0" layoutX="113.0" layoutY="273.0" startX="-107.99999237060547" startY="0.5999908447265625" stroke="WHITE" />
-                              <Button layoutX="-3.0" layoutY="284.0" mnemonicParsing="false" onAction="#buttonSchedule" prefHeight="42.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Schedule" textFill="WHITE">
+                              <Button alignment="CENTER" layoutY="274.0" mnemonicParsing="false" onAction="#buttonSchedule" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Schedule" textFill="WHITE">
                                  <graphic>
                                     <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -148,24 +166,25 @@
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <Line endX="100.0" layoutX="110.0" layoutY="326.0" startX="-107.99999237060547" startY="0.5999908447265625" stroke="WHITE" />
-                              <Button layoutX="14.0" layoutY="327.0" mnemonicParsing="false" onAction="#classbtn" prefHeight="42.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Class" textFill="WHITE">
+                              <Button alignment="CENTER" layoutX="-13.0" layoutY="326.0" mnemonicParsing="false" onAction="#classbtn" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Class" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@asset/videoconference.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <ImageView fitHeight="28.0" fitWidth="59.0" layoutX="49.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@asset/videoconference.png" />
-                                 </image>
-                              </ImageView>
                            </children>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
                </left>
                <center>
-                  <AnchorPane fx:id="maindisplay" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <AnchorPane fx:id="maindisplay" minWidth="-Infinity" prefHeight="431.0" prefWidth="573.0" BorderPane.alignment="CENTER">
                      <children>
                         <BarChart fx:id="Barchart" layoutX="52.0" layoutY="14.0" prefHeight="153.0" prefWidth="268.0">
                           <xAxis>

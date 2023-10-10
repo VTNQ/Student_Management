@@ -38,7 +38,7 @@ public class ScoreviewController implements Initializable {
        @FXML
        private TableColumn<com.team_fortune.student_management_student.models.modelsubject,String>colclass;
        @FXML
-       private TableColumn<com.team_fortune.student_management_student.models.modelsubject,String>Status;
+       private TableColumn<com.team_fortune.student_management_student.models.modelsubject,Integer>Status;
        private void displayredord(){
            List<com.team_fortune.student_management_student.models.modelsubject>resultList=daodb.Scorestudent();
             ObservableList<com.team_fortune.student_management_student.models.modelsubject> observableList=FXCollections.observableArrayList(resultList);
@@ -47,20 +47,24 @@ public class ScoreviewController implements Initializable {
             colScore.setCellValueFactory(new PropertyValueFactory<>("score"));
             colclass.setCellValueFactory(new PropertyValueFactory<>("name_class"));
             Status.setCellValueFactory(new PropertyValueFactory<>("status"));
-            Status.setCellFactory(column->{
-            return new TableCell<com.team_fortune.student_management_student.models.modelsubject,String>(){
-                @Override
-                protected void updateItem(String Item, boolean empty) {
-                    super.updateItem(Item, empty); 
-                    if(!empty && "dat".equals(Item)){
-                        getStyleClass().add("field-success");
-                    }else{
-                        getStyleClass().add("field-error");
-                    }
-                    setText(Item);
-                }
-              
-            };
+            Status.setCellFactory(column->new TableCell<com.team_fortune.student_management_student.models.modelsubject,Integer>(){
+               @Override
+               protected void updateItem(Integer item, boolean empty) {
+                   super.updateItem(item, empty);
+                   if(item!=null || !empty){
+                       if(item==0){
+                           setText("marking");
+                       }else if(item==1){
+                           setText("obtain");
+                            setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+                       }else if(item==2){
+                           setText("fail");
+                            setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                       }
+                      
+                   }
+               }
+                
             });
        }
     @Override

@@ -62,7 +62,7 @@
                   <TableView fx:id="tblRegister" layoutX="110.0" layoutY="101.0" prefHeight="200.0" prefWidth="342.0">
                     <columns>
                       <TableColumn fx:id="ColMyJoin" prefWidth="162.39997100830078" text="Class" />
-                      <TableColumn fx:id="colDetail" minWidth="0.0" prefWidth="177.60003662109375" text="Detail" />
+                      <TableColumn fx:id="colDetail" minWidth="0.0" prefWidth="177.60003662109375" text="Status" />
                     </columns>
                   </TableView>
                </children></AnchorPane>

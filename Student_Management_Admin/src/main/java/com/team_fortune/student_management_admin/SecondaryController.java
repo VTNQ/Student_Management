@@ -100,33 +100,45 @@ public class SecondaryController implements Initializable {
         if (!usernameStudent.getText().isEmpty() && !nameStudent.getText().isEmpty() && !emailStudent.getText().isEmpty() && !phoneStudent.getText().isEmpty() && !SinceStudent.getText().isEmpty()) {
             if (Regax.isValidUsername(usernameStudent.getText())) {
                 String username = MD5.Md5(usernameStudent.getText());
+                boolean isFound = false;
                 try {
-                    String insertQuery = "insert into student(name,username,phone,email,since,password,status) values(?,?,?,?,?,?,?)";
-                    DateTimeFormatter local = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    String since = SinceStudent.getValue().format(local);
-                    Connection conn = DBConnection.getConnection();
-                    PreparedStatement ps = conn.prepareStatement(insertQuery);
-                    ps.setString(1, nameStudent.getText());
-                    ps.setString(2, username);
-                    ps.setString(3, phoneStudent.getText());
-                    ps.setString(4, emailStudent.getText());
-                    ps.setString(5, since);
-                    ps.setString(6, username);
-                    ps.setInt(7, 0);
+                    PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement("select*from student where email=?");
+                    preparedStatement.setString(1, emailStudent.getText());
+                    ResultSet rs = preparedStatement.executeQuery();
+                    while (rs.next()) {
+                        isFound = true;
+                    }
+                    if (isFound == true) {
+                        String insertQuery = "insert into student(name,username,phone,email,since,password,status) values(?,?,?,?,?,?,?)";
+                        DateTimeFormatter local = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        String since = SinceStudent.getValue().format(local);
+                        Connection conn = DBConnection.getConnection();
+                        PreparedStatement ps = conn.prepareStatement(insertQuery);
+                        ps.setString(1, nameStudent.getText());
+                        ps.setString(2, username);
+                        ps.setString(3, phoneStudent.getText());
+                        ps.setString(4, emailStudent.getText());
+                        ps.setString(5, since);
+                        ps.setString(6, username);
+                        ps.setInt(7, 0);
 
-                    sendConfirmationEmailStudent(emailStudent.getText());
-                    DialogAlert.DialogSuccess("Add Student Success!");
+                        sendConfirmationEmailStudent(emailStudent.getText());
+                        DialogAlert.DialogSuccess("Add Student Success!");
 
-                    ps.executeUpdate();
-                    usernameStudent.clear();
-                    nameStudent.clear();
-                    phoneStudent.clear();
-                    SinceStudent.clear();
-                    emailStudent.clear();
+                        ps.executeUpdate();
+                        usernameStudent.clear();
+                        nameStudent.clear();
+                        phoneStudent.clear();
+                        SinceStudent.clear();
+                        emailStudent.clear();
 
-                    Student.clear();
-                    Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudent());
-                    showStudent();
+                        Student.clear();
+                        Student.addAll(new getDatabaseToModel().getDataFromDatabaseStudent());
+                        showStudent();
+                    }else{
+                        DialogAlert.DialogError("Email Is Exist");
+                    }
+
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -139,33 +151,45 @@ public class SecondaryController implements Initializable {
         if (!usernameTeacher.getText().isEmpty() && !nameTeacher.getText().isEmpty() && !emailTeacher.getText().isEmpty() && !phoneTeacher.getText().isEmpty() && !SinceTeacher.getText().isEmpty()) {
             if (Regax.isValidUsername(usernameTeacher.getText())) {
                 String username = MD5.Md5(usernameTeacher.getText());
+                boolean isFound = false;
                 try {
-                    String insertQuery = "insert into teacher(name,username,phone,email,since,password,status) values(?,?,?,?,?,?,?)";
-                    DateTimeFormatter local = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    String since = SinceTeacher.getValue().format(local);
-                    Connection conn = DBConnection.getConnection();
-                    PreparedStatement ps = conn.prepareStatement(insertQuery);
-                    ps.setString(1, nameTeacher.getText());
-                    ps.setString(2, username);
-                    ps.setString(3, phoneTeacher.getText());
-                    ps.setString(4, emailTeacher.getText());
-                    ps.setString(5, since);
-                    ps.setString(6, username);
-                    ps.setInt(7, 0);
+                    PreparedStatement preparedStatement = DBConnection.getConnection().prepareStatement("select*from teacher where email=?");
+                    preparedStatement.setString(1, emailTeacher.getText());
+                    ResultSet rs = preparedStatement.executeQuery();
+                    while (rs.next()) {
+                        isFound = true;
+                    }
+                    if (isFound == true) {
+                        String insertQuery = "insert into teacher(name,username,phone,email,since,password,status) values(?,?,?,?,?,?,?)";
+                        DateTimeFormatter local = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        String since = SinceTeacher.getValue().format(local);
+                        Connection conn = DBConnection.getConnection();
+                        PreparedStatement ps = conn.prepareStatement(insertQuery);
+                        ps.setString(1, nameTeacher.getText());
+                        ps.setString(2, username);
+                        ps.setString(3, phoneTeacher.getText());
+                        ps.setString(4, emailTeacher.getText());
+                        ps.setString(5, since);
+                        ps.setString(6, username);
+                        ps.setInt(7, 0);
 
-                    sendConfirmationEmailTeacher(emailTeacher.getText());
-                    DialogAlert.DialogSuccess("Add Teacher Success!");
+                        sendConfirmationEmailTeacher(emailTeacher.getText());
+                        DialogAlert.DialogSuccess("Add Teacher Success!");
 
-                    ps.executeUpdate();
-                    usernameTeacher.clear();
-                    nameTeacher.clear();
-                    phoneTeacher.clear();
-                    SinceTeacher.clear();
-                    emailTeacher.clear();
+                        ps.executeUpdate();
+                        usernameTeacher.clear();
+                        nameTeacher.clear();
+                        phoneTeacher.clear();
+                        SinceTeacher.clear();
+                        emailTeacher.clear();
 
-                    Teacher.clear();
-                    Teacher.addAll(new getDatabaseToModel().getDataFromDatabaseTeacher());
-                    showTeacher();
+                        Teacher.clear();
+                        Teacher.addAll(new getDatabaseToModel().getDataFromDatabaseTeacher());
+                        showTeacher();
+                    } else {
+                        DialogAlert.DialogError("Email Is Exist");
+                    }
+
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }

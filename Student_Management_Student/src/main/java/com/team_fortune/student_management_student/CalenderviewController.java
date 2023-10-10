@@ -67,6 +67,9 @@ public class CalenderviewController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    private int id_Cla;
+    private int id_sub;
+    private int id_exam;
     private int id_Assignment;
     @FXML
     private Label Subject = new Label();
@@ -112,7 +115,7 @@ public class CalenderviewController implements Initializable {
     @FXML
     private TableView<modelcalender> tblview = new TableView<>();
     private boolean linkStudentExist(int id_Examp){
-        String query="Select a.id_exam From transcript a JOIN exam_schedule b ON a.id_exam=a.id JOIN class_subject c ON b.id=c.id_exam JOIN student d ON c.id_student=d.id Where a.id_exam=? and a.link IS NOT NULL And d.id=?";
+        String query="Select a.id From transcript a JOIN class_subject c ON a.id=c.id_transcipt JOIN exam_schedule b ON b.id=c.id_exam JOIN student d ON c.id_student=d.id Where b.id=? and a.link IS NOT NULL And d.id=?";
         try {
             Connection conn=DBconnect.connectDB();
             PreparedStatement stmt=conn.prepareStatement(query);
@@ -127,6 +130,25 @@ public class CalenderviewController implements Initializable {
         }
         return false;
     }
+    private void setidclass(int id_class){
+       id_Cla=id_class;
+    }
+    private int getidclass(){
+        return id_Cla;
+    }
+     private void setidsubject(int id_subject){
+       id_sub=id_subject;
+    }
+    private int getidsubject(){
+        return id_sub;
+    }
+    private void setidexam(int id_Exam){
+        id_exam=id_Exam;
+    }
+    private int getidexam(){
+        return id_exam;
+    }
+
     public void EndCountDownEverySecond(LocalDateTime endTime) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             LocalDateTime now = LocalDateTime.now();
@@ -146,7 +168,7 @@ public class CalenderviewController implements Initializable {
                 Endcoutdown.setStyle("-fx-text-fill:red");
                 closepopup();
             if(!popupShow){
-                 zeropoint(getid_Assignment());
+                 zeropoint();
                  popupShow=true;
             }
                
@@ -216,15 +238,21 @@ public class CalenderviewController implements Initializable {
                 button.setOnAction(event -> {
 
                     com.team_fortune.student_management_student.models.modelcalender cls = getTableView().getItems().get(getIndex());
-
-                    if (startsecondsRemaining < 0) {
-                        try {
+                    boolean check=check_submission(cls.getId());
+                    if (startsecondsRemaining < 0 ) {
+                       if(check){
+                          try {
                             FXMLLoader loader = new FXMLLoader(App.class.getResource("laboratory_view.fxml"));
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", new Locale("vi", "VN"));
                             LocalDateTime Endtime = LocalDateTime.parse(cls.getEndtime(), formatter);
                             LocalDateTime starttime = LocalDateTime.parse(cls.getStartTime(), formatter);
                             AnchorPane popup = loader.load();
                             CalenderviewController exercise = loader.getController();
+                            int id_class=exercise.get_class(cls.getName_class());
+                            int id_subject=exercise.getid_subject(cls.getName_Subject());
+                            exercise.setidclass(id_class);
+                            exercise.setidsubject(id_subject);
+                            exercise.setidexam(cls.getId());
                            exercise.linkStudentExist(cls.getId());
                             exercise.setSubject(cls.getName_Subject());
                             exercise.settext(cls.getLink());
@@ -238,13 +266,19 @@ public class CalenderviewController implements Initializable {
                             popupStage.setResizable(false);
                             popupStage.initStyle(StageStyle.UNDECORATED);
                             popupStage.showAndWait();
-                            popupShow = true;
+                          
                         } catch (IOException ex) {
                             Logger.getLogger(CalenderviewController.class.getName()).log(Level.SEVERE, null, ex);
+                        }   
+                       }else{
+                            dialog.displayErrorMessage("You have the instructions");
+                       }
+                           
+                        }else{
+                             dialog.displayErrorMessage("It's not time yet");
                         }
-                    } else {
-                        dialog.displayErrorMessage("it's not time");
-                    }
+                       
+                   
 
                 });
             }
@@ -261,16 +295,65 @@ public class CalenderviewController implements Initializable {
             }
         });
         
+    }private int get_class(String name_class){
+        int id_class=-1;
+        try {
+             Connection conn=PrimaryController.connectDB();
+        String checkquery="Select id From class where name=?";
+        PreparedStatement stmt=conn.prepareStatement(checkquery);
+        stmt.setString(1, name_class);
+        ResultSet rs=stmt.executeQuery();
+        while(rs.next()){
+            id_class=rs.getInt("id");
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+      return id_class;
+        
     }
-    private void zeropoint(int id_exam){
-        String query="Insert into transcript(id_exam,link,score) values(?,?,?)";
+    private int getid_subject(String name_subject){
+        int id_subject=-1;
+        try {
+             Connection conn=PrimaryController.connectDB();
+        String checkquery="Select id From subject class where name=?";
+        PreparedStatement stmt=conn.prepareStatement(checkquery);
+        stmt.setString(1, name_subject);
+        ResultSet rs=stmt.executeQuery();
+        while(rs.next()){
+            id_subject=rs.getInt("id");
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id_subject;
+    }
+    private void zeropoint(){
+        int id_traanscript=-1;
+        String query="Insert into transcript(link,score,status) values(?,?,?)";
+        String latestquery="Select id From transcript ORDER BY id DESC LIMIT 1";
+        String updatequery="Update class_subject set id_transcipt=? Where id_class=? And id_subject=? And id_exam=?";
         Connection conn=PrimaryController.connectDB();
         try {
+           
             PreparedStatement stmt=conn.prepareStatement(query);
-            stmt.setInt(1, id_exam);
-            stmt.setString(2, "khong co bai");
-            stmt.setInt(3,0);
+            
+            stmt.setString(1, "khong co bai");
+            stmt.setInt(2,0);
+            stmt.setInt(3, 2);
             stmt.executeUpdate();
+            PreparedStatement stmt2=conn.prepareStatement(latestquery);
+           ResultSet rs=stmt2.executeQuery();
+           while(rs.next()){
+               id_traanscript=rs.getInt("id");
+           }
+          PreparedStatement updatestmt=conn.prepareStatement(updatequery);
+          updatestmt.setInt(1, id_traanscript);
+          updatestmt.setInt(2, getidclass());
+          updatestmt.setInt(3, getidsubject());
+          updatestmt.setInt(4, getidexam());
+          updatestmt.executeUpdate();
+         
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -308,21 +391,58 @@ public class CalenderviewController implements Initializable {
         }
 
     }
-
+    private boolean check_submission(int id_exam){
+        String query="Select id_exam From class_subject Where id_exam=? And id_student=? And id_transcipt IS NULL";
+        Connection conn=DBconnect.connectDB();
+        try {
+            PreparedStatement stmt=conn.prepareStatement(query);
+            stmt.setInt(1, id_exam);
+            stmt.setInt(2, PrimaryController.loggedInStudentId);
+            ResultSet rs=stmt.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     @FXML
     void submit(ActionEvent event) {
-        String query = "Insert into transcript(id_exam,link,status) values(?,?,?)";
-        Connection conn = DBconnect.connectDB();
+        if(!linkExamp.getText().isEmpty()){
+            int id_traanscript=-1;
+        String query="Insert into transcript(link,status) values(?,?)";
+        String latestquery="Select id From transcript ORDER BY id DESC LIMIT 1";
+        String updatequery="Update class_subject set id_transcipt=? Where id_class=? And id_subject=? And id_exam=? And id_student=?";
+        Connection conn=PrimaryController.connectDB();
         try {
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setInt(1, getid_Assignment());
-            stmt.setString(2, linkExamp.getText());
-            stmt.setInt(3, 0);
+           
+            PreparedStatement stmt=conn.prepareStatement(query);
+            
+            stmt.setString(1, linkExamp.getText());
+            stmt.setInt(2,0);
+          
             stmt.executeUpdate();
-            closepopup();
-        } catch (SQLException ex) {
-            Logger.getLogger(CalenderviewController.class.getName()).log(Level.SEVERE, null, ex);
+            PreparedStatement stmt2=conn.prepareStatement(latestquery);
+           ResultSet rs=stmt2.executeQuery();
+           while(rs.next()){
+               id_traanscript=rs.getInt("id");
+           }
+          PreparedStatement updatestmt=conn.prepareStatement(updatequery);
+          updatestmt.setInt(1, id_traanscript);
+          updatestmt.setInt(2, getidclass());
+          updatestmt.setInt(3, getidsubject());
+          updatestmt.setInt(4, getidexam());
+          updatestmt.setInt(5, PrimaryController.loggedInStudentId);
+          updatestmt.executeUpdate();
+         closepopup();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        }else{
+            dialog.displayErrorMessage("Exam link has not been entered yet");
+        }
+        
     }
 
     @Override

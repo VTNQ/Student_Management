@@ -6,9 +6,9 @@ import java.sql.Connection;
 
 public class DBConnection {
 
-    private static String url = "jdbc:mysql://localhost:3306/student_management";
+    private static String url = "jdbc:mysql://localhost:3308/student_management";
     private static String user = "root";
-    private static String password = "Anhthang61@";
+    private static String password = "123456789";
 
     public static Connection getConnection() throws SQLException {
         try {
