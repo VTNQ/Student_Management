@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.team_fortune.student_management_student.Registered_classController">
+   <children>
+      <AnchorPane prefHeight="124.0" prefWidth="600.0" styleClass="card1" stylesheets="@css/primary.css">
+         <children>
+            <ImageView fitHeight="125.0" fitWidth="164.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@asset/videoconference.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="142.0" layoutY="24.0" prefHeight="62.0" prefWidth="350.0" text="Detail Registed">
+               <font>
+                  <Font name="System Bold" size="39.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <MFXButton layoutX="114.0" layoutY="169.0" prefHeight="56.0" prefWidth="142.0" styleClass="btn-design" stylesheets="@css/primary.css" text="Student Class" />
+      <MFXButton layoutX="374.0" layoutY="169.0" prefHeight="56.0" prefWidth="164.0" styleClass="btn-design" stylesheets="@css/primary.css" text="Subject Class" />
+   </children>
+</AnchorPane>

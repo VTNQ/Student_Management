@@ -4,6 +4,7 @@
  */
 package com.team_fortune.student_management_student;
 
+import com.teach_fortune.student_management_student.dialog.dialog;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,8 +39,10 @@ public class SubmitExerciseController implements Initializable {
     }
         @FXML
     void SubmitAssignment(ActionEvent event) {
-     conn=PrimaryController.connectDB();
+        if(!txtAssignment.getText().isEmpty()){
+            conn=PrimaryController.connectDB();
             try {
+                
                 String query="Insert into transcript(id_exam,link) values(?,?)";
                 PreparedStatement stmt=conn.prepareStatement(query);
                 stmt.setString(2, txtAssignment.getText());
@@ -47,6 +50,10 @@ public class SubmitExerciseController implements Initializable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }else{
+            dialog.displayErrorMessage("Haven't entered the Assignment link yet");
+        }
+     
     }
 
     @Override

@@ -6,6 +6,7 @@ package com.team_fortune.student_management_student;
 
 import com.teach_fortune.student_management_student.dialog.dialog;
 import com.teach_fortune.student_management_student.util.DBconnect;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,7 +32,8 @@ public class PopupupdatepassController implements Initializable {
      */
     @FXML
     private TextField NewPassword;
-
+    @FXML
+    private MFXButton change;
     @FXML
     private TextField RenewPassword;
 
@@ -49,7 +51,7 @@ public class PopupupdatepassController implements Initializable {
                         stmt.setInt(3, PrimaryController.loggedInStudentId);
                         stmt.executeUpdate();
                         dialog.displaysuccessfully("Change Password successfully");
-                    Stage stage=(Stage) NewPassword.getScene().getWindow();
+                    Stage stage=(Stage) change.getScene().getWindow();
                     stage.close();
                     }else{
                          dialog.displayErrorMessage("Password must be 8 characters");

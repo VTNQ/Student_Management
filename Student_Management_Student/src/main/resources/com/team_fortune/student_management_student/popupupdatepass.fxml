@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.team_fortune.student_management_student.PopupupdatepassController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_student.PopupupdatepassController">
    <children>
       <AnchorPane prefHeight="88.0" prefWidth="600.0" styleClass="card1" stylesheets="@css/primary.css">
          <children>
@@ -34,7 +34,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <MFXButton layoutX="248.0" layoutY="280.0" onAction="#ChangePassword" prefHeight="46.0" prefWidth="82.0" styleClass="btn-design" stylesheets="@css/primary.css" text="Change" />
+      <MFXButton fx:id="change" layoutX="248.0" layoutY="280.0" onAction="#ChangePassword" prefHeight="46.0" prefWidth="82.0" styleClass="btn-design" stylesheets="@css/primary.css" text="Change" />
       <PasswordField fx:id="NewPassword" layoutX="248.0" layoutY="128.0" promptText="New Password" />
       <PasswordField fx:id="RenewPassword" layoutX="256.0" layoutY="211.0" promptText="Re-enterd Password" />
    </children>

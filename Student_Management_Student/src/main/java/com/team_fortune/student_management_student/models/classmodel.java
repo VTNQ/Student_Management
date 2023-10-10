@@ -11,6 +11,25 @@ package com.team_fortune.student_management_student.models;
 public class classmodel {
    private String name;
     private int id;
+    private int id_Subject;
+    private int id_teacher;
+    private int Active;
+
+    public int getActive() {
+        return Active;
+    }
+
+    public void setActive(int Active) {
+        this.Active = Active;
+    }
+    
+    public int getId_Subject() {
+        return id_Subject;
+    }
+
+    public void setId_Subject(int id_Subject) {
+        this.id_Subject = id_Subject;
+    }
      private Boolean isActive;
    private Boolean detail;
    private String name_subject;
@@ -46,12 +65,27 @@ public class classmodel {
     public void setDetail(Boolean detail) {
         this.detail = detail;
     }
-public classmodel(int id,String name) {
+public classmodel(int id,String name,int id_subject,int id_teacher) {
         this.id=id;
         this.name = name;
         this.isActive = true;
         this.detail=true;
-        
+        this.id_Subject=id_subject;
+        this.id_teacher=id_teacher;
+    }
+public int getId_teacher() {
+        return id_teacher;
+    }
+
+    public void setId_teacher(int id_teacher) {
+        this.id_teacher = id_teacher;
+    }
+    public classmodel( int id,String name,int Active) {
+        this.name = name;
+        this.id = id;
+        this.Active=Active;
+         this.isActive = true;
+        this.detail=true;
     }
     public int getId() {
         return id;

@@ -12,13 +12,13 @@ public class modelsubject {
     private String name_subject;
     private Float score;
     private String name_class;
-    private String status;
+    private int status;
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -30,7 +30,7 @@ public class modelsubject {
         this.name_class = name_class;
     }
     
-    public modelsubject( String name_subject, Float score,String name_class,String status) {
+    public modelsubject( String name_subject, Float score,String name_class,int status) {
         this.name_subject = name_subject;
         this.score = score;
         this.name_class=name_class;

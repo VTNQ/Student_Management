@@ -89,6 +89,9 @@ public class SecondaryController implements Initializable {
     private AnchorPane maindisplay;
 
     public String countDown;
+    
+    @FXML
+    private Button btn_profile;
 
     public String name_class;
 
@@ -120,6 +123,8 @@ public class SecondaryController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    
+    
     private final ObservableList<com.team_fortune.student_management_student.models.modelsearch> models = FXCollections.observableArrayList();
     private final ObservableList<modelsubject> model = FXCollections.observableArrayList();
     private final ObservableList<modelcalender> data = FXCollections.observableArrayList();
@@ -147,31 +152,31 @@ public class SecondaryController implements Initializable {
     }
 
     public void chart() {
-        String chartQuery = "SELECT t1.name_subject, t5.score FROM subject t1 "
+        String chartQuery = "SELECT t1.name, t5.score FROM subject t1 "
                 + "JOIN class_subject t2 ON t1.id = t2.id_subject "
                 + "JOIN student t3 ON t2.id_student = t3.id "
-                + "JOIN exam_schedule t4 ON t2.id_exam = t4.id "
-                + "JOIN transcript t5 ON t4.id = t5.id_exam "
-                + "WHERE t3.id = ?";
+                + "JOIN transcript t5 ON t2.id_transcipt = t5.id "
+                + "WHERE t3.id = ? And Active=1";
 
         connection = PrimaryController.connectDB();
         try {
             CategoryAxis xAxis = new CategoryAxis();
             NumberAxis yAyis = new NumberAxis();
             Barchart.setTitle("total score");
-            xAxis.setLabel("Name subject");
+            xAxis.setLabel("Name Subject");
             yAyis.setLabel("Score");
             XYChart.Series<String, Number> chartbar = new XYChart.Series<>();
             PreparedStatement stmt = connection.prepareStatement(chartQuery);
             stmt.setInt(1, PrimaryController.loggedInStudentId);
             ResultSet result = stmt.executeQuery();
             while (result.next()) {
-                String nameSubject = result.getString("name_subject");
+                String nameSubject = result.getString("name");
                 Float score = result.getFloat("score");
                 chartbar.getData().add(new XYChart.Data<>(nameSubject, score));
             }
             Barchart.getData().add(chartbar);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -192,7 +197,20 @@ public class SecondaryController implements Initializable {
                 PopupStage.initModality(Modality.APPLICATION_MODAL);
                 PopupStage.setScene(new Scene(newPopup, 600, 400));
                 PopupStage.setResizable(false);
-                PopupStage.show();
+                PopupStage.setOnCloseRequest(event->{
+                    try {
+                         String query1 = "Update student set status=1 Where id=?";
+                        
+                    PreparedStatement stmtquery = conn.prepareStatement(query1);
+                    stmtquery.setInt(1, PrimaryController.loggedInStudentId);
+                    
+                    stmtquery.executeUpdate();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+               
+                PopupStage.showAndWait();
             }
 
         } catch (Exception e) {
@@ -204,7 +222,7 @@ public class SecondaryController implements Initializable {
         String chart = "SELECT COUNT(DISTINCT t1.id_subject) as total FROM class_subject t1 "
                 + "JOIN student t2 ON t1.id_student = t2.id "
                 + "JOIN class t3 ON t1.id_class=t3.id "
-                + "WHERE t2.id = ? AND t3.name = ?";
+                + "WHERE t2.id = ? AND t3.name = ? And t1.Active=1";
         connection = PrimaryController.connectDB();
         ObservableList<PieChart.Data> piechartData = FXCollections.observableArrayList();
         try {
@@ -216,9 +234,11 @@ public class SecondaryController implements Initializable {
             while (resultset.next()) {
 
                 int total = resultset.getInt("total");
-
-                PieChart.Data data = new PieChart.Data(getClassName(PrimaryController.loggedInUsername), total);
+             if(total>0){
+                 PieChart.Data data = new PieChart.Data(getClassName(PrimaryController.loggedInUsername), total);
                 piechartData.add(data);
+             }
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -238,25 +258,6 @@ public class SecondaryController implements Initializable {
 
         } catch (Exception e) {
         }
-    }
-
-    public int idassignment(String assignment) {
-        int id = -1;
-        connection = PrimaryController.connectDB();
-        String query = "Select t1.id From assignments t1 "
-                + "JOIN class_subject  t2 ON t1.id=t2.id_assignments "
-                + "JOIN subject t3 ON t2.id_subject=t3.id " + "Where t3.name = ?";
-        try {
-            PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setString(1, assignment);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt("id");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return id;
     }
 
     @FXML
@@ -366,12 +367,23 @@ public class SecondaryController implements Initializable {
             ex.printStackTrace();
         }
     }
-
+  @FXML
+    void showInformationUser(ActionEvent event) {
+FXMLLoader loader = new FXMLLoader(App.class.getResource("Information.fxml"));
+       
+        try {
+            AnchorPane InformationPage = loader.load();
+            maindisplay.getChildren().clear();
+            maindisplay.getChildren().setAll(InformationPage);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("LoggedInStudentId in initialize: " + PrimaryController.loggedInStudentId);
+       
         chart();
         piechart();
-
+        Example();
     }
 }

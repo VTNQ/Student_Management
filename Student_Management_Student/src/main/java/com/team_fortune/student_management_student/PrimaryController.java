@@ -51,6 +51,7 @@ public class PrimaryController implements Initializable {
     public static int loggedInStudentId;
     @FXML
     private TextField username;
+    public static String user;
 public static String loggedInUsername;
 private PreparedStatement statement;
 private static ResultSet result;
@@ -112,6 +113,7 @@ private static boolean isaccoutphone(String phone){
     try {
         String sql = "SELECT * FROM student WHERE username=? And password=?";
         statement = conn.prepareStatement(sql);
+        user=username.getText();
  String usernamtxt=encryptPasswordMD5(username.getText());
       String passtxt=encryptPasswordMD5(password.getText());
 
@@ -130,7 +132,7 @@ private static boolean isaccoutphone(String phone){
             
           
         } else {
-            displayErrorMessage("Wrong Username");
+            displayErrorMessage("Wrong Username or Password");
         }
     } catch (Exception e) {
         e.printStackTrace();

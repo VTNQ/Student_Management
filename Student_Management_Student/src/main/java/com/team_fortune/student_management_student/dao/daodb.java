@@ -45,7 +45,8 @@ public class daodb {
                 + "JOIN class sc ON t2.id_class = sc.id "
                 + "JOIN subject st ON t2.id_subject = st.id "
                 + "JOIN teacher tc ON t2.id_teacher = tc.id "
-                + "WHERE t1.id = ? AND st.name LIKE ?";
+                + "WHERE t1.id = ? AND st.name LIKE ? And t2.Active=1 "
+                +"Group by t1.id,tc.name,st.name,sc.name";
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, PrimaryController.loggedInStudentId);
@@ -72,7 +73,8 @@ public class daodb {
                 + "JOIN teacher t3 ON t2.id_teacher=t3.id "
                 + "JOIN class t6 ON t2.id_class=t6.id "
                 + "JOIN student t7 ON t2.id_student=t7.id "
-                + "Where t7.id=? ";
+                + "Where t7.id=? And t2.Active=1 "
+                +"Group by t1.name,t3.name,t1.lession_link,t6.name";
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, PrimaryController.loggedInStudentId);
@@ -101,8 +103,8 @@ public class daodb {
                 + "JOIN student t6 ON t5.id_student = t6.id "
                 + "JOIN exam_schedule t4 ON t5.id_exam = t4.id "
                 + "JOIN teacher t2 ON t2.id = t5.id_teacher "
-                + "LEFT JOIN transcript a ON t4.id = a.id_exam "
-                + "WHERE t6.id = ? AND (a.link IS NULL OR a.link = '') AND t4.end > NOW()";
+                
+                + "WHERE t6.id = ?  AND t4.end > NOW()";
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, PrimaryController.loggedInStudentId);
@@ -131,7 +133,7 @@ public class daodb {
     public static List<com.team_fortune.student_management_student.models.classmodel>joined_class(){
         List<com.team_fortune.student_management_student.models.classmodel>Joined_Class=new ArrayList<>();
         Connection conn=DBconnect.connectDB();
-        String query="Select a.name,a.id From class a JOIN class_Subject b ON a.id=b.id_class Where b.id_student=?";
+        String query="Select a.name,a.id,b.Active From class a JOIN class_Subject b ON a.id=b.id_class Where b.id_student=?";
         try {
             PreparedStatement stmt=conn.prepareStatement(query);
             stmt.setInt(1, PrimaryController.loggedInStudentId);
@@ -139,7 +141,8 @@ public class daodb {
             while(rs.next()){
                 int id=rs.getInt("id");
                 String name=rs.getString("name");
-               Joined_Class.add(new classmodel(id,name));
+                int Active=rs.getInt("Active");
+               Joined_Class.add(new classmodel(id,name,Active));
             }
             DBconnect.closeConnection(conn);
         } catch (Exception e) {
@@ -176,7 +179,7 @@ public class daodb {
                 + "Join assignments t4 On t4.id=t2.id_assignments "
                 + "Join class t5 ON t5.id=t2.id_class "
                 + "Join student t6 ON t6.id=t2.id_student "
-                + "Where t6.id = ? ";
+                + "Where t6.id = ? And t2.Active=1";
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, PrimaryController.loggedInStudentId);
@@ -199,7 +202,7 @@ public class daodb {
     public static List<com.team_fortune.student_management_student.models.classmodel> Detailclass(int id_class) {
         List<com.team_fortune.student_management_student.models.classmodel> result = new ArrayList<>();
         Connection conn = DBconnect.connectDB();
-        String query = "Select a.name as name_subject,b.name as name_teacher From subject a Join class_subject c ON a.id=c.id_subject Join teacher b ON b.id=c.id_teacher Where c.id_class=?";
+        String query = "Select a.name as name_subject,b.name as name_teacher From subject a Join class_subject c ON a.id=c.id_subject Join teacher b ON b.id=c.id_teacher Where c.id_class=? Group by a.name,b.name";
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, id_class);
@@ -222,10 +225,10 @@ public class daodb {
         String query = "Select a.name as Name_subject,b.score,c.name as name_class,b.status From subject a "
                 + "Join class_subject e ON a.id=e.id_subject "
                 + "Join exam_schedule f ON f.id=e.id_exam "
-                + "JOIN transcript b ON b.id_exam=f.id "
+                + "JOIN transcript b ON b.id=e.id_transcipt "
                 + "JOIN class c ON c.id=e.id_class "
                 + "Join student g ON g.id=e.id_student "
-                + "Where g.id=?";
+                + "Where g.id=? And e.Active=1";
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, PrimaryController.loggedInStudentId);
@@ -234,9 +237,9 @@ public class daodb {
                 String name_Subject = rs.getString("Name_subject");
                 float score = rs.getFloat("score");
                 String name_class = rs.getString("name_class");
-                boolean status = rs.getBoolean("status");
-                String resultTest = (status) ? "dat" : "rot";
-                result.add(new modelsubject(name_Subject, score, name_class, resultTest));
+                int status = rs.getInt("status");
+                
+                result.add(new modelsubject(name_Subject, score, name_class, status));
             }
             DBconnect.closeConnection(conn);
         } catch (Exception e) {
@@ -253,7 +256,8 @@ public class daodb {
                 + "JOIN class sc ON t2.id_class = sc.id "
                 + "JOIN subject st ON t2.id_subject = st.id "
                 + "JOIN teacher tc ON t2.id_teacher = tc.id "
-                + "WHERE t1.id = ?";
+                + "WHERE t1.id = ? And t2.Active=1 "
+                +"Group by t1.id,tc.name,st.name,sc.name";
         try {
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, PrimaryController.loggedInStudentId);

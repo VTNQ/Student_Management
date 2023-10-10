@@ -45,60 +45,71 @@ public class Registered_classController implements Initializable {
     /**
      * Initializes the controller class.
      */
-        @FXML
-    private Label name_class=new Label();
+    @FXML
+    private Label name_class = new Label();
     private int id_class;
     @FXML
-    private TableColumn<com.team_fortune.student_management_student.models.classmodel, String> colsubject=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_student.models.classmodel, String> colsubject = new TableColumn<>();
 
     @FXML
-    private TableColumn<com.team_fortune.student_management_student.models.classmodel, String> colteacher=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_student.models.classmodel, String> colteacher = new TableColumn<>();
 
     @FXML
-    private TableView<com.team_fortune.student_management_student.models.classmodel> tbldetail=new TableView<>();
-      @FXML
-    private TableColumn<com.team_fortune.student_management_student.models.classmodel, String> ColMyJoin=new TableColumn<>();
-      @FXML
-      private TableColumn<com.team_fortune.student_management_student.models.classmodel,Boolean>colDetail=new TableColumn<>();
+    private TableView<com.team_fortune.student_management_student.models.classmodel> tbldetail = new TableView<>();
     @FXML
-    private TableColumn<com.team_fortune.student_management_student.models.classmodel, Boolean> colregisterDetail=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_student.models.classmodel, String> ColMyJoin = new TableColumn<>();
+    @FXML
+    private TableColumn<com.team_fortune.student_management_student.models.classmodel, Integer> colDetail = new TableColumn<>();
+    @FXML
+    private TableColumn<com.team_fortune.student_management_student.models.classmodel, Boolean> colregisterDetail = new TableColumn<>();
 
     @FXML
-    private TableView<com.team_fortune.student_management_student.models.classmodel> tblclass=new TableView<>();
+    private TableView<com.team_fortune.student_management_student.models.classmodel> tblclass = new TableView<>();
     @FXML
-    private TableColumn<com.team_fortune.student_management_student.models.classmodel, String> colclass=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_student.models.classmodel, String> colclass = new TableColumn<>();
     @FXML
-    private TableView<com.team_fortune.student_management_student.models.classmodel>tblRegister=new TableView<>();
-    
+    private TableView<com.team_fortune.student_management_student.models.classmodel> tblRegister = new TableView<>();
+
     @FXML
-    private TableColumn<com.team_fortune.student_management_student.models.classmodel, Boolean> colJoin=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_student.models.classmodel, Boolean> colJoin = new TableColumn<>();
     @FXML
-    private TableColumn<com.team_fortune.student_management_student.models.classmodel, Boolean> colDe=new TableColumn<>();
+    private TableColumn<com.team_fortune.student_management_student.models.classmodel, Boolean> colDe = new TableColumn<>();
     ObservableList<com.team_fortune.student_management_student.models.classmodel> model = FXCollections.observableArrayList();
-    private void Joinedclass(){
-        List<com.team_fortune.student_management_student.models.classmodel>arraylist=daodb.joined_class();
-        ObservableList<com.team_fortune.student_management_student.models.classmodel>observable=FXCollections.observableArrayList(arraylist);
+
+    private void Joinedclass() {
+        List<com.team_fortune.student_management_student.models.classmodel> arraylist = daodb.joined_class();
+        ObservableList<com.team_fortune.student_management_student.models.classmodel> observable = FXCollections.observableArrayList(arraylist);
         tblRegister.setItems(observable);
         ColMyJoin.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colDetail.setCellValueFactory(new PropertyValueFactory<>("isActive"));
-        colDetail.setCellFactory(column->new TableCell<com.team_fortune.student_management_student.models.classmodel,Boolean>(){
-        private final MFXButton button=new MFXButton("Detail");
-
+        colDetail.setCellValueFactory(new PropertyValueFactory<>("Active"));
+        colDetail.setCellFactory(column -> new TableCell<com.team_fortune.student_management_student.models.classmodel, Integer>() {
             @Override
-            protected void updateItem(Boolean Item, boolean empty) {
-                super.updateItem(Item, empty);
-                button.getStyleClass().add("btn-design");
-                if(Item!=null || !empty){
-                    setGraphic(button);
-                }else{
-                    setGraphic(null);
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null || !empty) {
+                    if (item == 0) {
+                        setText("marking");
+                    } else if (item == 1) {
+                        setText("obtain");
+                        setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+                    } else if (item == 2) {
+                        setText("fail");
+                        setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                    }
                 }
             }
-        
+
         });
     }
-private void displayrecord() {
-        String query = "Select a.id,a.name From class a JOIN class_subject b ON a.id=b.id_class Where b.id_student!=? OR b.id_student IS  NULL Group by a.id,a.name";
+
+    private void displayrecord() {
+        String query = "SELECT a.id, a.name,d.id as id_subject,f.id as id_teacher "
+                + "FROM class a "
+                + "LEFT JOIN class_subject b ON a.id = b.id_class "
+                + "Left Join subject d ON d.id=b.id_subject "
+                + "Left Join teacher f ON f.id=b.id_teacher "
+                + "WHERE ( b.id_exam IS Null And b.id_assignments IS NULL And b.id_teacher IS NOT NULL AND (b.id_student != ? OR b.id_student IS NULL)) "
+                + "GROUP BY a.id, a.name,d.id,f.id";
         try {
             model.clear();
             Connection conn = PrimaryController.connectDB();
@@ -108,7 +119,9 @@ private void displayrecord() {
             while (result.next()) {
                 int id = result.getInt("id");
                 String name = result.getString("name");
-                com.team_fortune.student_management_student.models.classmodel class_name = new com.team_fortune.student_management_student.models.classmodel(id, name);
+                int id_subject = result.getInt("id_subject");
+                int id_teacher = result.getInt("id_teacher");
+                com.team_fortune.student_management_student.models.classmodel class_name = new com.team_fortune.student_management_student.models.classmodel(id, name, id_subject, id_teacher);
                 model.add(class_name);
             }
             tblclass.setItems(model);
@@ -120,16 +133,46 @@ private void displayrecord() {
                 {
                     button.setOnAction(event -> {
                         com.team_fortune.student_management_student.models.classmodel cl = getTableView().getItems().get(getIndex());
-                        try{
-                            String query="Update class_subject set id_student=? Where id_class=?";
-                        Connection conn=PrimaryController.connectDB();
-                            PreparedStatement stmt=conn.prepareStatement(query);
-                            stmt.setInt(1, PrimaryController.loggedInStudentId);
-                            stmt.setInt(2, cl.getId());
-                            stmt.executeUpdate();
-                            PrimaryController.displaysuccessfully("Join successfully");
-                            displayrecord();
-                        }catch(Exception ex){
+                        try {
+                            String check_query = "Select count(*) as total From class_subject where id_class=? And id_teacher=? And id_subject=? And id_student IS null";
+                            String update_query="Update class_subject set id_student=?,Active=? where id_class=? And id_teacher=? And id_subject=?";
+                            Connection conn = PrimaryController.connectDB();
+                            PreparedStatement checksmtmt = conn.prepareStatement(check_query);
+                            checksmtmt.setInt(1, cl.getId());
+                            checksmtmt.setInt(2, cl.getId_teacher());
+                            checksmtmt.setInt(3, cl.getId_Subject());
+                          
+                            ResultSet rs = checksmtmt.executeQuery();
+                            if (rs.next()) {
+                                int total=rs.getInt("total");
+                                System.out.println(total);
+                                if(total>0){
+                                   PreparedStatement updatestmt=conn.prepareStatement(update_query);
+                                updatestmt.setInt(1, PrimaryController.loggedInStudentId);
+                                updatestmt.setInt(2, 0);
+                                updatestmt.setInt(3, cl.getId());
+                                updatestmt.setInt(4, cl.getId_teacher());
+                                updatestmt.setInt(5, cl.getId_Subject());
+                                updatestmt.executeUpdate();
+                                 PrimaryController.displaysuccessfully("Join successfully"); 
+                                }else{
+                                        String query = "Insert into class_subject(id_class,id_teacher,id_student,Active,id_subject) values(?,?,?,?,?)";
+
+                                PreparedStatement stmt = conn.prepareStatement(query);
+                                stmt.setInt(1, cl.getId());
+                                stmt.setInt(2, cl.getId_teacher());
+
+                                stmt.setInt(3, PrimaryController.loggedInStudentId);
+                                stmt.setInt(4, 0);
+                                stmt.setInt(5, cl.getId_Subject());
+                                stmt.executeUpdate();
+                                PrimaryController.displaysuccessfully("Join successfully");
+                                }
+                                
+                              
+                            }
+
+                        } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     });
@@ -149,7 +192,7 @@ private void displayrecord() {
                 }
 
             });
-           colDe.setCellValueFactory(new PropertyValueFactory<>("isActive"));
+            colDe.setCellValueFactory(new PropertyValueFactory<>("isActive"));
             colDe.setCellFactory(column -> new TableCell<com.team_fortune.student_management_student.models.classmodel, Boolean>() {
                 private final MFXButton button = new MFXButton("Detail");
 
@@ -157,21 +200,21 @@ private void displayrecord() {
                     button.setOnAction(event -> {
                         com.team_fortune.student_management_student.models.classmodel cl = getTableView().getItems().get(getIndex());
                         try {
-                            FXMLLoader fxloader=new FXMLLoader(App.class.getResource("Detailclass.fxml"));
+                            FXMLLoader fxloader = new FXMLLoader(App.class.getResource("Detailclass.fxml"));
                             AnchorPane newPopup;
-                            newPopup=fxloader.load();
-                            Registered_classController exercise=fxloader.getController();
+                            newPopup = fxloader.load();
+                            Registered_classController exercise = fxloader.getController();
                             exercise.detailclass(cl.getId());
                             exercise.detailnameclass(cl.getName());
-                            Stage PopupStage=new Stage();
+                            Stage PopupStage = new Stage();
                             PopupStage.initModality(Modality.APPLICATION_MODAL);
-                            PopupStage.setScene(new Scene(newPopup,500,400));
+                            PopupStage.setScene(new Scene(newPopup, 500, 400));
                             PopupStage.setResizable(false);
                             PopupStage.show();
                         } catch (IOException ex) {
                             Logger.getLogger(Registered_classController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
+
                     });
                 }
 
@@ -189,33 +232,42 @@ private void displayrecord() {
                 }
 
             });
-         
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    private void startUpdating(){
-         ScheduledExecutorService executor=Executors.newSingleThreadScheduledExecutor();
-         executor.scheduleAtFixedRate(()->{
-             Platform.runLater(this::displayrecord);
-         }, 0, 1, TimeUnit.SECONDS);
+
+    private void startUpdating() {
+        ScheduledExecutorService Excuter = Executors.newSingleThreadScheduledExecutor();
+        Excuter.scheduleAtFixedRate(() -> {
+            Platform.runLater(() -> {
+                displayrecord();
+                Joinedclass();
+
+            });
+        }, 0, 1, TimeUnit.SECONDS);
     }
-    private void detailclass(int id_class){
-          List<com.team_fortune.student_management_student.models.classmodel> resultList = daodb.Detailclass(id_class);
-  ObservableList<com.team_fortune.student_management_student.models.classmodel> observableList = FXCollections.observableArrayList(resultList);
+
+    private void detailclass(int id_class) {
+        List<com.team_fortune.student_management_student.models.classmodel> resultList = daodb.Detailclass(id_class);
+        ObservableList<com.team_fortune.student_management_student.models.classmodel> observableList = FXCollections.observableArrayList(resultList);
         tbldetail.setItems(observableList);
         colsubject.setCellValueFactory(new PropertyValueFactory<>("name_subject"));
         colteacher.setCellValueFactory(new PropertyValueFactory<>("name_teacher"));
     }
-    private void detailnameclass(String name_class){
+
+    private void detailnameclass(String name_class) {
         this.name_class.setText(name_class);
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
         displayrecord();
-         Joinedclass();
+        Joinedclass();
+        startUpdating();
     }
 
-    
 }

@@ -13,7 +13,7 @@ private int index;
 private String subject;
 private String Myclass;
 private String exercises;
-private String status;
+private int status;
 private String reason;
 
     public int getIndex() {
@@ -48,11 +48,11 @@ private String reason;
         this.exercises = exercises;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -64,7 +64,7 @@ private String reason;
         this.reason = reason;
     }
 
-    public modelsolution(int index, String subject, String Myclass, String exercises, String status, String reason) {
+    public modelsolution(int index, String subject, String Myclass, String exercises, int status, String reason) {
         this.index = index;
         this.subject = subject;
         this.Myclass = Myclass;

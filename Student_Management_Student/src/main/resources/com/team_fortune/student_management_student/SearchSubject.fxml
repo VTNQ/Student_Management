@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="com.team_fortune.student_management_student.SearchSubjectController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.team_fortune.student_management_student.SearchSubjectController">
    <children>
       <AnchorPane prefHeight="98.0" prefWidth="600.0" styleClass="card1" stylesheets="@css/primary.css">
          <children>
@@ -19,13 +18,13 @@
                   <Image url="@asset/Jommans-Thermonuke-Search.256.png" />
                </image>
             </ImageView>
-            <Label layoutX="112.0" layoutY="2.0" prefHeight="46.0" prefWidth="130.0" text="Search Teacher" textFill="WHITE">
+            <Label layoutX="112.0" layoutY="2.0" prefHeight="46.0" prefWidth="130.0" text="Search Subject" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <TextField fx:id="txtserach" layoutX="312.0" layoutY="49.0" styleClass="input" stylesheets="@css/primary.css" />
-            <Label layoutX="112.0" layoutY="37.0" prefHeight="57.0" prefWidth="182.0" text="Enter Name Teachers" textFill="WHITE">
+            <Label layoutX="112.0" layoutY="37.0" prefHeight="57.0" prefWidth="182.0" text="Enter Name Subject" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
