@@ -224,7 +224,7 @@ public class MainClassController implements Initializable {
                         try {
                             String selectquery = "Select count(*) From class a " + "Join class_subject b ON a.id=b.id_class " + "Where a.name=? And b.id_student IS  NULL";
                             conn = DBConnection.getConnection();
-                            String query = "Update class_subject set id_class=Null Where id_class=?";
+                            String query = "Delete From class_subject Where id_class=?";
                             String deleteQuery = "Delete From class where  name=?";
                             PreparedStatement smt = conn.prepareStatement(selectquery);
                             smt.setString(1, className);
